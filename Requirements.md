@@ -1,5 +1,4 @@
-# Employee Management Application
-### Advanced Software Development Project 1
+# Advanced Software Development Project 1
 
 ## Summary
 Create a graphical application of your choosing. The application can be a unique creation, or it can be an imitation of an existing program or concept. 
