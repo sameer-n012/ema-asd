@@ -26,10 +26,14 @@ public class LoginView extends JPanel {
     private JButton loginButton;
     private JButton createCompanyButton;
     private JLabel errorMssg;
+    
+    private EMA ema;
+    
 
     public LoginView(Controller controller) {
         super();
-
+        ema = EMA.getInstance();
+        this.controller = controller;
         this.initialize();
     }
 
@@ -79,7 +83,7 @@ public class LoginView extends JPanel {
 
     private void initErrorMssg() {
         errorMssg = new JLabel("", SwingConstants.CENTER);
-        errorMssg.setBounds(205, 260, 500, 35);
+        errorMssg.setBounds(50, 275, 500, 35);
         errorMssg.setFont(new Font("DialogInput", Font.ITALIC, 12));
         errorMssg.setForeground(Color.RED);
         errorMssg.setVisible(false);
@@ -180,9 +184,8 @@ public class LoginView extends JPanel {
                 if (source.equals(loginButton)) {
                     String username = getUsername();
                     String password = getPassword();
-                    
-                        
-                    controller.login(username, password);
+
+                    EMA.getInstance().getController().login(username, password);
                 }
             }
         });
@@ -197,9 +200,9 @@ public class LoginView extends JPanel {
     	
     	createCompanyButton.addActionListener(new ActionListener() {
     		public void actionPerformed(ActionEvent e) {
-    			if(EMA.checkUserDuplicates(getUsername())) {
+    			if(ema.existsUser(getUsername())) {
     				showErrorMessage("Username already exists.", true);
-    			}else if(EMA.checkCompanyDuplicates(getUsername())){
+    			}else if(ema.existsCompany(getUsername())){
     				showErrorMessage("Company Name already exists.", true);
     			}else {
     				//TODO store text field values, advance to employer management page

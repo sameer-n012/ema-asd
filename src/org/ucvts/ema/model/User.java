@@ -1,5 +1,7 @@
 package org.ucvts.ema.model;
 
+import org.ucvts.ema.app.Password;
+
 public class User {
 	
 //	private static int uidCounter = 0;
@@ -10,7 +12,8 @@ public class User {
 	private String lastName;
 	private int cid;
 //	private int uid;
-	private String password;
+	private String passwordHash;
+	private byte[] salt;
 	private String username;
 	private Shift[] shifts = new Shift[7];
 	private double salary;
@@ -22,7 +25,21 @@ public class User {
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.username = username;
-		password = defaultPassword; //TODO Hash this	
+		salt = Password.getSalt();
+		passwordHash = Password.hash(defaultPassword, salt);	
+		
+		cid = companyId;
+//		uid = uidCounter++;
+	}
+	
+	public User(String firstName, String lastName, String username, String password, UserGroup role, int companyId) {
+		this.role = role;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.username = username;
+		salt = Password.getSalt();
+		passwordHash = Password.hash(password, salt);	
+		
 		cid = companyId;
 //		uid = uidCounter++;
 	}
@@ -41,6 +58,10 @@ public class User {
 	
 	public Shift[] getShifts() { return shifts; }
 	
+	public byte[] getSalt() { return salt; }
+	
+	public String getPasswordHash() { return passwordHash; }
+	
 	public void setFName(String firstName) { this.firstName = firstName; }
 	
 	public void setLName(String lastName) { this.lastName = lastName; }
@@ -51,7 +72,15 @@ public class User {
 	
 	public void setRole(UserGroup role) { this.role = role; }
 	
-	public void resetPassword() { password = defaultPassword; } //TODO Hash this
+	public void setPasswordHash(String password) { 
+		this.salt = Password.getSalt();
+		this.passwordHash = Password.hash(password, this.salt);
+	}
+	
+	public void resetPassword() {
+		this.setPasswordHash(defaultPassword);
+	}
+	
 	
 	
 }

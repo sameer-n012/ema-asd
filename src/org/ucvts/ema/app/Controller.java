@@ -12,12 +12,15 @@ public class Controller {
 
     private Container views;
     private User activeUser;
+    
+    private EMA ema = null;
 
     public Controller(Container views) {
         this.views = views;
         this.activeUser = null;
+        ema = EMA.getInstance();
     }
-
+    
     public User getActiveUser() {
         return activeUser;
     }
@@ -28,10 +31,18 @@ public class Controller {
 
     
     public void login(String username, String password) {
-	   LoginView lv = (LoginView) views.getComponents()[0];
+	   LoginView lv = (LoginView) views.getComponents()[EMA.LOGIN_VIEW_INDEX];
 	   
 	   try {
-		   if(EMA.checkUserDuplicates(username)) {
+		   if(ema.existsUser(username)) {
+			   User u = ema.getUser(username);
+			   if(Password.checkPassword(password, u.getPasswordHash(), u.getSalt())) {
+				   ema.currentUser = u;
+				   lv.showErrorMessage("Successful Login", true); //TODO delete later
+			   }
+			   else {
+				   lv.showErrorMessage("Invalid password", true);
+			   }
 			   
 		   }
 		   else {

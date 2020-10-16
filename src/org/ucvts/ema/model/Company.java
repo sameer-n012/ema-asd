@@ -10,11 +10,16 @@ public class Company {
 	private ArrayList<User> employees;
 	private User employer;
 	
-	public Company(String name, String username, String password, String firstName, String lastName) {
+	public Company(String name) {
 		companyName = name;
 		companyId = cidCounter++; //TODO
 		employees = new ArrayList<User>();
-		employer = new User(firstName, lastName, username, UserGroup.EMPLOYER, companyId);
+		employer = null;
+	}
+	
+	public User addEmployer(String username, String password, String firstName, String lastName) {
+		employer = new User(firstName, lastName, username, password, UserGroup.EMPLOYER, companyId);
+		return employer;
 	}
 	
 	public String getName() {
@@ -33,7 +38,7 @@ public class Company {
 		return employees.size();
 	}
 	
-	public User assign(String name, String username, String firstName, String lastName) {
+	public User assign(String username, String firstName, String lastName) {
 		User u = new User(firstName, lastName, username, UserGroup.EMPLOYEE, companyId);
 		employees.add(u);
 		return u;

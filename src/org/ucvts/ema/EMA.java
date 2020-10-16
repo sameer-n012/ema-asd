@@ -19,16 +19,39 @@ public class EMA extends JFrame{
 	
 	public static HashMap<String, User> userDirectory = null;
 	public static HashMap<Integer, Company> companyDirectory = null;
+	public static final int LOGIN_VIEW_INDEX = 0;
+	public User currentUser = null;
+	
+	private Controller controller = null;
+	
+	private static EMA instance = null;
+	
+	
+	public static EMA getInstance() {
+		if(instance==null) { instance = new EMA(); }
+		return instance;
+	}
+	
+	public Controller getController() {
+		return controller;
+	}
 	
 	public static void main(String[] args) { //TODO
 		
 		userDirectory = new HashMap<String, User>();
 		companyDirectory = new HashMap<Integer, Company>();
+		
+		Company c = new Company("First Inc.");
+		companyDirectory.put(c.getId(), c);
+		
+		
+		userDirectory.put("sn", c.addEmployer("sn", "default", "sameer", "narendran"));
+		userDirectory.put("jd", c.assign("jd", "john", "doe"));
 				
 		SwingUtilities.invokeLater(new Runnable() {
 			
             public void run() {
-                try { new EMA().initialize(); } 
+                try { EMA.getInstance().initialize(); } 
                 catch (Exception e) { e.printStackTrace(); }
             }
             
@@ -39,7 +62,7 @@ public class EMA extends JFrame{
 	
     private void initialize() {
     	JPanel views = new JPanel(new CardLayout());
-        Controller controller = new Controller(views);
+        controller = new Controller(views);
 
         // add child views to the parent container
 
@@ -56,11 +79,11 @@ public class EMA extends JFrame{
         this.setVisible(true);
     }
 	
-	public static boolean checkUserDuplicates(String s) { //TODO
+	public boolean existsUser(String s) { //TODO
 		return userDirectory.get(s)==null ? false : true; //No duplicates: returns false
 	}
 	
-	public static boolean checkCompanyDuplicates(String s) { //TODO
+	public boolean existsCompany(String s) { //TODO
 		return companyDirectory.get(s)==null ? false : true; //No duplicates: returns false
 	}
 	
