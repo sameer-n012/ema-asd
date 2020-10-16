@@ -6,28 +6,31 @@ import java.math.BigDecimal;
 import org.ucvts.ema.EMA;
 import org.ucvts.ema.model.Company;
 import org.ucvts.ema.model.User;
+import org.ucvts.ema.model.UserGroup;
 import org.ucvts.ema.views.LoginView;
 
 
 public class Controller {
 
     private Container views;
-    private User activeUser;
+    
+    private User currentUser;
     
     private EMA ema = null;
 
     public Controller(Container views) {
         this.views = views;
-        this.activeUser = null;
+        this.currentUser = null;
         ema = EMA.getInstance();
     }
     
-    public User getActiveUser() {
-        return activeUser;
+    public User getCurrentUser() {
+        return currentUser;
     }
 
-    public void switchTo(String view) {
+    public void switchView(String view) {
         ((CardLayout) views.getLayout()).show(views, view);
+        //TODO when switching views do it here
     }
 
     
@@ -38,8 +41,11 @@ public class Controller {
 		   if(ema.existsUser(username)) {
 			   User u = ema.getUser(username);
 			   if(Password.checkPassword(password, u.getPasswordHash(), u.getSalt())) {
-				   ema.currentUser = u;
+				   this.currentUser = u;
 				   lv.showErrorMessage("Successful login", true); //TODO delete later
+				   //TODO uncomment when employer and employee main views finished
+				   //if(u.getRole() == UserGroup.EMPLOYER) { switchView(ema.EMPLOYER_VIEW); }
+				   //else if(u.getRole() == UserGroup.EMPLOYEE) { switchView(ema.EMPLOYEE_VIEW); }
 			   }
 			   else {
 				   lv.showErrorMessage("Invalid password", true);
@@ -61,7 +67,7 @@ public class Controller {
  			   lv.showErrorMessage("Username already exists.", true);
  		   }
  		   else if(ema.existsCompany(companyName)){
- 				lv.showErrorMessage("Company Name already exists.", true);
+ 				lv.showErrorMessage("Company name already exists.", true);
  		   }
  		   else {
  			   Company c = new Company(companyName);
@@ -75,6 +81,8 @@ public class Controller {
     }
 
     public void logout() {
-        
+    	this.currentUser = null;
+    	switchView(ema.LOGIN_VIEW);
+        //TODO need to add more stuff
     }
 }

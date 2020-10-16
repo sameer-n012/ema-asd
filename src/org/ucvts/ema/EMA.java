@@ -21,8 +21,15 @@ public class EMA extends JFrame{
 	
 	public static HashMap<String, User> userDirectory = null;
 	public static HashMap<Integer, Company> companyDirectory = null;
+	
 	public static final int LOGIN_VIEW_INDEX = 0;
-	public User currentUser = null;
+	public static final int EMPLOYEE_VIEW_INDEX = 1;
+	public static final int EMPLOYER_VIEW_INDEX = 2;
+	public static final int MODIFY_VIEW_INDEX = 3;
+	public static final String LOGIN_VIEW = "LOGIN_VIEW";
+	public static final String EMPLOYEE_VIEW = "EMPLOYEE_VIEW";
+	public static final String EMPLOYER_VIEW = "EMPLOYER_VIEW";
+	public static final String MODIFY_VIEW = "MODIFY_VIEW";
 	
 	private Controller controller = null;
 	
@@ -37,6 +44,7 @@ public class EMA extends JFrame{
 	public Controller getController() {
 		return controller;
 	}
+	
 	
 	public static void main(String[] args) { //TODO
 		
@@ -68,13 +76,15 @@ public class EMA extends JFrame{
 
         // add child views to the parent container
 
-        views.add(new LoginView(controller), "Login View");
-        //views.add(new TransactionView(controller), TRANSACTION_VIEW);
+        views.add(new LoginView(controller), LOGIN_VIEW);
+        //views.add(new EmployeeView(controller), EMPLOYEE_VIEW);
+        //views.add(new EmployerView(controller), EMPLOYER_VIEW);
+        //views.add(new ModifyView(controller), MODIFY_VIEW);
 
         // configure the application frame
 
         this.add(views);
-        this.setBounds(100, 100, 500, 500);
+        this.setBounds(100, 100, 600, 600);
         this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         this.setLocationRelativeTo(null);
         this.setResizable(false);

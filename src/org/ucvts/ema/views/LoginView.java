@@ -79,7 +79,7 @@ public class LoginView extends JPanel {
 
     private void initTitle() {
         JLabel label = new JLabel("Employee Management Application", SwingConstants.CENTER);
-        label.setBounds(0, 20, 500, 35);
+        label.setBounds(50, 20, 500, 35);
         label.setFont(new Font("DialogInput", Font.BOLD, 21));
 
         this.add(label);
