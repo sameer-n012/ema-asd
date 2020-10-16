@@ -14,6 +14,7 @@ import org.ucvts.ema.views.LoginView;
 
 
 
+@SuppressWarnings("serial")
 public class EMA extends JFrame{
 	
 	public static HashMap<String, User> userDirectory = null;

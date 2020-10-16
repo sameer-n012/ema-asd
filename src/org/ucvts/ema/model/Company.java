@@ -34,7 +34,7 @@ public class Company {
 	}
 	
 	public User assign(String name, String username, String firstName, String lastName) {
-		User u = new User(firstName, lastName, username, UserGroup.EMPLOYER, companyId);
+		User u = new User(firstName, lastName, username, UserGroup.EMPLOYEE, companyId);
 		employees.add(u);
 		return u;
 	}
@@ -42,11 +42,6 @@ public class Company {
 	public User getEmployer() {
 		return employer;
 	}
-	
-	
-	
-	
-	
 	
 	
 }
