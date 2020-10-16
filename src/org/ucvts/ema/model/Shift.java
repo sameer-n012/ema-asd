@@ -1,4 +1,4 @@
-package ems.app;
+package org.ucvts.ema.model;
 
 public enum Shift {
 

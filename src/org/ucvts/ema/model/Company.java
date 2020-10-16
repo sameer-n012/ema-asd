@@ -1,4 +1,4 @@
-package ems.app;
+package org.ucvts.ema.model;
 import java.util.ArrayList;
 
 public class Company {

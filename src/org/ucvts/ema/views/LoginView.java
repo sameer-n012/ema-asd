@@ -1,4 +1,4 @@
-package ems.views;
+package org.ucvts.ema.views;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -14,7 +14,7 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
-import ems.app.Controller;
+import org.ucvts.ema.app.Controller;
 
 public class LoginView extends JPanel {
 
@@ -25,7 +25,7 @@ public class LoginView extends JPanel {
     private JButton createCompanyButton;
     private JLabel errorMssg;
 
-    public LoginView() {
+    public LoginView(Controller controller) {
         super();
 
         this.initialize();

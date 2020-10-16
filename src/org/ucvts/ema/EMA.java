@@ -1,11 +1,20 @@
-package ems.app;
+package org.ucvts.ema;
 
+import java.awt.CardLayout;
 import java.util.HashMap;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
+import org.ucvts.ema.app.Controller;
+import org.ucvts.ema.model.Company;
+import org.ucvts.ema.model.User;
+import org.ucvts.ema.views.LoginView;
 
 
-public class EMA {
+
+public class EMA extends JFrame{
 	
 	public static HashMap<String, User> userDirectory = null;
 	public static HashMap<Integer, Company> companyDirectory = null;
@@ -28,7 +37,22 @@ public class EMA {
 	}
 	
     private void initialize() {
-    	
+    	JPanel views = new JPanel(new CardLayout());
+        Controller controller = new Controller(views);
+
+        // add child views to the parent container
+
+        views.add(new LoginView(controller), "Login View");
+        //views.add(new TransactionView(controller), TRANSACTION_VIEW);
+
+        // configure the application frame
+
+        this.add(views);
+        this.setBounds(100, 100, 500, 500);
+        this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        this.setLocationRelativeTo(null);
+        this.setResizable(false);
+        this.setVisible(true);
     }
 	
 	public boolean checkDuplicates(String s) { //TODO
