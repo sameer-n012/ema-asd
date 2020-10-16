@@ -15,6 +15,7 @@ public class Controller {
     private Container views;
     
     private User currentUser;
+    private Company currentCompany;
     
     private EMA ema = null;
 
@@ -26,6 +27,10 @@ public class Controller {
     
     public User getCurrentUser() {
         return currentUser;
+    }
+    
+    public Company getCurrentCompany() {
+    	return currentCompany;
     }
 
     public void switchView(String view) {
@@ -42,6 +47,7 @@ public class Controller {
 			   User u = ema.getUser(username);
 			   if(Password.checkPassword(password, u.getPasswordHash(), u.getSalt())) {
 				   this.currentUser = u;
+				   this.currentCompany = ema.getCompany(u.getCID());
 				   lv.showErrorMessage("Successful login", true); //TODO delete later
 				   //TODO uncomment when employer and employee main views finished
 				   //if(u.getRole() == UserGroup.EMPLOYER) { switchView(ema.EMPLOYER_VIEW); }

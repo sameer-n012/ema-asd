@@ -79,8 +79,8 @@ public class LoginView extends JPanel {
 
     private void initTitle() {
         JLabel label = new JLabel("Employee Management Application", SwingConstants.CENTER);
-        label.setBounds(50, 20, 500, 35);
-        label.setFont(new Font("DialogInput", Font.BOLD, 21));
+        label.setBounds(50, 60, 500, 35);
+        label.setFont(new Font("Verdana", Font.BOLD, 21));
 
         this.add(label);
     }
@@ -88,7 +88,7 @@ public class LoginView extends JPanel {
     private void initErrorMssg() {
         errorMssg = new JLabel("", SwingConstants.CENTER);
         errorMssg.setBounds(50, 275, 500, 35);
-        errorMssg.setFont(new Font("DialogInput", Font.ITALIC, 12));
+        errorMssg.setFont(new Font("Verdana", Font.ITALIC, 12));
         errorMssg.setForeground(Color.RED);
         errorMssg.setVisible(false);
 
@@ -99,7 +99,7 @@ public class LoginView extends JPanel {
         JLabel label = new JLabel("Username:", SwingConstants.RIGHT);
         label.setBounds(100, 160, 95, 35);
         label.setLabelFor(usernameField);
-        label.setFont(new Font("DialogInput", Font.BOLD, 14));
+        label.setFont(new Font("Verdana", Font.BOLD, 14));
 
         usernameField = new JTextField(20);
         usernameField.setBounds(205, 160, 200, 35);
@@ -124,7 +124,7 @@ public class LoginView extends JPanel {
         JLabel label = new JLabel("Password:", SwingConstants.RIGHT);
         label.setBounds(100, 200, 95, 35);
         label.setLabelFor(passwordField);
-        label.setFont(new Font("DialogInput", Font.BOLD, 14));
+        label.setFont(new Font("Verdana", Font.BOLD, 14));
 
         passwordField = new JPasswordField(20);
         passwordField.setBounds(205, 200, 200, 35);
@@ -150,7 +150,7 @@ public class LoginView extends JPanel {
         JLabel label = new JLabel("Company:", SwingConstants.RIGHT);
         label.setBounds(100, 240, 95, 35);
         label.setLabelFor(companyField);
-        label.setFont(new Font("DialogInput", Font.BOLD, 14));
+        label.setFont(new Font("Verdana", Font.BOLD, 14));
 
         companyField = new JTextField(20);
         companyField.setBounds(205, 240, 200, 35);

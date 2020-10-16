@@ -35,7 +35,7 @@ public class Company {
 	}
 	
 	public int employeeCount() {
-		return employees.size();
+		return employees.size();  // returns employee count not including the employer
 	}
 	
 	public User assign(String username, String firstName, String lastName) {
@@ -47,6 +47,7 @@ public class Company {
 	public User getEmployer() {
 		return employer;
 	}
+	
 	
 	
 }

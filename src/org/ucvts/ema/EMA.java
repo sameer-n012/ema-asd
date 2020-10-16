@@ -12,6 +12,7 @@ import javax.swing.SwingUtilities;
 import org.ucvts.ema.app.Controller;
 import org.ucvts.ema.model.Company;
 import org.ucvts.ema.model.User;
+import org.ucvts.ema.views.EmployerView;
 import org.ucvts.ema.views.LoginView;
 
 
@@ -56,7 +57,7 @@ public class EMA extends JFrame{
 		
 		
 		userDirectory.put("sn", c.addEmployer("sn", "default", "sameer", "narendran"));
-		userDirectory.put("jd", c.assign("jd", "john", "doe"));
+		userDirectory.put("es", c.assign("es", "evan", "sun"));
 				
 		SwingUtilities.invokeLater(new Runnable() {
 			
@@ -76,6 +77,8 @@ public class EMA extends JFrame{
 
         // add child views to the parent container
 
+        
+        //Can uncomment each line with the others commented out to see graphics
         views.add(new LoginView(controller), LOGIN_VIEW);
         //views.add(new EmployeeView(controller), EMPLOYEE_VIEW);
         //views.add(new EmployerView(controller), EMPLOYER_VIEW);
@@ -85,7 +88,7 @@ public class EMA extends JFrame{
 
         this.add(views);
         this.setBounds(100, 100, 600, 600);
-        this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLocationRelativeTo(null);
         this.setResizable(false);
         this.setVisible(true);
