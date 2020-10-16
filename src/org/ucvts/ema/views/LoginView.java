@@ -14,6 +14,7 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
+import org.ucvts.ema.EMA;
 import org.ucvts.ema.app.Controller;
 
 public class LoginView extends JPanel {
@@ -21,6 +22,7 @@ public class LoginView extends JPanel {
 	private Controller controller;
     private JTextField usernameField;
     private JPasswordField passwordField;
+    private JTextField companyField;
     private JButton loginButton;
     private JButton createCompanyButton;
     private JLabel errorMssg;
@@ -31,12 +33,12 @@ public class LoginView extends JPanel {
         this.initialize();
     }
 
-    public JTextField getUsernameField() {
-        return usernameField;
+    public String getUsername() {
+        return usernameField.getText();
     }
 
-    public JPasswordField getPasswordField() {
-        return passwordField;
+    public String getPassword() {
+        return passwordField.getText();
     }
 
     public void clear() {
@@ -44,16 +46,28 @@ public class LoginView extends JPanel {
         passwordField.setText("");
     }
 
+    public void showErrorMessage(String msg, boolean show){
+    	if(show) {
+    		errorMssg.setText(msg);
+    		errorMssg.setVisible(true);
+    	}else {
+    		errorMssg.setText("");
+    		errorMssg.setVisible(false);
+    	}
+    }
 
     private void initialize() {
         this.setLayout(null);
 
         initTitle();
-        initErrorMssg("");
+        initErrorMssg();
         initUsernameField();
         initPasswordField();
+        initCompanyField();
         initLoginButton();
+        initCreateCompanyButton();
     }
+    
 
     private void initTitle() {
         JLabel label = new JLabel("Employee Management Application", SwingConstants.CENTER);
@@ -63,11 +77,12 @@ public class LoginView extends JPanel {
         this.add(label);
     }
 
-    private void initErrorMssg(String mssg) {
+    private void initErrorMssg() {
         errorMssg = new JLabel("", SwingConstants.CENTER);
-        errorMssg.setBounds(0, 110, 500, 35);
+        errorMssg.setBounds(205, 260, 500, 35);
         errorMssg.setFont(new Font("DialogInput", Font.ITALIC, 12));
         errorMssg.setForeground(Color.RED);
+        errorMssg.setVisible(false);
 
         this.add(errorMssg);
     }
@@ -85,10 +100,10 @@ public class LoginView extends JPanel {
 
             @Override
             public void keyTyped(KeyEvent e) {
-                if (usernameField.getText().length() >= 8) {
-                    e.consume();
-                } else if (e.getKeyChar() < 48 || e.getKeyChar() > 57) {
-                    e.consume(); //TODO change accepted keys for usernames
+                if (usernameField.getText().length() >= 20) {
+                    e.consume();  //Next line includes upper and lowercase letters and 0-9 
+                } else if (e.getKeyChar() < 48 || (e.getKeyChar() < 65 && e.getKeyChar() > 57) || (e.getKeyChar() < 97 && e.getKeyChar() > 90) || e.getKeyChar() > 122) {
+                    e.consume(); 
                 }
             }
         });
@@ -111,9 +126,9 @@ public class LoginView extends JPanel {
 
             @Override //TODO Most likely remove (no bounds on password characters
             public void keyTyped(KeyEvent e) {
-                if (passwordField.getPassword().length >= 4) {
-                    e.consume();
-                } else if (e.getKeyChar() < 48 || e.getKeyChar() > 57) {
+                if (passwordField.getPassword().length >= 20) {
+                    e.consume(); //Next line allows upper and lowercase letters, 0-9, and special characters
+                }else if (e.getKeyChar() < 33 || (e.getKeyChar() < 64 && e.getKeyChar() > 57) || (e.getKeyChar() < 97 && e.getKeyChar() > 90) || e.getKeyChar() > 122) {
                     e.consume();
                 }
             }
@@ -122,10 +137,35 @@ public class LoginView extends JPanel {
         this.add(label);
         this.add(passwordField);
     }
+    
+    private void initCompanyField() {
+        JLabel label = new JLabel("Company:", SwingConstants.RIGHT);
+        label.setBounds(100, 240, 95, 35);
+        label.setLabelFor(companyField);
+        label.setFont(new Font("DialogInput", Font.BOLD, 14));
+
+        companyField = new JTextField(20);
+        companyField.setBounds(205, 240, 200, 35);
+
+        companyField.addKeyListener(new KeyAdapter() {
+
+            @Override
+            public void keyTyped(KeyEvent e) {
+                if (companyField.getText().length() >= 20) {
+                    e.consume();  //Next line includes upper and lowercase letters and 0-9 
+                } else if (e.getKeyChar() < 48 || (e.getKeyChar() < 65 && e.getKeyChar() > 57) || (e.getKeyChar() < 97 && e.getKeyChar() > 90) || e.getKeyChar() > 122) {
+                    e.consume(); 
+                }
+            }
+        });
+
+        this.add(label);
+        this.add(companyField);
+    }
 
     private void initLoginButton() {
     	loginButton = new JButton("Login");
-        loginButton.setBounds(205, 260, 200, 35);
+        loginButton.setBounds(205, 320, 200, 35);
     
         loginButton.addActionListener(new ActionListener() {
     
@@ -145,7 +185,26 @@ public class LoginView extends JPanel {
                 }
             }
         });
-    
         this.add(loginButton);
+        
+        
+    }
+    
+    private void initCreateCompanyButton() {
+    	createCompanyButton = new JButton("Create Company");
+    	createCompanyButton.setBounds(205, 360, 200, 35);
+    	
+    	createCompanyButton.addActionListener(new ActionListener() {
+    		public void actionPerformed(ActionEvent e) {
+    			if(EMA.checkUserDuplicates(getUsername())) {
+    				showErrorMessage("Username already exists.", true);
+    			}else if(EMA.checkCompanyDuplicates(getUsername())){
+    				showErrorMessage("Company Name already exists.", true);
+    			}else {
+    				//TODO store text field values, advance to employer management page
+    			}
+    		}
+    	});
+        this.add(createCompanyButton);
     }
 }
