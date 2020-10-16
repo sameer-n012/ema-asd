@@ -62,6 +62,8 @@ public class User {
 	
 	public String getPasswordHash() { return passwordHash; }
 	
+	public String getUsername() { return username; }
+	
 	public void setFName(String firstName) { this.firstName = firstName; }
 	
 	public void setLName(String lastName) { this.lastName = lastName; }
@@ -71,6 +73,8 @@ public class User {
 	public void setSalary(double salary) { this.salary = salary; }
 	
 	public void setRole(UserGroup role) { this.role = role; }
+	
+	public void setUsername(String username) { this.username = username; }
 	
 	public void setPasswordHash(String password) { 
 		this.salt = Password.getSalt();

@@ -2,6 +2,8 @@ package org.ucvts.ema;
 
 import java.awt.CardLayout;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -84,7 +86,10 @@ public class EMA extends JFrame{
 	}
 	
 	public boolean existsCompany(String s) { //TODO
-		return companyDirectory.get(s)==null ? false : true; //No duplicates: returns false
+		for(Company val : companyDirectory.values()) {
+			if(val.getName().equalsIgnoreCase(s)) { return true; }
+		}
+		return false; //No duplicates: returns false
 	}
 	
 	public Company getCompany(Integer i) {
@@ -95,12 +100,20 @@ public class EMA extends JFrame{
 		return userDirectory.get(s);
 	}
 	
-	public void addCompany(Integer i, Company c) {
-		companyDirectory.put(i, c);
+	public void addCompany(Company c) {
+		companyDirectory.put(c.getId(), c);
 	}
 	
-	public void addUser(String s, User u) {
-		userDirectory.put(s, u);
+	public void addUser(User u) {
+		userDirectory.put(u.getUsername(), u);
+	}
+	
+	public static void printMap(Map mp) {
+	    Iterator it = mp.entrySet().iterator();
+	    while (it.hasNext()) {
+	        Map.Entry pair = (Map.Entry)it.next();
+	        System.out.println(pair.getKey() + " = " + pair.getValue());
+	    }
 	}
 
 }

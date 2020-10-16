@@ -44,6 +44,10 @@ public class LoginView extends JPanel {
     public String getPassword() {
         return new String(passwordField.getPassword());
     }
+    
+    public String getCompanyName() {
+    	return companyField.getText();
+    }
 
     public void clear() {
         usernameField.setText("");
@@ -185,7 +189,7 @@ public class LoginView extends JPanel {
                     String username = getUsername();
                     String password = getPassword();
 
-                    EMA.getInstance().getController().login(username, password);
+                    controller.login(username, password);
                 }
             }
         });
@@ -200,13 +204,10 @@ public class LoginView extends JPanel {
     	
     	createCompanyButton.addActionListener(new ActionListener() {
     		public void actionPerformed(ActionEvent e) {
-    			if(ema.existsUser(getUsername())) {
-    				showErrorMessage("Username already exists.", true);
-    			}else if(ema.existsCompany(getUsername())){
-    				showErrorMessage("Company Name already exists.", true);
-    			}else {
-    				//TODO store text field values, advance to employer management page
-    			}
+    			String username = getUsername();
+    			String password = getPassword();
+    			String companyName = getCompanyName();
+    			controller.createCompany(username, password, companyName);
     		}
     	});
         this.add(createCompanyButton);
