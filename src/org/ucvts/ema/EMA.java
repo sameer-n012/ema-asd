@@ -24,7 +24,7 @@ public class EMA extends JFrame{
 		
 		userDirectory = new HashMap<String, User>();
 		companyDirectory = new HashMap<Integer, Company>();
-		
+				
 		SwingUtilities.invokeLater(new Runnable() {
 			
             public void run() {

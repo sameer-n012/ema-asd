@@ -38,7 +38,7 @@ public class LoginView extends JPanel {
     }
 
     public String getPassword() {
-        return passwordField.getText();
+        return new String(passwordField.getPassword());
     }
 
     public void clear() {
@@ -46,9 +46,9 @@ public class LoginView extends JPanel {
         passwordField.setText("");
     }
 
-    public void showErrorMessage(String msg, boolean show){
+    public void showErrorMessage(String mssg, boolean show){
     	if(show) {
-    		errorMssg.setText(msg);
+    		errorMssg.setText(mssg);
     		errorMssg.setVisible(true);
     	}else {
     		errorMssg.setText("");
@@ -100,7 +100,7 @@ public class LoginView extends JPanel {
 
             @Override
             public void keyTyped(KeyEvent e) {
-                if (usernameField.getText().length() >= 20) {
+                if (getUsername().length() >= 20) {
                     e.consume();  //Next line includes upper and lowercase letters and 0-9 
                 } else if (e.getKeyChar() < 48 || (e.getKeyChar() < 65 && e.getKeyChar() > 57) || (e.getKeyChar() < 97 && e.getKeyChar() > 90) || e.getKeyChar() > 122) {
                     e.consume(); 
@@ -126,7 +126,7 @@ public class LoginView extends JPanel {
 
             @Override //TODO Most likely remove (no bounds on password characters
             public void keyTyped(KeyEvent e) {
-                if (passwordField.getPassword().length >= 20) {
+                if (getPassword().length() >= 20) {
                     e.consume(); //Next line allows upper and lowercase letters, 0-9, and special characters
                 }else if (e.getKeyChar() < 33 || (e.getKeyChar() < 64 && e.getKeyChar() > 57) || (e.getKeyChar() < 97 && e.getKeyChar() > 90) || e.getKeyChar() > 122) {
                     e.consume();
@@ -178,10 +178,11 @@ public class LoginView extends JPanel {
                 Object source = e.getSource();
     
                 if (source.equals(loginButton)) {
-                    String accountNumber = usernameField.getText();
-                    char[] pin = passwordField.getPassword();
+                    String username = getUsername();
+                    String password = getPassword();
+                    
                         
-                    controller.login(accountNumber, pin);
+                    controller.login(username, password);
                 }
             }
         });

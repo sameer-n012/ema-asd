@@ -3,7 +3,9 @@ import java.awt.CardLayout;
 import java.awt.Container;
 import java.math.BigDecimal;
 
+import org.ucvts.ema.EMA;
 import org.ucvts.ema.model.User;
+import org.ucvts.ema.views.LoginView;
 
 
 public class Controller {
@@ -25,8 +27,18 @@ public class Controller {
     }
 
     
-    public void login(String accountNumber, char[] pin) {
+    public void login(String username, String password) {
+	   LoginView lv = (LoginView) views.getComponents()[0];
 	   
+	   try {
+		   if(EMA.checkUserDuplicates(username)) {
+			   
+		   }
+		   else {
+			   lv.showErrorMessage("Username does not exist.", true);
+		   }
+	   }
+	   catch(Exception e) { e.printStackTrace(); }
     }
 
     public void logout() {
