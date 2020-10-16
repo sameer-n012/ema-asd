@@ -56,8 +56,12 @@ public class EMA extends JFrame{
         this.setVisible(true);
     }
 	
-	public boolean checkDuplicates(String s) { //TODO
-		return userDirectory.get(s)==null ? false : true;
+	public static boolean checkUserDuplicates(String s) { //TODO
+		return userDirectory.get(s)==null ? false : true; //No duplicates: returns false
+	}
+	
+	public static boolean checkCompanyDuplicates(String s) { //TODO
+		return companyDirectory.get(s)==null ? false : true; //No duplicates: returns false
 	}
 	
 	public Company getCompany(Integer i) {
