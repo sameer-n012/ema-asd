@@ -12,8 +12,10 @@ import javax.swing.SwingUtilities;
 import org.ucvts.ema.app.Controller;
 import org.ucvts.ema.model.Company;
 import org.ucvts.ema.model.User;
+import org.ucvts.ema.views.EmployeeView;
 import org.ucvts.ema.views.EmployerView;
 import org.ucvts.ema.views.LoginView;
+import org.ucvts.ema.views.ModifyView;
 
 
 
@@ -23,14 +25,14 @@ public class EMA extends JFrame{
 	public static HashMap<String, User> userDirectory = null;
 	public static HashMap<Integer, Company> companyDirectory = null;
 	
-	public static final int LOGIN_VIEW_INDEX = 0;
-	public static final int EMPLOYEE_VIEW_INDEX = 1;
-	public static final int EMPLOYER_VIEW_INDEX = 2;
-	public static final int MODIFY_VIEW_INDEX = 3;
-	public static final String LOGIN_VIEW = "LOGIN_VIEW";
-	public static final String EMPLOYEE_VIEW = "EMPLOYEE_VIEW";
-	public static final String EMPLOYER_VIEW = "EMPLOYER_VIEW";
-	public static final String MODIFY_VIEW = "MODIFY_VIEW";
+	public final int LOGIN_VIEW_INDEX = 0;
+	public final int EMPLOYEE_VIEW_INDEX = 1;
+	public final int EMPLOYER_VIEW_INDEX = 2;
+	public final int MODIFY_VIEW_INDEX = 3;
+	public final String LOGIN_VIEW = "LOGIN_VIEW";
+	public final String EMPLOYEE_VIEW = "EMPLOYEE_VIEW";
+	public final String EMPLOYER_VIEW = "EMPLOYER_VIEW";
+	public final String MODIFY_VIEW = "MODIFY_VIEW";
 	
 	private Controller controller = null;
 	
@@ -52,12 +54,8 @@ public class EMA extends JFrame{
 		userDirectory = new HashMap<String, User>();
 		companyDirectory = new HashMap<Integer, Company>();
 		
-		Company c = new Company("First Inc.");
-		companyDirectory.put(c.getId(), c);
+		initializeTest();
 		
-		
-		userDirectory.put("sn", c.addEmployer("sn", "default", "sameer", "narendran"));
-		userDirectory.put("es", c.assign("es", "evan", "sun"));
 				
 		SwingUtilities.invokeLater(new Runnable() {
 			
@@ -80,9 +78,9 @@ public class EMA extends JFrame{
         
         //Can uncomment each line with the others commented out to see graphics
         views.add(new LoginView(controller), LOGIN_VIEW);
-        //views.add(new EmployeeView(controller), EMPLOYEE_VIEW);
-        //views.add(new EmployerView(controller), EMPLOYER_VIEW);
-        //views.add(new ModifyView(controller), MODIFY_VIEW);
+        views.add(new EmployeeView(controller), EMPLOYEE_VIEW);
+        views.add(new EmployerView(controller), EMPLOYER_VIEW);
+        views.add(new ModifyView(controller), MODIFY_VIEW);
 
         // configure the application frame
 
@@ -127,6 +125,23 @@ public class EMA extends JFrame{
 	        Map.Entry pair = (Map.Entry)it.next();
 	        System.out.println(pair.getKey() + " = " + pair.getValue());
 	    }
+	}
+	
+	private static void initializeTest() {
+		Company c1 = new Company("First Inc");
+		companyDirectory.put(c1.getId(), c1);
+		Company c2 = new Company("Last Inc");
+		
+		
+		userDirectory.put("sn", c1.addEmployer("sn", "admin", "sameer", "narendran"));
+		userDirectory.put("a", c1.assign("a", "A", "a"));
+		userDirectory.put("a", c1.assign("b", "B", "b"));
+		userDirectory.put("a", c1.assign("c", "C", "c"));
+		
+		userDirectory.put("es", c2.addEmployer("es", "admin", "evan", "sun"));
+		userDirectory.put("a", c1.assign("x", "X", "x"));
+		userDirectory.put("a", c1.assign("y", "Y", "y"));
+		userDirectory.put("a", c1.assign("z", "Z", "z"));
 	}
 
 }

@@ -36,6 +36,20 @@ public class LoginView extends JPanel {
         this.controller = controller;
         this.initialize();
     }
+    
+    public void updateCard() {
+    	
+    	this.removeAll();
+    	this.setLayout(null);
+
+    	initTitle();
+        initErrorMssg();
+        initUsernameField();
+        initPasswordField();
+        initCompanyField();
+        initLoginButton();
+        initCreateCompanyButton();
+    }
 
     public String getUsername() {
         return usernameField.getText();

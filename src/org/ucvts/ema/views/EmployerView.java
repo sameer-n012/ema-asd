@@ -38,6 +38,17 @@ public class EmployerView extends JPanel {
         this.controller = controller;
         this.initialize();
     }
+    
+    public void updateCard() {
+    	
+    	this.removeAll();
+    	this.setLayout(null);
+
+        initTitle();
+        initLogoutButton();
+        initAddButton();
+        initEmployeeList();
+    }
 
     private void initialize() {
         this.setLayout(null);
@@ -48,8 +59,11 @@ public class EmployerView extends JPanel {
         initEmployeeList();
     }
     
+    
     private void initTitle() {
-    	String s = controller.getCurrentCompany().getName() + ": Employee List";
+    	String s = null;
+    	try { s = controller.getCurrentCompany().getName() + ": Employee List"; }
+    	catch(Exception e) {};
     	//String s = "First Inc: Employee List";
     	title = new JLabel(s, SwingConstants.CENTER);
     	title.setBounds(50, 20, 500, 35);
@@ -117,30 +131,33 @@ public class EmployerView extends JPanel {
     }
     
     private void initEmployeeBoxes() {
-    	Company c = controller.getCurrentCompany();
-    	ArrayList<User> list = c.employeeList();
-    	
-    	User u = null;
-    	String name = null;
-    	
-    	for(int i = 0; i < list.size(); i++) {
-    		u = list.get(i);
-    		name = u.getFName() + " " + u.getLName();
-    		JLabel label = new JLabel(name, SwingConstants.LEFT);
-    		label.setBounds(10, 90 + 40*i, 150, 30);
-    		label.setFont(new Font("Verdana", Font.BOLD, 14));
-    		
-    		JButton button = new JButton("Modify");
-    		button.setBounds(460, 90 + 40*i, 150, 30);
-    		
-    		JSeparator separator = new JSeparator();
-    		separator.setOrientation(SwingConstants.HORIZONTAL);
-    		
-    		employeeList.add(label);
-    		employeeList.add(button);
-    		if(i!=list.size()-1) { employeeList.add(separator); }
-    		
+    	try { 
+    		Company c = controller.getCurrentCompany();
+	    	ArrayList<User> list = c.employeeList();
+	    	
+	    	User u = null;
+	    	String name = null;
+	    	
+	    	for(int i = 0; i < list.size(); i++) {
+	    		u = list.get(i);
+	    		name = u.getFName() + " " + u.getLName();
+	    		JLabel label = new JLabel(name, SwingConstants.LEFT);
+	    		label.setBounds(10, 90 + 40*i, 150, 30);
+	    		label.setFont(new Font("Verdana", Font.BOLD, 14));
+	    		
+	    		JButton button = new JButton("Modify");
+	    		button.setBounds(460, 90 + 40*i, 150, 30);
+	    		
+	    		JSeparator separator = new JSeparator();
+	    		separator.setOrientation(SwingConstants.HORIZONTAL);
+	    		
+	    		employeeList.add(label);
+	    		employeeList.add(button);
+	    		if(i!=list.size()-1) { employeeList.add(separator); }
+	    		
+	    	}
     	}
+    	catch(Exception e) {}
     	
     	
     }
