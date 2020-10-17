@@ -1,6 +1,7 @@
 package org.ucvts.ema.views;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -28,6 +29,8 @@ public class EmployerView extends JPanel {
     private JLabel title;
     private JButton logoutButton;
     private JScrollPane employeeList;
+    private JPanel scrollPanel;
+    private JButton addButton;
     
     private EMA ema;
 	private Controller controller;
@@ -66,7 +69,7 @@ public class EmployerView extends JPanel {
     	catch(Exception e) {};
     	//String s = "First Inc: Employee List";
     	title = new JLabel(s, SwingConstants.CENTER);
-    	title.setBounds(50, 20, 500, 35);
+    	title.setBounds(30, 20, 500, 35);
     	title.setFont(new Font("Verdana", Font.BOLD, 18));
 
         this.add(title);
@@ -96,10 +99,10 @@ public class EmployerView extends JPanel {
     }
     
     private void initAddButton() {
-    	logoutButton = new JButton("Add");
-    	logoutButton.setBounds(460, 40, 100, 25);
+    	addButton = new JButton("Add");
+    	addButton.setBounds(460, 40, 100, 25);
     
-    	logoutButton.addActionListener(new ActionListener() {
+    	addButton.addActionListener(new ActionListener() {
     
             /*
              * Respond when the user clicks the Login button.
@@ -109,19 +112,24 @@ public class EmployerView extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 Object source = e.getSource();
     
-                if (source.equals(logoutButton)) {
-                    controller.logout();
+                if (source.equals(addButton)) {
+                    
                 }
             }
         });
         
-        this.add(logoutButton);
+        this.add(addButton);
     }
     
     private void initEmployeeList() {
     	
-    	employeeList = new JScrollPane();
-    	employeeList.setBounds(0, 80, 600, 600);
+    	scrollPanel = new JPanel();
+    	employeeList = new JScrollPane(scrollPanel);
+    	employeeList.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+    	employeeList.getVerticalScrollBar().setPreferredSize(new Dimension(30, Integer.MAX_VALUE));
+    	employeeList.setBounds(0, 80, 600, 300);
+    	//scrollPanel.setBounds(0, 80, 600, 300);
+    	scrollPanel.setLayout(null);
     	employeeList.setBorder(BorderFactory.createLineBorder(Color.black));
     	
     	initEmployeeBoxes();
@@ -141,25 +149,31 @@ public class EmployerView extends JPanel {
 	    	for(int i = 0; i < list.size(); i++) {
 	    		u = list.get(i);
 	    		name = u.getFName() + " " + u.getLName();
+	    		System.out.println(name);
 	    		JLabel label = new JLabel(name, SwingConstants.LEFT);
-	    		label.setBounds(10, 90 + 40*i, 150, 30);
+	    		label.setBounds(40, 20 + 60*i, 100, 30);
 	    		label.setFont(new Font("Verdana", Font.BOLD, 14));
 	    		
 	    		JButton button = new JButton("Modify");
-	    		button.setBounds(460, 90 + 40*i, 150, 30);
+	    		button.setBounds(450, 20 + 60*i, 100, 30);
+	    		System.out.println(button.getBounds().toString());
 	    		
 	    		JSeparator separator = new JSeparator();
+	    		separator.setBounds(20, 65 + 60*i, 540, 1);
+	    		separator.setBorder(BorderFactory.createMatteBorder(50,50,50,50, Color.black));
+	    		separator.setSize(540, 2);
 	    		separator.setOrientation(SwingConstants.HORIZONTAL);
 	    		
-	    		employeeList.add(label);
-	    		employeeList.add(button);
-	    		if(i!=list.size()-1) { employeeList.add(separator); }
+	    		scrollPanel.add(label);
+	    		scrollPanel.add(button);
+	    		if(i!=list.size()-1) { scrollPanel.add(separator); }
 	    		
 	    	}
     	}
-    	catch(Exception e) {}
+    	catch(Exception e) {e.printStackTrace();}
     	
-    	
+    	System.out.println(scrollPanel.getBounds().toString());
+    	System.out.println(employeeList.getBounds().toString());
     }
     
 

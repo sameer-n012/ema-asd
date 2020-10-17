@@ -113,6 +113,7 @@ public class Controller {
 
     public void logout() {
     	this.currentUser = null;
+    	this.currentCompany = null;
     	switchView(ema.LOGIN_VIEW);
         //TODO need to add more stuff
     }

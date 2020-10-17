@@ -131,17 +131,27 @@ public class EMA extends JFrame{
 		Company c1 = new Company("First Inc");
 		companyDirectory.put(c1.getId(), c1);
 		Company c2 = new Company("Last Inc");
+		companyDirectory.put(c2.getId(), c2);
 		
 		
 		userDirectory.put("sn", c1.addEmployer("sn", "admin", "sameer", "narendran"));
 		userDirectory.put("a", c1.assign("a", "A", "a"));
 		userDirectory.put("a", c1.assign("b", "B", "b"));
 		userDirectory.put("a", c1.assign("c", "C", "c"));
+		userDirectory.put("a", c1.assign("d", "D", "d"));
+		userDirectory.put("a", c1.assign("e", "E", "e"));
+		userDirectory.put("a", c1.assign("f", "F", "f"));
+		userDirectory.put("a", c1.assign("g", "G", "g"));
+		userDirectory.put("a", c1.assign("h", "H", "h"));
+		userDirectory.put("a", c1.assign("i", "I", "i"));
+		userDirectory.put("a", c1.assign("j", "J", "j"));
+		userDirectory.put("a", c1.assign("k", "K", "k"));
+		userDirectory.put("a", c1.assign("l", "L", "l"));
 		
 		userDirectory.put("es", c2.addEmployer("es", "admin", "evan", "sun"));
-		userDirectory.put("a", c1.assign("x", "X", "x"));
-		userDirectory.put("a", c1.assign("y", "Y", "y"));
-		userDirectory.put("a", c1.assign("z", "Z", "z"));
+		userDirectory.put("a", c2.assign("x", "X", "x"));
+		userDirectory.put("a", c2.assign("y", "Y", "y"));
+		userDirectory.put("a", c2.assign("z", "Z", "z"));
 	}
 
 }
