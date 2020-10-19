@@ -1,6 +1,7 @@
 package org.ucvts.ema;
 
 import java.awt.CardLayout;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -12,6 +13,7 @@ import javax.swing.SwingUtilities;
 import org.ucvts.ema.app.Controller;
 import org.ucvts.ema.model.Company;
 import org.ucvts.ema.model.User;
+import org.ucvts.ema.model.UserGroup;
 import org.ucvts.ema.views.EmployeeView;
 import org.ucvts.ema.views.EmployerView;
 import org.ucvts.ema.views.LoginView;
@@ -117,6 +119,25 @@ public class EMA extends JFrame{
 	
 	public void addUser(User u) {
 		userDirectory.put(u.getUsername(), u);
+	}
+	
+	public void removeUser(User u) {
+		Company c = getCompany(u.getCID());
+		c.removeEmployee(u);
+		userDirectory.remove(u.getUsername());
+		
+		if(u.getRole() == UserGroup.EMPLOYER) {
+			removeCompany(c);
+		}
+	}
+	
+	public void removeCompany(Company c) {
+		ArrayList<User> emplist = c.employeeList();
+		for(int i = 0; i < emplist.size(); i++) {
+			userDirectory.remove(emplist.get(i).getUsername());
+		}
+		userDirectory.remove(c.getEmployer().getUsername());
+		companyDirectory.remove(c.getId());
 	}
 	
 	public static void printMap(Map mp) {

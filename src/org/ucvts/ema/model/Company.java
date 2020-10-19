@@ -48,6 +48,12 @@ public class Company {
 		return employer;
 	}
 	
+	public boolean removeEmployee(User u) {
+		return employees.remove(u);
+		
+	}
+	
+	
 	
 	
 }

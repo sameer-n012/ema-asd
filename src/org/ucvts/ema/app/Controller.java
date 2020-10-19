@@ -139,11 +139,13 @@ public class Controller {
 			modifiedEmployee.setLName(lname);
 		}
     	String v = currentUser.getRole() == UserGroup.EMPLOYER ? ema.EMPLOYER_VIEW : ema.EMPLOYEE_VIEW;
+    	modifiedEmployee = null;
     	switchView(v);
     }
     
     public void deleteEmployee(User u) {
-    	
+    	ema.removeUser(u);
+    	u = null;
     }
     
     public void logout() {
