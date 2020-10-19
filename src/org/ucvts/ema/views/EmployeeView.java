@@ -16,9 +16,7 @@ import org.ucvts.ema.app.Controller;
 public class EmployeeView extends JPanel {
 
 	private JLabel title;
-	private JLabel subtitle;
     private JButton logoutButton;
-    private JScrollPane employeeList;
     
     private EMA ema;
 	private Controller controller;
@@ -45,27 +43,19 @@ public class EmployeeView extends JPanel {
 	
     private void initTitle() {
     	String s = null;
-    	String s2 = null;
-    	try { s = controller.getCurrentCompany().getName(); }
+    	try { s = controller.getCurrentCompany().getName() + ": " + controller.getCurrentUser().getFName() + " " + controller.getCurrentUser().getLName();; }
     	catch(Exception e) {};
-    	try { s2 = controller.getCurrentUser().getFName() + " " + controller.getCurrentUser().getLName(); }
-    	catch(Exception e) {};
-    	title = new JLabel(s, SwingConstants.CENTER);
-    	title.setBounds(30, 10, 500, 35);
+    	title = new JLabel(s, SwingConstants.LEFT);
+    	title.setBounds(20, 20, 450, 35);
     	title.setFont(new Font("Verdana", Font.BOLD, 20));
     	
-    	subtitle = new JLabel(s2, SwingConstants.CENTER);
-    	subtitle.setBounds(30, 30, 500, 35);
-    	subtitle.setFont(new Font("Verdana", Font.BOLD, 14));
-    	
         this.add(title);
-        this.add(subtitle);
     }
     
     
     private void initLogoutButton() {
     	logoutButton = new JButton("Logout");
-    	logoutButton.setBounds(460, 10, 100, 25);
+    	logoutButton.setBounds(460, 25, 100, 25);
     
     	logoutButton.addActionListener(new ActionListener() {
     

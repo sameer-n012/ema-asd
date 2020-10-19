@@ -135,7 +135,7 @@ public class EMA extends JFrame{
 		
 		
 		userDirectory.put("sn", c1.addEmployer("sn", "admin", "sameer", "narendran"));
-		userDirectory.put("a", c1.assign("a", "A", "a"));
+		userDirectory.put("a", c1.assign("a", "Ajskajdksa", "ahjskahdkja"));
 		userDirectory.put("b", c1.assign("b", "B", "b"));
 		userDirectory.put("c", c1.assign("c", "C", "c"));
 		userDirectory.put("d", c1.assign("d", "D", "d"));

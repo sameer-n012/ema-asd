@@ -5,6 +5,7 @@ import java.math.BigDecimal;
 
 import org.ucvts.ema.EMA;
 import org.ucvts.ema.model.Company;
+import org.ucvts.ema.model.Shift;
 import org.ucvts.ema.model.User;
 import org.ucvts.ema.model.UserGroup;
 import org.ucvts.ema.views.EmployeeView;
@@ -71,6 +72,7 @@ public class Controller {
 			   if(Password.checkPassword(password, u.getPasswordHash(), u.getSalt())) {
 				   this.currentUser = u;
 				   this.currentCompany = ema.getCompany(u.getCID());
+				   this.modifiedEmployee = u;
 				   lv.showErrorMessage("Successful login", true); //TODO delete later
 				   //TODO uncomment when employer and employee main views finished
 				   if(u.getRole() == UserGroup.EMPLOYER) { switchView(ema.EMPLOYER_VIEW); }
@@ -97,9 +99,11 @@ public class Controller {
  		   }
  		   else if(ema.existsCompany(companyName)){
  			   lv.showErrorMessage("Company name already exists.", true);
- 		   }else if(username == null || username.equals("") || password == null || password.equals("") || companyName == null || companyName.equals("")) {
+ 		   }
+ 		   else if(username == null || username.equals("") || password == null || password.equals("") || companyName == null || companyName.equals("")) {
  			   lv.showErrorMessage("Credentials cannot be empty.", true);
- 		   }else {
+ 		   }
+ 		   else {
  			   Company c = new Company(companyName);
  			   ema.addCompany(c);
  			   User u = c.addEmployer(username, password, "First", "Last");
@@ -121,10 +125,21 @@ public class Controller {
     	switchView(ema.MODIFY_VIEW);
     }
     
-    public void updateProfileInformation(String username, String password, String fname, String lname, UserGroup[] shifts, double salary) {
-    	
-    	
-    	
+    public void updateProfileInformation(boolean resetPass, String password, String fname, String lname, Shift[] shifts, double salary) {
+
+		if(currentUser.getRole() == UserGroup.EMPLOYER) {
+			if(resetPass == true) { modifiedEmployee.resetPassword(); }
+			modifiedEmployee.setShifts(shifts);
+			modifiedEmployee.setSalary(salary);
+			
+		}
+		if(currentUser == modifiedEmployee) { 
+			modifiedEmployee.setPasswordHash(password);
+			modifiedEmployee.setFName(fname);
+			modifiedEmployee.setLName(lname);
+		}
+    	String v = currentUser.getRole() == UserGroup.EMPLOYER ? ema.EMPLOYER_VIEW : ema.EMPLOYEE_VIEW;
+    	switchView(v);
     }
     
     public void deleteEmployee(User u) {

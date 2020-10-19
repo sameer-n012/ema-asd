@@ -71,9 +71,9 @@ public class EmployerView extends JPanel {
     	try { s = controller.getCurrentCompany().getName() + ": Employee List"; }
     	catch(Exception e) {};
     	//String s = "First Inc: Employee List";
-    	title = new JLabel(s, SwingConstants.CENTER);
-    	title.setBounds(30, 20, 500, 35);
-    	title.setFont(new Font("Verdana", Font.BOLD, 18));
+    	title = new JLabel(s, SwingConstants.LEFT);
+    	title.setBounds(20, 20, 500, 35);
+    	title.setFont(new Font("Verdana", Font.BOLD, 20));
 
         this.add(title);
     }
@@ -185,8 +185,7 @@ public class EmployerView extends JPanel {
 	                public void actionPerformed(ActionEvent e) {
 	                    Object source = e.getSource();
 	                    int a = Integer.parseInt(((JButton) source).getActionCommand());
-	        
-	                    if (source.equals(modifyButton)) {
+	                    if (a >= -1 && a < list.size()) {
 	                    	User u = null;
 	                    	if(a==-1) { u = c.getEmployer(); }
 	                    	else { u = list.get(a); }
@@ -210,7 +209,7 @@ public class EmployerView extends JPanel {
 	    	
 	    	employeeBoxPanel.setPreferredSize(new Dimension(560, 60*(list.size()+1)));
     	}
-    	catch(Exception e) {e.printStackTrace();}
+    	catch(Exception e) {}
     	
     }
     
