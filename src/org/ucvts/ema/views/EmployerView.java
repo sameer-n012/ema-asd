@@ -126,18 +126,19 @@ public class EmployerView extends JPanel {
     	
     	
     	employeeBoxPanel = new JPanel();
-    	employeeBoxPanel.setBounds(0, 80, 600, 800);
-    	initEmployeeBoxes();
+    	employeeBoxPanel.setBounds(0, 80, 585, 800);
+    	
     	
     	employeeScrollList = new JScrollPane(employeeBoxPanel);
     	employeeScrollList.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
     	employeeScrollList.getVerticalScrollBar().setPreferredSize(new Dimension(15, Integer.MAX_VALUE));
+    	employeeScrollList.getVerticalScrollBar().setUnitIncrement(20);
     	employeeScrollList.setBounds(0, 80, 585, 485);
     	
     	employeeBoxPanel.setLayout(null);
     	employeeScrollList.setBorder(BorderFactory.createLineBorder(Color.black));
     	
-    	
+    	initEmployeeBoxes();
     	
     	this.add(employeeScrollList);
     	
@@ -177,6 +178,8 @@ public class EmployerView extends JPanel {
 	    		if(i!=list.size()-1) { employeeBoxPanel.add(separator); }
 	    		
 	    	}
+	    	
+	    	employeeBoxPanel.setPreferredSize(new Dimension(560, 60*list.size()));
     	}
     	catch(Exception e) {e.printStackTrace();}
     	
