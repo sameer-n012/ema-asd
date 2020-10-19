@@ -28,8 +28,8 @@ public class EmployerView extends JPanel {
 
     private JLabel title;
     private JButton logoutButton;
-    private JScrollPane employeeList;
-    private JPanel scrollPanel;
+    private JScrollPane employeeScrollList;
+    private JPanel employeeBoxPanel;
     private JButton addButton;
     
     private EMA ema;
@@ -123,18 +123,23 @@ public class EmployerView extends JPanel {
     
     private void initEmployeeList() {
     	
-    	scrollPanel = new JPanel();
-    	employeeList = new JScrollPane(scrollPanel);
-    	employeeList.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-    	employeeList.getVerticalScrollBar().setPreferredSize(new Dimension(30, Integer.MAX_VALUE));
-    	employeeList.setBounds(0, 80, 600, 300);
-    	//scrollPanel.setBounds(0, 80, 600, 300);
-    	scrollPanel.setLayout(null);
-    	employeeList.setBorder(BorderFactory.createLineBorder(Color.black));
     	
+    	
+    	employeeBoxPanel = new JPanel();
+    	employeeBoxPanel.setBounds(0, 80, 600, 800);
     	initEmployeeBoxes();
     	
-    	this.add(employeeList);
+    	employeeScrollList = new JScrollPane(employeeBoxPanel);
+    	employeeScrollList.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+    	employeeScrollList.getVerticalScrollBar().setPreferredSize(new Dimension(15, Integer.MAX_VALUE));
+    	employeeScrollList.setBounds(0, 80, 585, 485);
+    	
+    	employeeBoxPanel.setLayout(null);
+    	employeeScrollList.setBorder(BorderFactory.createLineBorder(Color.black));
+    	
+    	
+    	
+    	this.add(employeeScrollList);
     	
     }
     
@@ -145,6 +150,9 @@ public class EmployerView extends JPanel {
 	    	
 	    	User u = null;
 	    	String name = null;
+	    	
+	    	//scrollPanel.setBounds(0, 80, 600, 20+60*list.size());
+	    	
 	    	
 	    	for(int i = 0; i < list.size(); i++) {
 	    		u = list.get(i);
@@ -164,16 +172,16 @@ public class EmployerView extends JPanel {
 	    		separator.setSize(540, 2);
 	    		separator.setOrientation(SwingConstants.HORIZONTAL);
 	    		
-	    		scrollPanel.add(label);
-	    		scrollPanel.add(button);
-	    		if(i!=list.size()-1) { scrollPanel.add(separator); }
+	    		employeeBoxPanel.add(label);
+	    		employeeBoxPanel.add(button);
+	    		if(i!=list.size()-1) { employeeBoxPanel.add(separator); }
 	    		
 	    	}
     	}
     	catch(Exception e) {e.printStackTrace();}
     	
-    	System.out.println(scrollPanel.getBounds().toString());
-    	System.out.println(employeeList.getBounds().toString());
+    	System.out.println(employeeBoxPanel.getBounds().toString());
+    	//System.out.println(employeeList.getBounds().toString());
     }
     
 
