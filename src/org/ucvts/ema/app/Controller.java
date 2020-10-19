@@ -101,6 +101,7 @@ public class Controller {
  			   ema.addCompany(c);
  			   User u = c.addEmployer(username, password, "First", "Last");
  			   ema.addUser(u);
+ 			   //TODO delete these later (only for testing)
  			   ema.addUser(c.assign("a", "A", "a"));
  			   ema.addUser(c.assign("b", "B", "b"));
  			   ema.addUser(c.assign("c", "C", "c"));
@@ -116,6 +117,6 @@ public class Controller {
     	this.currentUser = null;
     	this.currentCompany = null;
     	switchView(ema.LOGIN_VIEW);
-        //TODO need to add more stuff
+        //TODO need to add more stuff probably
     }
 }

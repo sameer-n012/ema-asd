@@ -175,7 +175,7 @@ public class LoginView extends JPanel {
             public void keyTyped(KeyEvent e) {
                 if (companyField.getText().length() >= 20) {
                     e.consume();  //Next line includes upper and lowercase letters and 0-9 
-                } else if (e.getKeyChar() < 48 || (e.getKeyChar() < 65 && e.getKeyChar() > 57) || (e.getKeyChar() < 97 && e.getKeyChar() > 90) || e.getKeyChar() > 122) {
+                } else if (e.getKeyChar() < 32 || (e.getKeyChar() > 32 && e.getKeyChar() < 48) || (e.getKeyChar() < 65 && e.getKeyChar() > 57) || (e.getKeyChar() < 97 && e.getKeyChar() > 90) || e.getKeyChar() > 122) {
                     e.consume(); 
                 }
             }
