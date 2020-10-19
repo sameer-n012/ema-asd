@@ -18,6 +18,7 @@ public class Controller {
     private Container views;
     
     private User currentUser;
+    private User modifiedEmployee;
     private Company currentCompany;
     
     private EMA ema = null;
@@ -25,6 +26,8 @@ public class Controller {
     public Controller(Container views) {
         this.views = views;
         this.currentUser = null;
+        this.currentCompany = null;
+        this.modifiedEmployee = null;
         ema = EMA.getInstance();
     }
     
@@ -113,6 +116,21 @@ public class Controller {
  	   catch(Exception e) { e.printStackTrace(); }
     }
 
+    public void modifyAddEmployee(User u) {
+    	this.modifiedEmployee = u;
+    	switchView(ema.MODIFY_VIEW);
+    }
+    
+    public void updateProfileInformation(String username, String password, String fname, String lname, UserGroup[] shifts, double salary) {
+    	
+    	
+    	
+    }
+    
+    public void deleteEmployee(User u) {
+    	
+    }
+    
     public void logout() {
     	this.currentUser = null;
     	this.currentCompany = null;

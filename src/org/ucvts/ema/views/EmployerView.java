@@ -31,6 +31,9 @@ public class EmployerView extends JPanel {
     private JScrollPane employeeScrollList;
     private JPanel employeeBoxPanel;
     private JButton addButton;
+    private JButton modifyButton;
+    private JButton deleteButton;
+    private JLabel empName;
     
     private EMA ema;
 	private Controller controller;
@@ -113,7 +116,7 @@ public class EmployerView extends JPanel {
                 Object source = e.getSource();
     
                 if (source.equals(addButton)) {
-                    
+                    controller.modifyAddEmployee(null);
                 }
             }
         });
@@ -155,36 +158,60 @@ public class EmployerView extends JPanel {
 	    	//scrollPanel.setBounds(0, 80, 600, 20+60*list.size());
 	    	
 	    	
-	    	for(int i = 0; i < list.size(); i++) {
-	    		u = list.get(i);
+	    	for(int i = -1; i < list.size(); i++) {
+	    		if(i == -1) { u = c.getEmployer(); }
+	    		else { u = list.get(i); }
 	    		name = u.getFName() + " " + u.getLName();
-	    		System.out.println(name);
-	    		JLabel label = new JLabel(name, SwingConstants.LEFT);
-	    		label.setBounds(40, 20 + 60*i, 100, 30);
-	    		label.setFont(new Font("Verdana", Font.BOLD, 14));
+	    		if(i == -1) { name = name + " *"; }
+	    		empName = new JLabel(name, SwingConstants.LEFT);
+	    		empName.setBounds(40, 20 + 60*(i+1), 300, 30);
+	    		empName.setFont(new Font("Verdana", Font.BOLD, 14));
 	    		
-	    		JButton button = new JButton("Modify");
-	    		button.setBounds(450, 20 + 60*i, 100, 30);
-	    		System.out.println(button.getBounds().toString());
+	    		modifyButton = new JButton("Modify");
+	    		modifyButton.setBounds(330, 20 + 60*(i+1), 100, 30);
+	    		
+	    		deleteButton = new JButton("Delete");
+	    		deleteButton.setBounds(450, 20 + 60*(i+1), 100, 30);
+	    		
+	    		modifyButton.setActionCommand(String.valueOf(i));
+	    		
+	    		modifyButton.addActionListener(new ActionListener() {
+	    		    
+	                /*
+	                 * Respond when the user clicks the Login button.
+	                 */
+	        
+	                @Override
+	                public void actionPerformed(ActionEvent e) {
+	                    Object source = e.getSource();
+	                    int a = Integer.parseInt(((JButton) source).getActionCommand());
+	        
+	                    if (source.equals(modifyButton)) {
+	                    	User u = null;
+	                    	if(a==-1) { u = c.getEmployer(); }
+	                    	else { u = list.get(a); }
+	                    	controller.modifyAddEmployee(u);
+	                    }
+	                }
+	            });
 	    		
 	    		JSeparator separator = new JSeparator();
-	    		separator.setBounds(20, 65 + 60*i, 540, 1);
+	    		separator.setBounds(20, 65 + 60*(i+1), 540, 1);
 	    		separator.setBorder(BorderFactory.createMatteBorder(50,50,50,50, Color.black));
 	    		separator.setSize(540, 2);
 	    		separator.setOrientation(SwingConstants.HORIZONTAL);
 	    		
-	    		employeeBoxPanel.add(label);
-	    		employeeBoxPanel.add(button);
+	    		employeeBoxPanel.add(empName);
+	    		employeeBoxPanel.add(modifyButton);
+	    		employeeBoxPanel.add(deleteButton);
 	    		if(i!=list.size()-1) { employeeBoxPanel.add(separator); }
 	    		
 	    	}
 	    	
-	    	employeeBoxPanel.setPreferredSize(new Dimension(560, 60*list.size()));
+	    	employeeBoxPanel.setPreferredSize(new Dimension(560, 60*(list.size()+1)));
     	}
     	catch(Exception e) {e.printStackTrace();}
     	
-    	System.out.println(employeeBoxPanel.getBounds().toString());
-    	//System.out.println(employeeList.getBounds().toString());
     }
     
 
