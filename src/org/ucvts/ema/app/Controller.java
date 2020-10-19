@@ -71,7 +71,7 @@ public class Controller {
 				   lv.showErrorMessage("Successful login", true); //TODO delete later
 				   //TODO uncomment when employer and employee main views finished
 				   if(u.getRole() == UserGroup.EMPLOYER) { switchView(ema.EMPLOYER_VIEW); }
-				   //else if(u.getRole() == UserGroup.EMPLOYEE) { switchView(ema.EMPLOYEE_VIEW); }
+				   else if(u.getRole() == UserGroup.EMPLOYEE) { switchView(ema.EMPLOYEE_VIEW); }
 			   }
 			   else {
 				   lv.showErrorMessage("Invalid password", true);
@@ -94,8 +94,9 @@ public class Controller {
  		   }
  		   else if(ema.existsCompany(companyName)){
  			   lv.showErrorMessage("Company name already exists.", true);
- 		   }
- 		   else {
+ 		   }else if(username == null || username.equals("") || password == null || password.equals("") || companyName == null || companyName.equals("")) {
+ 			   lv.showErrorMessage("Credentials cannot be empty.", true);
+ 		   }else {
  			   Company c = new Company(companyName);
  			   ema.addCompany(c);
  			   User u = c.addEmployer(username, password, "First", "Last");

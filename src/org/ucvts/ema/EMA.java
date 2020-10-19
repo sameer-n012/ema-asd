@@ -136,22 +136,22 @@ public class EMA extends JFrame{
 		
 		userDirectory.put("sn", c1.addEmployer("sn", "admin", "sameer", "narendran"));
 		userDirectory.put("a", c1.assign("a", "A", "a"));
-		userDirectory.put("a", c1.assign("b", "B", "b"));
-		userDirectory.put("a", c1.assign("c", "C", "c"));
-		userDirectory.put("a", c1.assign("d", "D", "d"));
-		userDirectory.put("a", c1.assign("e", "E", "e"));
-		userDirectory.put("a", c1.assign("f", "F", "f"));
-		userDirectory.put("a", c1.assign("g", "G", "g"));
-		userDirectory.put("a", c1.assign("h", "H", "h"));
-		userDirectory.put("a", c1.assign("i", "I", "i"));
-		userDirectory.put("a", c1.assign("j", "J", "j"));
-		userDirectory.put("a", c1.assign("k", "K", "k"));
-		userDirectory.put("a", c1.assign("l", "L", "l"));
+		userDirectory.put("b", c1.assign("b", "B", "b"));
+		userDirectory.put("c", c1.assign("c", "C", "c"));
+		userDirectory.put("d", c1.assign("d", "D", "d"));
+		userDirectory.put("e", c1.assign("e", "E", "e"));
+		userDirectory.put("f", c1.assign("f", "F", "f"));
+		userDirectory.put("g", c1.assign("g", "G", "g"));
+		userDirectory.put("h", c1.assign("h", "H", "h"));
+		userDirectory.put("i", c1.assign("i", "I", "i"));
+		userDirectory.put("j", c1.assign("j", "J", "j"));
+		userDirectory.put("k", c1.assign("k", "K", "k"));
+		userDirectory.put("l", c1.assign("l", "L", "l"));
 		
 		userDirectory.put("es", c2.addEmployer("es", "admin", "evan", "sun"));
-		userDirectory.put("a", c2.assign("x", "X", "x"));
-		userDirectory.put("a", c2.assign("y", "Y", "y"));
-		userDirectory.put("a", c2.assign("z", "Z", "z"));
+		userDirectory.put("m", c2.assign("x", "X", "x"));
+		userDirectory.put("n", c2.assign("y", "Y", "y"));
+		userDirectory.put("o", c2.assign("z", "Z", "z"));
 	}
 
 }
