@@ -138,14 +138,20 @@ public class Controller {
 			modifiedEmployee.setFName(fname);
 			modifiedEmployee.setLName(lname);
 		}
-    	String v = currentUser.getRole() == UserGroup.EMPLOYER ? ema.EMPLOYER_VIEW : ema.EMPLOYEE_VIEW;
-    	modifiedEmployee = null;
-    	switchView(v);
+//		switchView(ema.LOGIN_VIEW);
+//    	String v = currentUser.getRole() == UserGroup.EMPLOYER ? ema.EMPLOYER_VIEW : ema.EMPLOYEE_VIEW;
+//    	modifiedEmployee = null;
+//    	switchView(v);
     }
     
     public void deleteEmployee(User u) {
+    	String s1 = u.getUsername();
+    	String s2 = currentUser.getUsername();
     	ema.removeUser(u);
     	u = null;
+    	if(!(currentUser.getRole() == UserGroup.EMPLOYER) || s1.equals(s2)) {
+    		switchView(ema.LOGIN_VIEW);
+    	}
     }
     
     public void logout() {

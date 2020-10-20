@@ -170,8 +170,6 @@ public class EmployerView extends JPanel {
 	    		modifyButton = new JButton("Modify");
 	    		modifyButton.setBounds(330, 20 + 60*(i+1), 100, 30);
 	    		
-	    		deleteButton = new JButton("Delete");
-	    		deleteButton.setBounds(450, 20 + 60*(i+1), 100, 30);
 	    		
 	    		modifyButton.setActionCommand(String.valueOf(i));
 	    		
@@ -190,6 +188,32 @@ public class EmployerView extends JPanel {
 	                    	if(a==-1) { u = c.getEmployer(); }
 	                    	else { u = list.get(a); }
 	                    	controller.modifyAddEmployee(u);
+	                    }
+	                }
+	            });
+	    		
+	    		deleteButton = new JButton("Delete");
+	    		deleteButton.setBounds(450, 20 + 60*(i+1), 100, 30);
+	    		
+	    		deleteButton.setActionCommand(String.valueOf(i));
+	    		
+	    		deleteButton.addActionListener(new ActionListener() {
+	    		    
+	                /*
+	                 * Respond when the user clicks the Login button.
+	                 */
+	        
+	                @Override
+	                public void actionPerformed(ActionEvent e) {
+	                    Object source = e.getSource();
+	                    int a = Integer.parseInt(((JButton) source).getActionCommand());
+	                    if (a >= -1 && a < list.size()) {
+	                    	User u = null;
+	                    	if(a==-1) { u = c.getEmployer(); }
+	                    	else { u = list.get(a); }
+	                    	controller.deleteEmployee(u);
+	                    	System.out.println("1");
+	                    	updateCard();
 	                    }
 	                }
 	            });
