@@ -20,6 +20,7 @@ public class ModifyView extends JPanel {
     public ModifyView(Controller controller) {
         super();
         ema = EMA.getInstance();
+        this.setBackground(ema.BACKGROUND_COLOR);
         this.controller = controller;
         this.initialize();
     }

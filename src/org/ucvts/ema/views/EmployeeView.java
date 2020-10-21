@@ -4,6 +4,7 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -24,6 +25,7 @@ public class EmployeeView extends JPanel {
     public EmployeeView(Controller controller) {
         super();
         ema = EMA.getInstance();
+        this.setBackground(ema.BACKGROUND_COLOR);
         this.controller = controller;
         this.initialize();
     }
@@ -47,7 +49,9 @@ public class EmployeeView extends JPanel {
     	catch(Exception e) {};
     	title = new JLabel(s, SwingConstants.LEFT);
     	title.setBounds(20, 20, 450, 35);
-    	title.setFont(new Font("Verdana", Font.BOLD, 20));
+    	title.setFont(ema.TITLE_FONT);
+    	title.setForeground(ema.FOREGROUND_COLOR);
+    	
     	
         this.add(title);
     }
@@ -56,6 +60,10 @@ public class EmployeeView extends JPanel {
     private void initLogoutButton() {
     	logoutButton = new JButton("Logout");
     	logoutButton.setBounds(460, 25, 100, 25);
+    	logoutButton.setForeground(ema.FOREGROUND_COLOR);
+    	logoutButton.setBorder(BorderFactory.createMatteBorder(0,0,0,0, ema.FOREGROUND_COLOR));
+    	logoutButton.setBackground(ema.BUTTON_COLOR);
+    	logoutButton.setFont(ema.TEXT_FONT);
     
     	logoutButton.addActionListener(new ActionListener() {
     

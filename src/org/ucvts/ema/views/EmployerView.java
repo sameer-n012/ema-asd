@@ -18,6 +18,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+import javax.swing.UIManager;
 
 import org.ucvts.ema.EMA;
 import org.ucvts.ema.app.Controller;
@@ -41,6 +42,7 @@ public class EmployerView extends JPanel {
     public EmployerView(Controller controller) {
         super();
         ema = EMA.getInstance();
+        this.setBackground(ema.BACKGROUND_COLOR);
         this.controller = controller;
         this.initialize();
     }
@@ -73,7 +75,8 @@ public class EmployerView extends JPanel {
     	//String s = "First Inc: Employee List";
     	title = new JLabel(s, SwingConstants.LEFT);
     	title.setBounds(20, 20, 500, 35);
-    	title.setFont(new Font("Verdana", Font.BOLD, 20));
+    	title.setFont(ema.TITLE_FONT);
+    	title.setForeground(ema.FOREGROUND_COLOR);
 
         this.add(title);
     }
@@ -81,6 +84,10 @@ public class EmployerView extends JPanel {
     private void initLogoutButton() {
     	logoutButton = new JButton("Logout");
     	logoutButton.setBounds(460, 10, 100, 25);
+    	logoutButton.setForeground(ema.FOREGROUND_COLOR);
+    	logoutButton.setBorder(BorderFactory.createMatteBorder(0,0,0,0, ema.FOREGROUND_COLOR));
+    	logoutButton.setBackground(ema.BUTTON_COLOR);
+    	logoutButton.setFont(ema.TEXT_FONT);
     
     	logoutButton.addActionListener(new ActionListener() {
     
@@ -104,6 +111,10 @@ public class EmployerView extends JPanel {
     private void initAddButton() {
     	addButton = new JButton("Add");
     	addButton.setBounds(460, 40, 100, 25);
+    	addButton.setForeground(ema.FOREGROUND_COLOR);
+    	addButton.setBorder(BorderFactory.createMatteBorder(0,0,0,0, ema.FOREGROUND_COLOR));
+    	addButton.setBackground(ema.BUTTON_COLOR);
+    	addButton.setFont(ema.TEXT_FONT);
     
     	addButton.addActionListener(new ActionListener() {
     
@@ -130,16 +141,21 @@ public class EmployerView extends JPanel {
     	
     	employeeBoxPanel = new JPanel();
     	employeeBoxPanel.setBounds(0, 80, 585, 800);
+    	employeeBoxPanel.setBackground(ema.BACKGROUND_COLOR);
     	
     	
     	employeeScrollList = new JScrollPane(employeeBoxPanel);
     	employeeScrollList.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
     	employeeScrollList.getVerticalScrollBar().setPreferredSize(new Dimension(15, Integer.MAX_VALUE));
     	employeeScrollList.getVerticalScrollBar().setUnitIncrement(20);
+    	//TODO try to change scrollbar thumb color
+    	employeeScrollList.getVerticalScrollBar().setForeground(ema.BUTTON_COLOR);
+    	//UIManager.getLookAndFeelDefaults().put( "ScrollBar.thumb", ema.BUTTON_COLOR );
+    	employeeScrollList.getVerticalScrollBar().setBackground(ema.BACKGROUND_COLOR);
     	employeeScrollList.setBounds(0, 80, 585, 485);
     	
     	employeeBoxPanel.setLayout(null);
-    	employeeScrollList.setBorder(BorderFactory.createLineBorder(Color.black));
+    	employeeScrollList.setBorder(BorderFactory.createLineBorder(ema.FOREGROUND_COLOR));
     	
     	initEmployeeBoxes();
     	
@@ -165,10 +181,15 @@ public class EmployerView extends JPanel {
 	    		if(i == -1) { name = name + " *"; }
 	    		empName = new JLabel(name, SwingConstants.LEFT);
 	    		empName.setBounds(40, 20 + 60*(i+1), 300, 30);
-	    		empName.setFont(new Font("Verdana", Font.BOLD, 14));
+	    		empName.setFont(ema.TEXT_FONT);
+	    		empName.setForeground(ema.FOREGROUND_COLOR);
 	    		
 	    		modifyButton = new JButton("Modify");
 	    		modifyButton.setBounds(330, 20 + 60*(i+1), 100, 30);
+	    		modifyButton.setForeground(ema.FOREGROUND_COLOR);
+	    		modifyButton.setBorder(BorderFactory.createMatteBorder(0,0,0,0, ema.FOREGROUND_COLOR));
+	    		modifyButton.setBackground(ema.BUTTON_COLOR);
+	    		modifyButton.setFont(ema.TEXT_FONT);
 	    		
 	    		
 	    		modifyButton.setActionCommand(String.valueOf(i));
@@ -194,6 +215,10 @@ public class EmployerView extends JPanel {
 	    		
 	    		deleteButton = new JButton("Delete");
 	    		deleteButton.setBounds(450, 20 + 60*(i+1), 100, 30);
+	    		deleteButton.setForeground(ema.FOREGROUND_COLOR);
+	    		deleteButton.setBorder(BorderFactory.createMatteBorder(0,0,0,0, ema.FOREGROUND_COLOR));
+	    		deleteButton.setBackground(ema.BUTTON_COLOR);
+	    		deleteButton.setFont(ema.TEXT_FONT);
 	    		
 	    		deleteButton.setActionCommand(String.valueOf(i));
 	    		
@@ -220,7 +245,7 @@ public class EmployerView extends JPanel {
 	    		
 	    		JSeparator separator = new JSeparator();
 	    		separator.setBounds(20, 65 + 60*(i+1), 540, 1);
-	    		separator.setBorder(BorderFactory.createMatteBorder(50,50,50,50, Color.black));
+	    		separator.setBorder(BorderFactory.createMatteBorder(50,50,50,50, ema.FOREGROUND_COLOR));
 	    		separator.setSize(540, 2);
 	    		separator.setOrientation(SwingConstants.HORIZONTAL);
 	    		

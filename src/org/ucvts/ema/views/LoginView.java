@@ -7,12 +7,15 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 
 import org.ucvts.ema.EMA;
 import org.ucvts.ema.app.Controller;
@@ -33,6 +36,7 @@ public class LoginView extends JPanel {
     public LoginView(Controller controller) {
         super();
         ema = EMA.getInstance();
+        this.setBackground(ema.BACKGROUND_COLOR);
         this.controller = controller;
         this.initialize();
     }
@@ -94,7 +98,8 @@ public class LoginView extends JPanel {
     private void initTitle() {
         JLabel label = new JLabel("Employee Management Application", SwingConstants.CENTER);
         label.setBounds(50, 60, 500, 35);
-        label.setFont(new Font("Verdana", Font.BOLD, 21));
+        label.setFont(ema.TITLE_FONT);
+        label.setForeground(ema.FOREGROUND_COLOR);
 
         this.add(label);
     }
@@ -102,8 +107,8 @@ public class LoginView extends JPanel {
     private void initErrorMssg() {
         errorMssg = new JLabel("", SwingConstants.CENTER);
         errorMssg.setBounds(50, 275, 500, 35);
-        errorMssg.setFont(new Font("Verdana", Font.ITALIC, 12));
-        errorMssg.setForeground(Color.RED);
+        errorMssg.setFont(ema.ERROR_FONT);
+        errorMssg.setForeground(ema.ERROR_COLOR);
         errorMssg.setVisible(false);
 
         this.add(errorMssg);
@@ -111,13 +116,19 @@ public class LoginView extends JPanel {
 
     private void initUsernameField() {
         JLabel label = new JLabel("Username:", SwingConstants.RIGHT);
+        label.setForeground(ema.FOREGROUND_COLOR);
         label.setBounds(100, 160, 95, 35);
         label.setLabelFor(usernameField);
-        label.setFont(new Font("Verdana", Font.BOLD, 14));
+        label.setFont(ema.TEXT_FONT);
 
         usernameField = new JTextField(20);
-        usernameField.setBounds(205, 160, 200, 35);
-
+        usernameField.setBounds(205, 165, 200, 25);
+        usernameField.setFont(ema.TEXT_FONT);
+        usernameField.setBorder(BorderFactory.createMatteBorder(0,0,2,0, ema.FOREGROUND_COLOR));
+        usernameField.setBackground(ema.BACKGROUND_COLOR);
+        usernameField.setForeground(ema.FOREGROUND_COLOR);
+        usernameField.setCaretColor(ema.FOREGROUND_COLOR);
+        
         usernameField.addKeyListener(new KeyAdapter() {
 
             @Override
@@ -137,12 +148,18 @@ public class LoginView extends JPanel {
     private void initPasswordField() {
         JLabel label = new JLabel("Password:", SwingConstants.RIGHT);
         label.setBounds(100, 200, 95, 35);
+        label.setForeground(ema.FOREGROUND_COLOR);
         label.setLabelFor(passwordField);
-        label.setFont(new Font("Verdana", Font.BOLD, 14));
+        label.setFont(ema.TEXT_FONT);
 
         passwordField = new JPasswordField(20);
-        passwordField.setBounds(205, 200, 200, 35);
-
+        passwordField.setBounds(205, 205, 200, 25);
+        passwordField.setBackground(ema.BACKGROUND_COLOR);
+        passwordField.setFont(ema.TEXT_FONT);
+        passwordField.setForeground(ema.FOREGROUND_COLOR);
+        passwordField.setCaretColor(ema.FOREGROUND_COLOR);
+        
+        passwordField.setBorder(BorderFactory.createMatteBorder(0,0,2,0, ema.FOREGROUND_COLOR));
         passwordField.addKeyListener(new KeyAdapter() {
 
 
@@ -164,10 +181,16 @@ public class LoginView extends JPanel {
         JLabel label = new JLabel("Company:", SwingConstants.RIGHT);
         label.setBounds(100, 240, 95, 35);
         label.setLabelFor(companyField);
-        label.setFont(new Font("Verdana", Font.BOLD, 14));
+        label.setForeground(ema.FOREGROUND_COLOR);
+        label.setFont(ema.TEXT_FONT);
 
         companyField = new JTextField(20);
-        companyField.setBounds(205, 240, 200, 35);
+        companyField.setBounds(205, 245, 200, 25);
+        companyField.setBorder(BorderFactory.createMatteBorder(0,0,2,0, ema.FOREGROUND_COLOR));
+        companyField.setFont(ema.TEXT_FONT);
+        companyField.setBackground(ema.BACKGROUND_COLOR);
+        companyField.setForeground(ema.FOREGROUND_COLOR);
+        companyField.setCaretColor(ema.FOREGROUND_COLOR);
 
         companyField.addKeyListener(new KeyAdapter() {
 
@@ -188,6 +211,11 @@ public class LoginView extends JPanel {
     private void initLoginButton() {
     	loginButton = new JButton("Login");
         loginButton.setBounds(205, 320, 200, 35);
+        loginButton.setForeground(ema.FOREGROUND_COLOR);
+        loginButton.setBorder(BorderFactory.createMatteBorder(0,0,0,0, ema.FOREGROUND_COLOR));
+        loginButton.setBackground(ema.BUTTON_COLOR);
+        loginButton.setFont(ema.TEXT_FONT);
+        
     
         loginButton.addActionListener(new ActionListener() {
     
@@ -215,6 +243,10 @@ public class LoginView extends JPanel {
     private void initCreateCompanyButton() {
     	createCompanyButton = new JButton("Create Company");
     	createCompanyButton.setBounds(205, 360, 200, 35);
+    	createCompanyButton.setForeground(ema.FOREGROUND_COLOR);
+    	createCompanyButton.setBorder(BorderFactory.createMatteBorder(0,0,0,0, ema.FOREGROUND_COLOR));
+    	createCompanyButton.setBackground(ema.BUTTON_COLOR);
+    	createCompanyButton.setFont(ema.TEXT_FONT);
     	
     	createCompanyButton.addActionListener(new ActionListener() {
     		public void actionPerformed(ActionEvent e) {
