@@ -82,7 +82,7 @@ public class EmployeeView extends JPanel {
     	return salaryField.getText();
     }
 
-    public String getPassword() {
+    public String getPasswordTextField() {
         return new String(passwordField.getPassword());
     }
     
@@ -208,7 +208,7 @@ public class EmployeeView extends JPanel {
         password.setFont(ema.TEXT_FONT);
 
         passwordField = new JPasswordField(20);
-        passwordField.setBounds(125, 205, 125, 25);
+        passwordField.setBounds(125, 205, 200, 25);
         passwordField.setBackground(ema.BACKGROUND_COLOR);
         passwordField.setFont(ema.TEXT_FONT);
         passwordField.setForeground(ema.FOREGROUND_COLOR);
@@ -218,11 +218,10 @@ public class EmployeeView extends JPanel {
         passwordField.addKeyListener(new KeyAdapter() {
 
         //TODO I cannot for the life of me get this to function, I've tried doing the same thing as LoginView, I've tried moving outside of a function, I've tried different methods to convert the char array, it will not work.  I don't know why.
-        String pass = String.valueOf(passwordField.getPassword());
             @Override //TODO Most likely remove (no bounds on password characters
             public void keyTyped(KeyEvent e) {
-            	System.out.print(pass);
-                if (pass.length() >= 20) {
+            	System.out.println(getPasswordTextField());
+                if (getPasswordTextField().length() >= 20) {
                     e.consume(); //Next line allows upper and lowercase letters, 0-9, and special characters
                     System.out.print("a");
                 }else if (e.getKeyChar() < 33 || (e.getKeyChar() < 64 && e.getKeyChar() > 57) || (e.getKeyChar() < 97 && e.getKeyChar() > 90) || e.getKeyChar() > 122) {
@@ -273,6 +272,7 @@ public class EmployeeView extends JPanel {
     	
         this.add(title);
     }
+    
     
     
     private void initLogoutButton() { //TODO does not work. I don't know why
