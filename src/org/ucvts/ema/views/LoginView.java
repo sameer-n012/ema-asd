@@ -16,6 +16,7 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.border.Border;
 
 import org.ucvts.ema.EMA;
 import org.ucvts.ema.app.Controller;
@@ -29,6 +30,7 @@ public class LoginView extends JPanel {
     private JButton loginButton;
     private JButton createCompanyButton;
     private JLabel errorMssg;
+    private Border buttonBorder;
     
     private EMA ema;
     
@@ -37,6 +39,7 @@ public class LoginView extends JPanel {
         super();
         ema = EMA.getInstance();
         this.setBackground(ema.BACKGROUND_COLOR);
+        buttonBorder = BorderFactory.createMatteBorder(0, 0, 0, 0, ema.FOREGROUND_COLOR);
         this.controller = controller;
         this.initialize();
     }
@@ -55,15 +58,15 @@ public class LoginView extends JPanel {
         initCreateCompanyButton();
     }
 
-    public String getUsername() {
+    public String getUsernameTextField() {
         return usernameField.getText();
     }
 
-    public String getPassword() {
+    public String getPasswordTextField() {
         return new String(passwordField.getPassword());
     }
     
-    public String getCompanyName() {
+    public String getCompanyNameTextField() {
     	return companyField.getText();
     }
 
@@ -133,7 +136,7 @@ public class LoginView extends JPanel {
 
             @Override
             public void keyTyped(KeyEvent e) {
-                if (getUsername().length() >= 20) {
+                if (getUsernameTextField().length() >= 20) {
                     e.consume();  //Next line includes upper and lowercase letters and 0-9 
                 } else if (e.getKeyChar() < 48 || (e.getKeyChar() < 65 && e.getKeyChar() > 57) || (e.getKeyChar() < 97 && e.getKeyChar() > 90) || e.getKeyChar() > 122) {
                     e.consume(); 
@@ -165,7 +168,7 @@ public class LoginView extends JPanel {
 
             @Override //TODO Most likely remove (no bounds on password characters
             public void keyTyped(KeyEvent e) {
-                if (getPassword().length() >= 20) {
+                if (getPasswordTextField().length() >= 20) {
                     e.consume(); //Next line allows upper and lowercase letters, 0-9, and special characters
                 }else if (e.getKeyChar() < 33 || (e.getKeyChar() < 64 && e.getKeyChar() > 57) || (e.getKeyChar() < 97 && e.getKeyChar() > 90) || e.getKeyChar() > 122) {
                     e.consume();
@@ -212,7 +215,7 @@ public class LoginView extends JPanel {
     	loginButton = new JButton("Login");
         loginButton.setBounds(205, 320, 200, 35);
         loginButton.setForeground(ema.FOREGROUND_COLOR);
-        loginButton.setBorder(BorderFactory.createMatteBorder(0,0,0,0, ema.FOREGROUND_COLOR));
+        loginButton.setBorder(buttonBorder);
         loginButton.setBackground(ema.BUTTON_COLOR);
         loginButton.setFont(ema.TEXT_FONT);
         
@@ -228,8 +231,8 @@ public class LoginView extends JPanel {
                 Object source = e.getSource();
     
                 if (source.equals(loginButton)) {
-                    String username = getUsername();
-                    String password = getPassword();
+                    String username = getUsernameTextField();
+                    String password = getPasswordTextField();
 
                     controller.login(username, password);
                 }
@@ -244,15 +247,15 @@ public class LoginView extends JPanel {
     	createCompanyButton = new JButton("Create Company");
     	createCompanyButton.setBounds(205, 360, 200, 35);
     	createCompanyButton.setForeground(ema.FOREGROUND_COLOR);
-    	createCompanyButton.setBorder(BorderFactory.createMatteBorder(0,0,0,0, ema.FOREGROUND_COLOR));
+    	createCompanyButton.setBorder(buttonBorder);
     	createCompanyButton.setBackground(ema.BUTTON_COLOR);
     	createCompanyButton.setFont(ema.TEXT_FONT);
     	
     	createCompanyButton.addActionListener(new ActionListener() {
     		public void actionPerformed(ActionEvent e) {
-    			String username = getUsername();
-    			String password = getPassword();
-    			String companyName = getCompanyName();
+    			String username = getUsernameTextField();
+    			String password = getPasswordTextField();
+    			String companyName = getCompanyNameTextField();
     			controller.createCompany(username, password, companyName);
     		}
     	});

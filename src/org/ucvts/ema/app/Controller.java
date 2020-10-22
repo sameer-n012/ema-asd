@@ -42,7 +42,7 @@ public class Controller {
 
     public void switchView(String view) {
     	
-        ((CardLayout) views.getLayout()).show(views, view);
+        
         if(view.equals("LOGIN_VIEW")) { 
         	LoginView lv = (LoginView) views.getComponents()[ema.LOGIN_VIEW_INDEX];
         	lv.updateCard(); 
@@ -59,6 +59,8 @@ public class Controller {
         	ModifyView ev = (ModifyView) views.getComponents()[ema.MODIFY_VIEW_INDEX];
         	ev.updateCard(); 
     	}
+        try { Thread.sleep(1000); } catch (Exception e) {}
+        ((CardLayout) views.getLayout()).show(views, view);
         //TODO when switching views do it here
     }
 

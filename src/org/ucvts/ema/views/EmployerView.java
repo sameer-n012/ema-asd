@@ -19,6 +19,7 @@ import javax.swing.JSeparator;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
+import javax.swing.border.Border;
 
 import org.ucvts.ema.EMA;
 import org.ucvts.ema.app.Controller;
@@ -35,6 +36,7 @@ public class EmployerView extends JPanel {
     private JButton modifyButton;
     private JButton deleteButton;
     private JLabel empName;
+    private Border buttonBorder;
     
     private EMA ema;
 	private Controller controller;
@@ -43,6 +45,7 @@ public class EmployerView extends JPanel {
         super();
         ema = EMA.getInstance();
         this.setBackground(ema.BACKGROUND_COLOR);
+        buttonBorder = BorderFactory.createMatteBorder(0, 0, 0, 0, ema.FOREGROUND_COLOR);
         this.controller = controller;
         this.initialize();
     }
@@ -85,7 +88,7 @@ public class EmployerView extends JPanel {
     	logoutButton = new JButton("Logout");
     	logoutButton.setBounds(460, 10, 100, 25);
     	logoutButton.setForeground(ema.FOREGROUND_COLOR);
-    	logoutButton.setBorder(BorderFactory.createMatteBorder(0,0,0,0, ema.FOREGROUND_COLOR));
+    	logoutButton.setBorder(buttonBorder);
     	logoutButton.setBackground(ema.BUTTON_COLOR);
     	logoutButton.setFont(ema.TEXT_FONT);
     
@@ -112,7 +115,7 @@ public class EmployerView extends JPanel {
     	addButton = new JButton("Add");
     	addButton.setBounds(460, 40, 100, 25);
     	addButton.setForeground(ema.FOREGROUND_COLOR);
-    	addButton.setBorder(BorderFactory.createMatteBorder(0,0,0,0, ema.FOREGROUND_COLOR));
+    	addButton.setBorder(buttonBorder);
     	addButton.setBackground(ema.BUTTON_COLOR);
     	addButton.setFont(ema.TEXT_FONT);
     
