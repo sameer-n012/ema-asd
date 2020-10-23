@@ -53,12 +53,7 @@ public class EmployerView extends JPanel {
     public void updateCard() {
     	
     	this.removeAll();
-    	this.setLayout(null);
-
-        initTitle();
-        initLogoutButton();
-        initAddButton();
-        initEmployeeList();
+    	initialize();
     }
 
     private void initialize() {
@@ -73,9 +68,9 @@ public class EmployerView extends JPanel {
     
     private void initTitle() {
     	String s = null;
-    	try { s = controller.getCurrentCompany().getName() + ": Employee List"; }
-    	catch(Exception e) {};
-    	//String s = "First Inc: Employee List";
+    	if(controller.getCurrentUser() != null) { 
+    		s = controller.getCurrentCompany().getName() + ": Employee List"; 
+		}
     	title = new JLabel(s, SwingConstants.LEFT);
     	title.setBounds(20, 20, 500, 35);
     	title.setFont(ema.TITLE_FONT);
@@ -160,14 +155,16 @@ public class EmployerView extends JPanel {
     	employeeBoxPanel.setLayout(null);
     	employeeScrollList.setBorder(BorderFactory.createLineBorder(ema.FOREGROUND_COLOR));
     	
-    	initEmployeeBoxes();
+    	if(controller.getCurrentCompany() != null && controller.getCurrentUser() != null) {
+    		initEmployeeBoxes();
+    	}
     	
     	this.add(employeeScrollList);
     	
     }
     
     private void initEmployeeBoxes() {
-    	try { 
+    	
     		Company c = controller.getCurrentCompany();
 	    	ArrayList<User> list = c.employeeList();
 	    	
@@ -240,8 +237,8 @@ public class EmployerView extends JPanel {
 	                    	if(a==-1) { u = c.getEmployer(); }
 	                    	else { u = list.get(a); }
 	                    	controller.deleteEmployee(u);
-	                    	System.out.println("1");
-	                    	updateCard();
+	                    	//updateCard();
+	                    	//initEmployeeList();
 	                    }
 	                }
 	            });
@@ -260,8 +257,6 @@ public class EmployerView extends JPanel {
 	    	}
 	    	
 	    	employeeBoxPanel.setPreferredSize(new Dimension(560, 60*(list.size()+1)));
-    	}
-    	catch(Exception e) {}
     	
     }
     

@@ -19,7 +19,7 @@ public class Controller {
     private Container views;
     
     private User currentUser;
-    private User modifiedEmployee;
+    private User modifiedUser;
     private Company currentCompany;
     
     private EMA ema = null;
@@ -28,7 +28,7 @@ public class Controller {
         this.views = views;
         this.currentUser = null;
         this.currentCompany = null;
-        this.modifiedEmployee = null;
+        this.modifiedUser = null;
         ema = EMA.getInstance();
     }
     
@@ -38,6 +38,10 @@ public class Controller {
     
     public Company getCurrentCompany() {
     	return currentCompany;
+    }
+    
+    public User getModifiedUser() {
+    	return modifiedUser;
     }
 
     public void switchView(String view) {
@@ -59,7 +63,7 @@ public class Controller {
         	ModifyView ev = (ModifyView) views.getComponents()[ema.MODIFY_VIEW_INDEX];
         	ev.updateCard(); 
     	}
-        try { Thread.sleep(1000); } catch (Exception e) {}
+       
         ((CardLayout) views.getLayout()).show(views, view);
         //TODO when switching views do it here
     }
@@ -74,7 +78,7 @@ public class Controller {
 			   if(Password.checkPassword(password, u.getPasswordHash(), u.getSalt())) {
 				   this.currentUser = u;
 				   this.currentCompany = ema.getCompany(u.getCID());
-				   this.modifiedEmployee = u;
+				   this.modifiedUser = u;
 				   lv.showErrorMessage("Successful login", true); //TODO delete later
 				   //TODO uncomment when employer and employee main views finished
 				   if(u.getRole() == UserGroup.EMPLOYER) { switchView(ema.EMPLOYER_VIEW); }
@@ -123,27 +127,40 @@ public class Controller {
     }
 
     public void modifyAddEmployee(User u) {
-    	this.modifiedEmployee = u;
+    	this.modifiedUser = u;
     	switchView(ema.MODIFY_VIEW);
     }
     
-    public void updateProfileInformation(boolean resetPass, String password, String fname, String lname, Shift[] shifts, double salary) {
+    public void updateProfileInformation(boolean resetPass, Shift[] shifts, double salary) {
 
 		if(currentUser.getRole() == UserGroup.EMPLOYER) {
-			if(resetPass == true) { modifiedEmployee.resetPassword(); }
-			modifiedEmployee.setShifts(shifts);
-			modifiedEmployee.setSalary(salary);
+			if(resetPass == true) { modifiedUser.resetPassword(); }
+			modifiedUser.setShifts(shifts);
+			modifiedUser.setSalary(salary);
+			switchView(ema.LOGIN_VIEW);
+    		switchView(ema.EMPLOYER_VIEW);
 			
 		}
-		if(currentUser == modifiedEmployee) { 
-			modifiedEmployee.setPasswordHash(password);
-			modifiedEmployee.setFName(fname);
-			modifiedEmployee.setLName(lname);
+		
+    }
+    
+    public void updateProfileInformation(String fname, String lname, String password) {
+    	if(currentUser == modifiedUser) { 
+			modifiedUser.setPasswordHash(password);
+			modifiedUser.setFName(fname);
+			modifiedUser.setLName(lname);
 		}
-//		switchView(ema.LOGIN_VIEW);
-//    	String v = currentUser.getRole() == UserGroup.EMPLOYER ? ema.EMPLOYER_VIEW : ema.EMPLOYEE_VIEW;
-//    	modifiedEmployee = null;
-//    	switchView(v);
+    	switchView(ema.LOGIN_VIEW);
+    	if(currentUser.getRole() == UserGroup.EMPLOYER) { switchView(ema.EMPLOYER_VIEW); }
+    	else { switchView(ema.EMPLOYEE_VIEW); }
+    	
+    }
+    
+    
+    public void cancelUpdate() {
+    	switchView(ema.LOGIN_VIEW);
+    	if(currentUser.getRole() == UserGroup.EMPLOYER) { switchView(ema.EMPLOYER_VIEW); }
+    	else { switchView(ema.EMPLOYEE_VIEW); }
     }
     
     public void deleteEmployee(User u) {
@@ -153,6 +170,9 @@ public class Controller {
     	u = null;
     	if(!(currentUser.getRole() == UserGroup.EMPLOYER) || s1.equals(s2)) {
     		switchView(ema.LOGIN_VIEW);
+    	} else {
+    		switchView(ema.LOGIN_VIEW);
+    		switchView(ema.EMPLOYER_VIEW);
     	}
     }
     

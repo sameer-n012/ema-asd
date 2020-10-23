@@ -47,15 +47,7 @@ public class LoginView extends JPanel {
     public void updateCard() {
     	
     	this.removeAll();
-    	this.setLayout(null);
-
-    	initTitle();
-        initErrorMssg();
-        initUsernameField();
-        initPasswordField();
-        initCompanyField();
-        initLoginButton();
-        initCreateCompanyButton();
+    	initialize();
     }
 
     public String getUsernameTextField() {
