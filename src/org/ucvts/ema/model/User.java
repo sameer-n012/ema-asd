@@ -18,6 +18,7 @@ public class User {
 	private Shift[] shifts = new Shift[7];
 	private double salary;
 	private UserGroup role; 
+	private String notes;
 
 	
 	public User(String firstName, String lastName, String username, UserGroup role, int companyId) {
@@ -27,6 +28,7 @@ public class User {
 		this.username = username;
 		salt = Password.getSalt();
 		passwordHash = Password.hash(defaultPassword, salt);	
+		notes = "";
 		
 		cid = companyId;
 //		uid = uidCounter++;
@@ -39,6 +41,7 @@ public class User {
 		this.username = username;
 		salt = Password.getSalt();
 		passwordHash = Password.hash(password, salt);	
+		notes = "";
 		
 		cid = companyId;
 //		uid = uidCounter++;
@@ -60,6 +63,8 @@ public class User {
 	
 	public byte[] getSalt() { return salt; }
 	
+	public String getNotes() { return notes; }
+	
 	public String getPasswordHash() { return passwordHash; }
 	
 	public String getUsername() { return username; }
@@ -75,6 +80,8 @@ public class User {
 	public void setRole(UserGroup role) { this.role = role; }
 	
 	public void setUsername(String username) { this.username = username; }
+	
+	public void setNotes(String notes) { this.notes = notes; }
 	
 	public void setPasswordHash(String password) { 
 		this.salt = Password.getSalt();
