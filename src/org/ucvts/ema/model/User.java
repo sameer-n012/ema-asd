@@ -29,6 +29,9 @@ public class User {
 		salt = Password.getSalt();
 		passwordHash = Password.hash(defaultPassword, salt);	
 		notes = "";
+		for(int i = 0; i < shifts.length; i++) {
+			shifts[i] = Shift.NONE;
+		}
 		
 		cid = companyId;
 //		uid = uidCounter++;
@@ -42,9 +45,25 @@ public class User {
 		salt = Password.getSalt();
 		passwordHash = Password.hash(password, salt);	
 		notes = "";
+		for(int i = 0; i < shifts.length; i++) {
+			shifts[i] = Shift.NONE;
+		}
 		
 		cid = companyId;
 //		uid = uidCounter++;
+	}
+	
+	public User(String firstName, String lastName, String username, UserGroup role, Shift[] shifts, int companyId) {
+		this.role = role;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.username = username;
+		salt = Password.getSalt();
+		passwordHash = Password.hash(defaultPassword, salt);	
+		notes = "";
+		this.shifts = shifts;
+		
+		cid = companyId;
 	}
 	
 //	public int getUID() { return uid; }

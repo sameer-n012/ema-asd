@@ -137,6 +137,7 @@ public class Controller {
 			if(resetPass == true) { modifiedUser.resetPassword(); }
 			modifiedUser.setShifts(shifts);
 			modifiedUser.setSalary(salary);
+			modifiedUser = null;
 			switchView(ema.LOGIN_VIEW);
     		switchView(ema.EMPLOYER_VIEW);
 			
@@ -151,6 +152,7 @@ public class Controller {
 			modifiedUser.setLName(lname);
 		}
     	switchView(ema.LOGIN_VIEW);
+    	modifiedUser = null;
     	if(currentUser.getRole() == UserGroup.EMPLOYER) { switchView(ema.EMPLOYER_VIEW); }
     	else { switchView(ema.EMPLOYEE_VIEW); }
     	
@@ -159,6 +161,7 @@ public class Controller {
     
     public void cancelUpdate() {
     	switchView(ema.LOGIN_VIEW);
+    	modifiedUser = null;
     	if(currentUser.getRole() == UserGroup.EMPLOYER) { switchView(ema.EMPLOYER_VIEW); }
     	else { switchView(ema.EMPLOYEE_VIEW); }
     }

@@ -349,7 +349,8 @@ public class EmployeeView extends JPanel {
 			tuecb.setFont(ema.TEXT_FONT);
 			tuecb.setBackground(ema.BACKGROUND_COLOR);
 			tuecb.setForeground(ema.FOREGROUND_COLOR);
-			tuecb.setSelectedItem(shiftToString(controller.getCurrentUser().getShifts()[2]));			tuecb.setEnabled(false);
+			tuecb.setSelectedItem(shiftToString(controller.getCurrentUser().getShifts()[2]));
+			tuecb.setEnabled(false);
 			profilePanel.add(tue);
 			profilePanel.add(tuecb);
 			

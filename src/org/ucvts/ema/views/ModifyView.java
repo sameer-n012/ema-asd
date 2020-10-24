@@ -21,6 +21,7 @@ import javax.swing.JPasswordField;
 import org.ucvts.ema.EMA;
 import org.ucvts.ema.app.Controller;
 import org.ucvts.ema.model.Shift;
+import org.ucvts.ema.model.User;
 import org.ucvts.ema.model.UserGroup;
 
 public class ModifyView extends JPanel {
@@ -101,8 +102,8 @@ public class ModifyView extends JPanel {
     	return lNameField.getText();
     }
     
-    public String getSalaryTextField() {
-    	return salaryField.getText();
+    public Double getSalaryTextField() {
+    	return Double.parseDouble(salaryField.getText().substring(1,salaryField.getText().length()));
     }
 
     public String getPasswordTextField() {
@@ -146,8 +147,9 @@ public class ModifyView extends JPanel {
     	 if(controller.getModifiedUser() != null) {
     		 fNameField.setText(controller.getModifiedUser().getFName()); 
 		 }
+    	 else { fNameField.setText("First Name"); }
     	 
-    	 if(controller.getModifiedUser() != controller.getCurrentUser()) {
+    	 if(controller.getModifiedUser() != controller.getCurrentUser() && controller.getModifiedUser() != null) {
     		 fNameField.setEditable(false);
     	 }
     	 
@@ -186,8 +188,9 @@ public class ModifyView extends JPanel {
 		if(controller.getModifiedUser() != null) {
 			lNameField.setText(controller.getModifiedUser().getLName()); 
 		}
+		else { lNameField.setText("Last Name"); }
 		
-		if(controller.getModifiedUser() != controller.getCurrentUser()) {
+		if(controller.getModifiedUser() != controller.getCurrentUser() && controller.getModifiedUser() != null) {
 			lNameField.setEditable(false);
    	 	}
 		 
@@ -224,8 +227,13 @@ public class ModifyView extends JPanel {
         
         if(controller.getModifiedUser() != null) { 
         	usernameField.setText(controller.getModifiedUser().getUsername()); 
+        	usernameField.setEditable(false);
     	}
-        usernameField.setEditable(false);
+        else { 
+        	usernameField.setText("Username"); 
+        	usernameField.setEditable(true);
+    	}
+        
 
 
         profilePanel.add(username);
@@ -311,6 +319,9 @@ public class ModifyView extends JPanel {
         if(controller.getModifiedUser() != null) { 
         	salaryField.setText("$" + Double.toString(controller.getModifiedUser().getSalary()));
         }
+        else {
+        	salaryField.setText("$0.00");
+        }
 
         salaryField.addKeyListener(new KeyAdapter() {
 
@@ -350,111 +361,114 @@ public class ModifyView extends JPanel {
     
 	private void initShifts() { //TODO get fields from user object
     	
-    	String[] shifts = { "None", "Morning", "Afternoon", "Evening", "Night", };
+String[] shifts = { "None", "Morning", "Afternoon", "Evening", "Night", };
 
-    	sun = new JLabel("Sunday:", SwingConstants.RIGHT);
-    	sun.setForeground(ema.FOREGROUND_COLOR);
-    	sun.setBounds(300, 20, 95, 35);
-    	sun.setLabelFor(fNameField);
-    	sun.setFont(ema.TEXT_FONT);
-		suncb = new JComboBox<String>(shifts);
-		suncb.setBounds(405, 25, 125, 25);
-		suncb.setFont(ema.TEXT_FONT);
-		suncb.setBackground(ema.BACKGROUND_COLOR);
-		suncb.setForeground(ema.FOREGROUND_COLOR);
-		suncb.setSelectedItem("None");
-		profilePanel.add(sun);
-		profilePanel.add(suncb);
-		
-		
-		mon = new JLabel("Monday:", SwingConstants.RIGHT);
-		mon.setForeground(ema.FOREGROUND_COLOR);
-		mon.setBounds(300, 80, 95, 35);
-		mon.setLabelFor(fNameField);
-		mon.setFont(ema.TEXT_FONT);
-		moncb = new JComboBox<String>(shifts);
-		moncb.setBounds(405, 85, 125, 25);
-		moncb.setFont(ema.TEXT_FONT);
-		moncb.setBackground(ema.BACKGROUND_COLOR);
-		moncb.setForeground(ema.FOREGROUND_COLOR);
-		moncb.setSelectedItem("None");
-		profilePanel.add(mon);
-		profilePanel.add(moncb);
-		
-		
-		tue = new JLabel("Tuesday:", SwingConstants.RIGHT);
-		tue.setForeground(ema.FOREGROUND_COLOR);
-		tue.setBounds(300, 140, 95, 35);
-		tue.setLabelFor(fNameField);
-		tue.setFont(ema.TEXT_FONT);
-		tuecb = new JComboBox<String>(shifts);
-		tuecb.setBounds(405, 145, 125, 25);
-		tuecb.setFont(ema.TEXT_FONT);
-		tuecb.setBackground(ema.BACKGROUND_COLOR);
-		tuecb.setForeground(ema.FOREGROUND_COLOR);
-		tuecb.setSelectedItem("None");
-		profilePanel.add(tue);
-		profilePanel.add(tuecb);
-		
-		
-		wed = new JLabel("Wednesday:", SwingConstants.RIGHT);
-    	wed.setForeground(ema.FOREGROUND_COLOR);
-    	wed.setBounds(300, 200, 95, 35);
-    	wed.setLabelFor(fNameField);
-    	wed.setFont(ema.TEXT_FONT); 
-		wedcb = new JComboBox<String>(shifts);
-		wedcb.setBounds(405, 205, 125, 25);
-		wedcb.setFont(ema.TEXT_FONT);
-		wedcb.setBackground(ema.BACKGROUND_COLOR);
-		wedcb.setForeground(ema.FOREGROUND_COLOR);
-		wedcb.setSelectedItem("None");
-		profilePanel.add(wed);
-		profilePanel.add(wedcb);
-		
-		
-		thu = new JLabel("Thursday:", SwingConstants.RIGHT);
-    	thu.setForeground(ema.FOREGROUND_COLOR);
-    	thu.setBounds(300, 260, 95, 35);
-    	thu.setLabelFor(fNameField);
-    	thu.setFont(ema.TEXT_FONT);
-		thucb = new JComboBox<String>(shifts);
-		thucb.setBounds(405, 265, 125, 25);
-		thucb.setFont(ema.TEXT_FONT);
-		thucb.setBackground(ema.BACKGROUND_COLOR);
-		thucb.setForeground(ema.FOREGROUND_COLOR);
-		thucb.setSelectedItem("None");
-		profilePanel.add(thu);
-		profilePanel.add(thucb);
-		
-		
-		fri = new JLabel("Friday:", SwingConstants.RIGHT);
-    	fri.setForeground(ema.FOREGROUND_COLOR);
-    	fri.setBounds(300, 320, 95, 35);
-    	fri.setLabelFor(fNameField);
-    	fri.setFont(ema.TEXT_FONT);
-		fricb = new JComboBox<String>(shifts);
-		fricb.setBounds(405, 325, 125, 25);
-		fricb.setFont(ema.TEXT_FONT);
-		fricb.setBackground(ema.BACKGROUND_COLOR);
-		fricb.setForeground(ema.FOREGROUND_COLOR);
-		fricb.setSelectedItem("None");
-		profilePanel.add(fri);
-		profilePanel.add(fricb);
-		
-		
-		sat = new JLabel("Saturday:", SwingConstants.RIGHT);
-    	sat.setForeground(ema.FOREGROUND_COLOR);
-    	sat.setBounds(300, 380, 95, 35);
-    	sat.setLabelFor(fNameField);
-    	sat.setFont(ema.TEXT_FONT);
-		satcb = new JComboBox<String>(shifts);
-		satcb.setBounds(405, 385, 125, 25);
-		satcb.setFont(ema.TEXT_FONT);
-		satcb.setBackground(ema.BACKGROUND_COLOR);
-		satcb.setForeground(ema.FOREGROUND_COLOR);
-		satcb.setSelectedItem("None");
-		profilePanel.add(sat);
-		profilePanel.add(satcb);
+    	
+    	if(controller.getCurrentUser() != null) {
+	    	sun = new JLabel("Sunday:", SwingConstants.RIGHT);
+	    	sun.setForeground(ema.FOREGROUND_COLOR);
+	    	sun.setBounds(300, 20, 95, 35);
+	    	sun.setLabelFor(fNameField);
+	    	sun.setFont(ema.TEXT_FONT);
+			suncb = new JComboBox<String>(shifts);
+			suncb.setBounds(405, 25, 125, 25);
+			suncb.setFont(ema.TEXT_FONT);
+			suncb.setBackground(ema.BACKGROUND_COLOR);
+			suncb.setForeground(ema.FOREGROUND_COLOR);
+			suncb.setSelectedItem(shiftToString(controller.getCurrentUser().getShifts()[0]));
+			profilePanel.add(sun);
+			profilePanel.add(suncb);
+			
+			
+			mon = new JLabel("Monday:", SwingConstants.RIGHT);
+			mon.setForeground(ema.FOREGROUND_COLOR);
+			mon.setBounds(300, 80, 95, 35);
+			mon.setLabelFor(fNameField);
+			mon.setFont(ema.TEXT_FONT);
+			moncb = new JComboBox<String>(shifts);
+			moncb.setBounds(405, 85, 125, 25);
+			moncb.setFont(ema.TEXT_FONT);
+			moncb.setBackground(ema.BACKGROUND_COLOR);
+			moncb.setForeground(ema.FOREGROUND_COLOR);
+			moncb.setSelectedItem(shiftToString(controller.getCurrentUser().getShifts()[1]));
+			profilePanel.add(mon);
+			profilePanel.add(moncb);
+			
+			
+			tue = new JLabel("Tuesday:", SwingConstants.RIGHT);
+			tue.setForeground(ema.FOREGROUND_COLOR);
+			tue.setBounds(300, 140, 95, 35);
+			tue.setLabelFor(fNameField);
+			tue.setFont(ema.TEXT_FONT);
+			tuecb = new JComboBox<String>(shifts);
+			tuecb.setBounds(405, 145, 125, 25);
+			tuecb.setFont(ema.TEXT_FONT);
+			tuecb.setBackground(ema.BACKGROUND_COLOR);
+			tuecb.setForeground(ema.FOREGROUND_COLOR);
+			tuecb.setSelectedItem(shiftToString(controller.getCurrentUser().getShifts()[2]));
+			profilePanel.add(tue);
+			profilePanel.add(tuecb);
+			
+			
+			wed = new JLabel("Wednesday:", SwingConstants.RIGHT);
+	    	wed.setForeground(ema.FOREGROUND_COLOR);
+	    	wed.setBounds(300, 200, 95, 35);
+	    	wed.setLabelFor(fNameField);
+	    	wed.setFont(ema.TEXT_FONT); 
+			wedcb = new JComboBox<String>(shifts);
+			wedcb.setBounds(405, 205, 125, 25);
+			wedcb.setFont(ema.TEXT_FONT);
+			wedcb.setBackground(ema.BACKGROUND_COLOR);
+			wedcb.setForeground(ema.FOREGROUND_COLOR);
+			wedcb.setSelectedItem(shiftToString(controller.getCurrentUser().getShifts()[3]));
+			profilePanel.add(wed);
+			profilePanel.add(wedcb);
+			
+			
+			thu = new JLabel("Thursday:", SwingConstants.RIGHT);
+	    	thu.setForeground(ema.FOREGROUND_COLOR);
+	    	thu.setBounds(300, 260, 95, 35);
+	    	thu.setLabelFor(fNameField);
+	    	thu.setFont(ema.TEXT_FONT);
+			thucb = new JComboBox<String>(shifts);
+			thucb.setBounds(405, 265, 125, 25);
+			thucb.setFont(ema.TEXT_FONT);
+			thucb.setBackground(ema.BACKGROUND_COLOR);
+			thucb.setForeground(ema.FOREGROUND_COLOR);
+			thucb.setSelectedItem(shiftToString(controller.getCurrentUser().getShifts()[4]));
+			profilePanel.add(thu);
+			profilePanel.add(thucb);
+			
+			
+			fri = new JLabel("Friday:", SwingConstants.RIGHT);
+	    	fri.setForeground(ema.FOREGROUND_COLOR);
+	    	fri.setBounds(300, 320, 95, 35);
+	    	fri.setLabelFor(fNameField);
+	    	fri.setFont(ema.TEXT_FONT);
+			fricb = new JComboBox<String>(shifts);
+			fricb.setBounds(405, 325, 125, 25);
+			fricb.setFont(ema.TEXT_FONT);
+			fricb.setBackground(ema.BACKGROUND_COLOR);
+			fricb.setForeground(ema.FOREGROUND_COLOR);
+			fricb.setSelectedItem(shiftToString(controller.getCurrentUser().getShifts()[5]));
+			profilePanel.add(fri);
+			profilePanel.add(fricb);
+			
+			
+			sat = new JLabel("Saturday:", SwingConstants.RIGHT);
+	    	sat.setForeground(ema.FOREGROUND_COLOR);
+	    	sat.setBounds(300, 380, 95, 35);
+	    	sat.setLabelFor(fNameField);
+	    	sat.setFont(ema.TEXT_FONT);
+			satcb = new JComboBox<String>(shifts);
+			satcb.setBounds(405, 385, 125, 25);
+			satcb.setFont(ema.TEXT_FONT);
+			satcb.setBackground(ema.BACKGROUND_COLOR);
+			satcb.setForeground(ema.FOREGROUND_COLOR);
+			satcb.setSelectedItem(shiftToString(controller.getCurrentUser().getShifts()[6]));
+			profilePanel.add(sat);
+			profilePanel.add(satcb);
+    	}
 		
     	
     }
@@ -517,9 +531,39 @@ public class ModifyView extends JPanel {
                 if (source.equals(updateButton)) {
                 	String fname = getFNameTextField();
                 	String lname = getLNameTextField();
-                	String password = getPasswordTextField();
+                	String uname = getUsernameTextField();
+                	if(controller.getModifiedUser() == null) {
+                		Shift[] shift = new Shift[7];
+                		shift[0] = stringToShift(suncb.getSelectedItem().toString());
+                		shift[1] = stringToShift(moncb.getSelectedItem().toString());
+                		shift[2] = stringToShift(tuecb.getSelectedItem().toString());
+                		shift[3] = stringToShift(wedcb.getSelectedItem().toString());
+                		shift[4] = stringToShift(thucb.getSelectedItem().toString());
+                		shift[5] = stringToShift(fricb.getSelectedItem().toString());
+                		shift[6] = stringToShift(satcb.getSelectedItem().toString());
+                		int cId = controller.getCurrentUser().getCID();
+                		User u = new User(fname, lname, uname, UserGroup.EMPLOYEE, shift, cId);
+                		ema.getCompany(cId).assign(uname, fname, lname);
+                		ema.addUser(u);
+                	}
+                	else if(controller.getModifiedUser() == controller.getCurrentUser()) {
+                		String pass = getPasswordTextField();
+                		controller.updateProfileInformation(fname, lname, pass);
+                	}
+                	else {
+                		boolean passreset = true;
+                		Shift[] shift = new Shift[7];
+                		shift[0] = stringToShift(suncb.getSelectedItem().toString());
+                		shift[1] = stringToShift(moncb.getSelectedItem().toString());
+                		shift[2] = stringToShift(tuecb.getSelectedItem().toString());
+                		shift[3] = stringToShift(wedcb.getSelectedItem().toString());
+                		shift[4] = stringToShift(thucb.getSelectedItem().toString());
+                		shift[5] = stringToShift(fricb.getSelectedItem().toString());
+                		shift[6] = stringToShift(satcb.getSelectedItem().toString());
+                		controller.updateProfileInformation(passreset, shift, getSalaryTextField());
+                	}
                 	
-                    controller.updateProfileInformation(fname, lname, password);
+                    
                 }
             }
         });
