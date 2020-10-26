@@ -1,6 +1,8 @@
 package org.ucvts.ema.model;
 import java.util.ArrayList;
 
+import org.ucvts.ema.EMA;
+
 public class Company {
 
 	private static int cidCounter = 0;

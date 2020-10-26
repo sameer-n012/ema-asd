@@ -110,6 +110,10 @@ public class ModifyView extends JPanel {
         return new String(passwordField.getPassword());
     }
     
+    public String getNotesTextArea() {
+    	return notesField.getText();
+    }
+    
     private void initProfilePanel() {
     	
     	profilePanel = new JPanel();
@@ -328,10 +332,12 @@ public class ModifyView extends JPanel {
             //TODO I cannot for the life of me get this to function, I've tried doing the same thing as LoginView, I've tried moving outside of a function, I've tried different methods to convert the char array, it will not work.  I don't know why.
                 @Override //TODO Most likely remove (no bounds on password characters
                 public void keyTyped(KeyEvent e) {
+                	if(salaryField.getText().length() > 0) {
                 	//this adds a dollar sign in front of numbers
-                    if (salaryField.getText().charAt(0) != '$') {
-                        salaryField.setText("$" + salaryField.getText()); 
-                    }
+                		if (salaryField.getText().charAt(0) != '$') {
+                			salaryField.setText("$" + salaryField.getText()); 
+                		}
+                	}
                   //Next line allows 0-9, and period
                     else if (e.getKeyChar() < 46 || (e.getKeyChar() < 48 && e.getKeyChar() > 46) || e.getKeyChar() > 57) {
                         e.consume();
@@ -532,38 +538,25 @@ String[] shifts = { "None", "Morning", "Afternoon", "Evening", "Night", };
                 	String fname = getFNameTextField();
                 	String lname = getLNameTextField();
                 	String uname = getUsernameTextField();
+                	String notes = getNotesTextArea();
+            		Shift[] shift = new Shift[7];
+            		shift[0] = stringToShift(suncb.getSelectedItem().toString());
+            		shift[1] = stringToShift(moncb.getSelectedItem().toString());
+            		shift[2] = stringToShift(tuecb.getSelectedItem().toString());
+            		shift[3] = stringToShift(wedcb.getSelectedItem().toString());
+            		shift[4] = stringToShift(thucb.getSelectedItem().toString());
+            		shift[5] = stringToShift(fricb.getSelectedItem().toString());
+            		shift[6] = stringToShift(satcb.getSelectedItem().toString());
                 	if(controller.getModifiedUser() == null) {
-                		Shift[] shift = new Shift[7];
-                		shift[0] = stringToShift(suncb.getSelectedItem().toString());
-                		shift[1] = stringToShift(moncb.getSelectedItem().toString());
-                		shift[2] = stringToShift(tuecb.getSelectedItem().toString());
-                		shift[3] = stringToShift(wedcb.getSelectedItem().toString());
-                		shift[4] = stringToShift(thucb.getSelectedItem().toString());
-                		shift[5] = stringToShift(fricb.getSelectedItem().toString());
-                		shift[6] = stringToShift(satcb.getSelectedItem().toString());
                 		int cId = controller.getCurrentUser().getCID();
-                		User u = new User(fname, lname, uname, UserGroup.EMPLOYEE, shift, cId);
-                		ema.getCompany(cId).assign(uname, fname, lname);
-                		ema.addUser(u);
-                	}
-                	else if(controller.getModifiedUser() == controller.getCurrentUser()) {
+                		controller.addProfileInformation(fname, lname, uname, UserGroup.EMPLOYEE, shift, cId, notes);
+                	} else if(controller.getModifiedUser() == controller.getCurrentUser()) {
                 		String pass = getPasswordTextField();
-                		controller.updateProfileInformation(fname, lname, pass);
-                	}
-                	else {
+                		controller.updateProfileInformation(fname, lname, pass, notes);
+                	} else {
                 		boolean passreset = true;
-                		Shift[] shift = new Shift[7];
-                		shift[0] = stringToShift(suncb.getSelectedItem().toString());
-                		shift[1] = stringToShift(moncb.getSelectedItem().toString());
-                		shift[2] = stringToShift(tuecb.getSelectedItem().toString());
-                		shift[3] = stringToShift(wedcb.getSelectedItem().toString());
-                		shift[4] = stringToShift(thucb.getSelectedItem().toString());
-                		shift[5] = stringToShift(fricb.getSelectedItem().toString());
-                		shift[6] = stringToShift(satcb.getSelectedItem().toString());
-                		controller.updateProfileInformation(passreset, shift, getSalaryTextField());
-                	}
-                	
-                    
+                		controller.updateProfileInformation(passreset, shift, getSalaryTextField(), notes);
+                	}                   
                 }
             }
         });

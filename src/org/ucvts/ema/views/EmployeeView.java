@@ -18,6 +18,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+import javax.swing.UIManager;
 import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JPasswordField;
@@ -108,6 +109,10 @@ public class EmployeeView extends JPanel {
 
     public String getPasswordTextField() {
         return new String(passwordField.getPassword());
+    }
+    
+    public String getNotesTextArea() {
+    	return notesField.getText();
     }
     
     private void initProfilePanel() {
@@ -307,6 +312,9 @@ public class EmployeeView extends JPanel {
 
     	
     	if(controller.getCurrentUser() != null) {
+			UIManager.put("ComboBox.disabledBackground", ema.BACKGROUND_COLOR);
+			UIManager.put("ComboBox.disabledForeground", ema.FOREGROUND_COLOR);
+    		
 	    	sun = new JLabel("Sunday:", SwingConstants.RIGHT);
 	    	sun.setForeground(ema.FOREGROUND_COLOR);
 	    	sun.setBounds(300, 20, 95, 35);
@@ -422,8 +430,8 @@ public class EmployeeView extends JPanel {
 	
 	private void initNotesField() {
 		notesField = new JTextArea();
-		if(controller.getModifiedUser() != null) {
-			notesField.setText(controller.getModifiedUser().getNotes());
+		if(controller.getCurrentUser() != null) {
+			notesField.setText(controller.getCurrentUser().getNotes());
 		}
 		
 		notesField.setForeground(ema.FOREGROUND_COLOR);
@@ -484,8 +492,9 @@ public class EmployeeView extends JPanel {
                 	String fname = getFNameTextField();
                 	String lname = getLNameTextField();
                 	String password = getPasswordTextField();
+                	String notes = getNotesTextArea();
                 	
-                    controller.updateProfileInformation(fname, lname, password);
+                    controller.updateProfileInformation(fname, lname, password, notes);
                 }
             }
         });

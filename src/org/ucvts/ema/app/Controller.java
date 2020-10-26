@@ -114,11 +114,8 @@ public class Controller {
  			   ema.addCompany(c);
  			   User u = c.addEmployer(username, password, "First", "Last");
  			   ema.addUser(u);
- 			   //TODO delete these later (only for testing)
- 			   ema.addUser(c.assign("a", "A", "a"));
- 			   ema.addUser(c.assign("b", "B", "b"));
- 			   ema.addUser(c.assign("c", "C", "c"));
  			   this.currentCompany = c;
+ 			   this.currentUser = u;
  			   lv.showErrorMessage("Successful creation", true);
  			   switchView(ema.EMPLOYER_VIEW);
  		   }
@@ -131,12 +128,13 @@ public class Controller {
     	switchView(ema.MODIFY_VIEW);
     }
     
-    public void updateProfileInformation(boolean resetPass, Shift[] shifts, double salary) {
+    public void updateProfileInformation(boolean resetPass, Shift[] shifts, double salary, String notes) {
 
 		if(currentUser.getRole() == UserGroup.EMPLOYER) {
 			if(resetPass == true) { modifiedUser.resetPassword(); }
 			modifiedUser.setShifts(shifts);
 			modifiedUser.setSalary(salary);
+			modifiedUser.setNotes(notes);
 			modifiedUser = null;
 			switchView(ema.LOGIN_VIEW);
     		switchView(ema.EMPLOYER_VIEW);
@@ -145,11 +143,12 @@ public class Controller {
 		
     }
     
-    public void updateProfileInformation(String fname, String lname, String password) {
+    public void updateProfileInformation(String fname, String lname, String password, String notes) {
     	if(currentUser == modifiedUser) { 
 			modifiedUser.setPasswordHash(password);
 			modifiedUser.setFName(fname);
 			modifiedUser.setLName(lname);
+			modifiedUser.setNotes(notes);
 		}
     	switchView(ema.LOGIN_VIEW);
     	modifiedUser = null;
@@ -158,6 +157,13 @@ public class Controller {
     	
     }
     
+    public void addProfileInformation(String fname, String lname, String uname, UserGroup uG, Shift[] shifts, int cId, String notes) {
+		User u = new User(fname, lname, uname, uG, shifts, cId);
+		u.setNotes(notes);
+		ema.getCompany(cId).assign(uname, fname, lname);
+		ema.addUser(u);
+		switchView(ema.EMPLOYER_VIEW);
+    }
     
     public void cancelUpdate() {
     	switchView(ema.LOGIN_VIEW);

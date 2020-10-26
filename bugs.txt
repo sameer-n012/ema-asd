@@ -1,0 +1,6 @@
+SATURDAY
+
+Duplicate users in different companies - users with the same username can be created in separate companies and there's no real way to deal with it
+
+Creating a user with the same username as another company owner will delete the company user from the database(created new user sn, could not login as sn, CEO of First Inc.)
+
