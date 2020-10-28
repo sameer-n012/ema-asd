@@ -11,12 +11,14 @@ public class Company {
 	private String companyName;
 	private ArrayList<User> employees;
 	private User employer;
+	private Chat chat;
 	
 	public Company(String name) {
 		companyName = name;
 		companyId = cidCounter++; //TODO
 		employees = new ArrayList<User>();
 		employer = null;
+		this.chat = new Chat(companyId);
 	}
 	
 	public User addEmployer(String username, String password, String firstName, String lastName) {
@@ -53,6 +55,10 @@ public class Company {
 	public boolean removeEmployee(User u) {
 		return employees.remove(u);
 		
+	}
+	
+	public Chat getChat() {
+		return chat;
 	}
 	
 	
