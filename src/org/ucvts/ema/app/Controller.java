@@ -130,6 +130,8 @@ public class Controller {
     
     public void updateProfileInformation(boolean resetPass, Shift[] shifts, double salary, String notes) {
 
+    	
+    	
 		if(currentUser.getRole() == UserGroup.EMPLOYER) {
 			if(resetPass == true) { modifiedUser.resetPassword(); }
 			modifiedUser.setShifts(shifts);
@@ -144,25 +146,41 @@ public class Controller {
     }
     
     public void updateProfileInformation(String fname, String lname, String password, String notes) {
-    	if(currentUser == modifiedUser) { 
-			modifiedUser.setPasswordHash(password);
-			modifiedUser.setFName(fname);
-			modifiedUser.setLName(lname);
-			modifiedUser.setNotes(notes);
-		}
-    	switchView(ema.LOGIN_VIEW);
-    	modifiedUser = null;
-    	if(currentUser.getRole() == UserGroup.EMPLOYER) { switchView(ema.EMPLOYER_VIEW); }
-    	else { switchView(ema.EMPLOYEE_VIEW); }
+    	ModifyView mv = (ModifyView) views.getComponents()[ema.MODIFY_VIEW_INDEX];
+    	if(password == null || password.equals("")) {
+    		mv.showErrorMessage("Credentials cannot be empty.", true);
+    	}
+    	else {
+    	
+	    	if(currentUser == modifiedUser) { 
+				modifiedUser.setPasswordHash(password);
+				modifiedUser.setFName(fname);
+				modifiedUser.setLName(lname);
+				modifiedUser.setNotes(notes);
+			}
+	    	switchView(ema.LOGIN_VIEW);
+	    	modifiedUser = null;
+	    	if(currentUser.getRole() == UserGroup.EMPLOYER) { switchView(ema.EMPLOYER_VIEW); }
+	    	else { switchView(ema.EMPLOYEE_VIEW); }
+    	}
     	
     }
     
     public void addProfileInformation(String fname, String lname, String uname, UserGroup uG, Shift[] shifts, int cId, String notes) {
-		User u = new User(fname, lname, uname, uG, shifts, cId);
-		u.setNotes(notes);
-		ema.getCompany(cId).assign(uname, fname, lname);
-		ema.addUser(u);
-		switchView(ema.EMPLOYER_VIEW);
+    	ModifyView mv = (ModifyView) views.getComponents()[ema.MODIFY_VIEW_INDEX];
+    	if(ema.existsUser(uname)) {
+    		mv.showErrorMessage("Username already exists.", true);
+    	}
+    	else if(uname == null || uname.equals("")) {
+    		mv.showErrorMessage("Credentials cannot be empty.", true);
+    	}
+    	else {
+			User u = new User(fname, lname, uname, uG, shifts, cId);
+			u.setNotes(notes);
+			ema.getCompany(cId).assign(uname, fname, lname);
+			ema.addUser(u);
+			switchView(ema.EMPLOYER_VIEW);
+    	}
     }
     
     public void cancelUpdate() {

@@ -43,6 +43,7 @@ public class ModifyView extends JPanel {
     private JLabel salary;
     private JTextField salaryField;
     private JTextArea notesField;
+    private JLabel errorMssg;
     private Border buttonBorder;
     private Border textFieldBorder;
     private Border textAreaBorder;
@@ -114,6 +115,16 @@ public class ModifyView extends JPanel {
     	return notesField.getText();
     }
     
+    public void showErrorMessage(String mssg, boolean show){
+    	if(show) {
+    		errorMssg.setText(mssg);
+    		errorMssg.setVisible(true);
+    	}else {
+    		errorMssg.setText("");
+    		errorMssg.setVisible(false);
+    	}
+    }
+    
     private void initProfilePanel() {
     	
     	profilePanel = new JPanel();
@@ -129,6 +140,7 @@ public class ModifyView extends JPanel {
     	initSalary();
     	initShifts();
     	initNotesField();
+    	initErrorMssg();
     	
     	
     	this.add(profilePanel);
@@ -496,6 +508,16 @@ String[] shifts = { "None", "Morning", "Afternoon", "Evening", "Night", };
 		profilePanel.add(notesField);
 	}
 	
+	private void initErrorMssg() {
+        errorMssg = new JLabel("", SwingConstants.CENTER);
+        errorMssg.setBounds(20, 440, 600, 35);
+        errorMssg.setFont(ema.ERROR_FONT);
+        errorMssg.setForeground(ema.ERROR_COLOR);
+        errorMssg.setVisible(false);
+
+        profilePanel.add(errorMssg);
+    }
+	
 	private void initCancelButton() {
     	logoutButton = new JButton("Cancel");
     	logoutButton.setBounds(460, 10, 100, 25);
@@ -518,6 +540,7 @@ String[] shifts = { "None", "Morning", "Afternoon", "Evening", "Night", };
         
         this.add(logoutButton);
     }
+	
     
     private void initUpdateButton() { //TODO make method
     	updateButton = new JButton("Update");
