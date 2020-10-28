@@ -44,6 +44,7 @@ public class EmployeeView extends JPanel {
     private JLabel salary;
     private JTextField salaryField;
     private JTextArea notesField;
+    private JLabel errorMssg;
     private Border buttonBorder;
     private Border textFieldBorder;
     private Border textAreaBorder;
@@ -115,6 +116,16 @@ public class EmployeeView extends JPanel {
     	return notesField.getText();
     }
     
+    public void showErrorMessage(String mssg, boolean show){
+    	if(show) {
+    		errorMssg.setText(mssg);
+    		errorMssg.setVisible(true);
+    	}else {
+    		errorMssg.setText("");
+    		errorMssg.setVisible(false);
+    	}
+    }
+    
     private void initProfilePanel() {
     	
     	profilePanel = new JPanel();
@@ -130,6 +141,7 @@ public class EmployeeView extends JPanel {
     	initSalary();
     	initShifts();
     	initNotesField();
+    	initErrorMssg();
     	
     	
     	this.add(profilePanel);
@@ -445,6 +457,16 @@ public class EmployeeView extends JPanel {
 		
 		profilePanel.add(notesField);
 	}
+	
+	private void initErrorMssg() {
+        errorMssg = new JLabel("", SwingConstants.CENTER);
+        errorMssg.setBounds(20, 440, 600, 35);
+        errorMssg.setFont(ema.ERROR_FONT);
+        errorMssg.setForeground(ema.ERROR_COLOR);
+        errorMssg.setVisible(false);
+
+        profilePanel.add(errorMssg);
+    }
 	
 	private void initLogoutButton() {
     	logoutButton = new JButton("Logout");

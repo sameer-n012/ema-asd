@@ -147,8 +147,10 @@ public class Controller {
     
     public void updateProfileInformation(String fname, String lname, String password, String notes) {
     	ModifyView mv = (ModifyView) views.getComponents()[ema.MODIFY_VIEW_INDEX];
+    	EmployeeView ev = (EmployeeView) views.getComponents()[ema.EMPLOYEE_VIEW_INDEX];
     	if(password == null || password.equals("")) {
     		mv.showErrorMessage("Credentials cannot be empty.", true);
+    		ev.showErrorMessage("Credentials cannot be empty.", true);
     	}
     	else {
     	
