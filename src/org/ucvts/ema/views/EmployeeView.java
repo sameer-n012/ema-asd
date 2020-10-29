@@ -277,7 +277,7 @@ public class EmployeeView extends JPanel {
     }
     
     private void initSalary() {
-    	salary = new JLabel("Salary:", SwingConstants.RIGHT);
+    	salary = new JLabel("Salary($):", SwingConstants.RIGHT);
     	salary.setForeground(ema.FOREGROUND_COLOR);
     	salary.setBounds(20, 260, 95, 35);
     	salary.setLabelFor(salaryField);
@@ -293,7 +293,7 @@ public class EmployeeView extends JPanel {
     	salaryField.setBorder(textFieldBorder);
         
         if(controller.getCurrentUser() != null) { 
-        	salaryField.setText("$" + Double.toString(controller.getCurrentUser().getSalary()));
+        	salaryField.setText(Double.toString(controller.getCurrentUser().getSalary()));
         }
     	salaryField.setEditable(false);
 

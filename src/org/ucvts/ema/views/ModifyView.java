@@ -104,7 +104,7 @@ public class ModifyView extends JPanel {
     }
     
     public Double getSalaryTextField() {
-    	return Double.parseDouble(salaryField.getText().substring(1,salaryField.getText().length()));
+    	return Double.parseDouble(salaryField.getText());
     }
 
     public String getPasswordTextField() {
@@ -317,7 +317,7 @@ public class ModifyView extends JPanel {
     }
     
     private void initSalary() {
-    	salary = new JLabel("Salary:", SwingConstants.RIGHT);
+    	salary = new JLabel("Salary($):", SwingConstants.RIGHT);
     	salary.setForeground(ema.FOREGROUND_COLOR);
     	salary.setBounds(20, 260, 95, 35);
     	salary.setLabelFor(salaryField);
@@ -333,10 +333,10 @@ public class ModifyView extends JPanel {
     	salaryField.setBorder(textFieldBorder);
         
         if(controller.getModifiedUser() != null) { 
-        	salaryField.setText("$" + Double.toString(controller.getModifiedUser().getSalary()));
+        	salaryField.setText(Double.toString(controller.getModifiedUser().getSalary()));
         }
         else {
-        	salaryField.setText("$0.00");
+        	salaryField.setText("0.00");
         }
 
         salaryField.addKeyListener(new KeyAdapter() {
@@ -344,14 +344,8 @@ public class ModifyView extends JPanel {
             //TODO I cannot for the life of me get this to function, I've tried doing the same thing as LoginView, I've tried moving outside of a function, I've tried different methods to convert the char array, it will not work.  I don't know why.
                 @Override //TODO Most likely remove (no bounds on password characters
                 public void keyTyped(KeyEvent e) {
-                	if(salaryField.getText().length() > 0) {
-                	//this adds a dollar sign in front of numbers
-                		if (salaryField.getText().charAt(0) != '$') {
-                			salaryField.setText("$" + salaryField.getText()); 
-                		}
-                	}
                   //Next line allows 0-9, and period
-                    else if (e.getKeyChar() < 46 || (e.getKeyChar() < 48 && e.getKeyChar() > 46) || e.getKeyChar() > 57) {
+                    if (e.getKeyChar() < 46 || (e.getKeyChar() < 48 && e.getKeyChar() > 46) || e.getKeyChar() > 57) {
                         e.consume();
                     }
                 }

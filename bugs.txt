@@ -4,3 +4,4 @@ Duplicate users in different companies - users with the same username can be cre
 
 Creating a user with the same username as another company owner will delete the company user from the database(created new user sn, could not login as sn, CEO of First Inc.) - same problem as previous, prevented duplicate users
 
+salary does not update
