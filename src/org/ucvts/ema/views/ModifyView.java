@@ -319,6 +319,9 @@ public class ModifyView extends JPanel {
     		s = controller.getCurrentCompany().getName() + ": " + 
     			controller.getModifiedUser().getFName() + " " + controller.getModifiedUser().getLName(); 
 		}
+    	else if(controller.getCurrentCompany() != null) {
+    		s = controller.getCurrentCompany().getName() + ": Add User";
+    	}
     	title = new JLabel(s, SwingConstants.LEFT);
     	style(title, ema.FOREGROUND_COLOR, ema.BACKGROUND_COLOR, ema.TITLE_FONT, 
 				20, 20, 450, 35, null);
@@ -346,7 +349,11 @@ public class ModifyView extends JPanel {
 	    				300, 20+60*i, 95, 35, null);
 	    		
 		    	JComboBox<String> cb = new JComboBox<String>(shifts);
-				cb.setSelectedItem(shiftToString(controller.getModifiedUser().getShifts()[i]));
+		    	try {
+		    		cb.setSelectedItem(shiftToString(controller.getModifiedUser().getShifts()[i]));
+		    	} catch(Exception e) {
+		    		cb.setSelectedItem("None");
+		    	}
 				style(cb, ema.FOREGROUND_COLOR, ema.BACKGROUND_COLOR, ema.TEXT_FONT, 
 	    				405, 25+60*i, 125, 25, null);
 				

@@ -1,3 +1,6 @@
+
+Bug List:
+
 SATURDAY - unable to replicate bug, could be because of using it on monitor?
 
 Duplicate users in different companies - users with the same username can be created in separate companies and there's no real way to deal with it - solved
@@ -5,3 +8,5 @@ Duplicate users in different companies - users with the same username can be cre
 Creating a user with the same username as another company owner will delete the company user from the database(created new user sn, could not login as sn, CEO of First Inc.) - same problem as previous, prevented duplicate users
 
 salary does not update - not finding this problem
+
+no title on add user screen - fixed
