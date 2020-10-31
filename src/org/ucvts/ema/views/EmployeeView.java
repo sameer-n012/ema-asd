@@ -335,6 +335,7 @@ public class EmployeeView extends JPanel {
 		notesField.setCaretColor(ema.FOREGROUND_COLOR);
 		notesField.setEditable(false);
 		notesField.setLineWrap(true);
+		notesField.setWrapStyleWord(true);
 		
 		profilePanel.add(notesField);
 	}

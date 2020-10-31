@@ -251,8 +251,6 @@ public class ModifyView extends JPanel {
 	        
 	        passwordField.addKeyListener(new KeyAdapter() {
 	
-	        //TODO I cannot for the life of me get this to function, I've tried doing the same thing as LoginView, I've tried moving outside of a function, I've tried different methods to convert the char array, it will not work.  I don't know why.
-	            @Override //TODO Most likely remove (no bounds on password characters
 	            public void keyTyped(KeyEvent e) {
 	                if (getPasswordTextField().length() >= 20) {
 	                    e.consume(); //Next line allows upper and lowercase letters, 0-9, and special characters
@@ -373,6 +371,7 @@ public class ModifyView extends JPanel {
 		notesField.setMargin(new Insets(20,20,20,20));
 		notesField.setCaretColor(ema.FOREGROUND_COLOR);
 		notesField.setLineWrap(true);
+		notesField.setWrapStyleWord(true);
 		style(notesField, ema.FOREGROUND_COLOR, ema.BACKGROUND_COLOR, ema.TEXT_FONT, 
 				20, 320, 230, 120, textAreaBorder);
 		
