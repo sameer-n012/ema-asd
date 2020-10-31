@@ -32,7 +32,7 @@ public class ModifyView extends JPanel {
 
 	private JPanel profilePanel;
 	private JLabel title;
-    private JButton logoutButton;
+    private JButton cancelButton;
     private JButton updateButton;
     private JLabel fName;
     private JLabel lName;
@@ -144,12 +144,10 @@ public class ModifyView extends JPanel {
     			 20, 20, 95, 35, null);
     	 
     	 fNameField = new JTextField(20);
-    	 fNameField.setBounds(125, 25, 125, 25);
-    	 fNameField.setFont(ema.TEXT_FONT);
-    	 fNameField.setBorder(textFieldBorder);
-    	 fNameField.setBackground(ema.BACKGROUND_COLOR);
-    	 fNameField.setForeground(ema.FOREGROUND_COLOR);
     	 fNameField.setCaretColor(ema.FOREGROUND_COLOR);
+    	 style(fNameField, ema.FOREGROUND_COLOR, ema.BACKGROUND_COLOR, ema.TEXT_FONT, 
+    			 125, 25, 125, 25, textFieldBorder);
+    	 
     	 if(controller.getModifiedUser() != null) {
     		 fNameField.setText(controller.getModifiedUser().getFName()); 
 		 }
@@ -179,18 +177,14 @@ public class ModifyView extends JPanel {
     private void initLName() {
     	 
 		lName = new JLabel("Last Name:", SwingConstants.RIGHT);
-		lName.setForeground(ema.FOREGROUND_COLOR);
-		lName.setBounds(20, 80, 95, 35);
-		lName.setLabelFor(lNameField);
-		lName.setFont(ema.TEXT_FONT);
+		style(lName, ema.FOREGROUND_COLOR, ema.BACKGROUND_COLOR, ema.TEXT_FONT, 
+				20, 80, 95, 35, null);
 		 
 		lNameField = new JTextField(20);
-		lNameField.setBounds(125, 85, 125, 25);
-		lNameField.setFont(ema.TEXT_FONT);
-		lNameField.setBorder(textFieldBorder);
-		lNameField.setBackground(ema.BACKGROUND_COLOR);
-		lNameField.setForeground(ema.FOREGROUND_COLOR);
 		lNameField.setCaretColor(ema.FOREGROUND_COLOR);
+		style(lNameField, ema.FOREGROUND_COLOR, ema.BACKGROUND_COLOR, ema.TEXT_FONT, 
+	   			 125, 85, 125, 25, textFieldBorder);
+		
 		if(controller.getModifiedUser() != null) {
 			lNameField.setText(controller.getModifiedUser().getLName()); 
 		}
@@ -217,19 +211,13 @@ public class ModifyView extends JPanel {
     
     private void initUsername() {
     	username = new JLabel("Username:", SwingConstants.RIGHT);
-        username.setForeground(ema.FOREGROUND_COLOR);
-        username.setBounds(20, 140, 95, 35);
-        username.setLabelFor(usernameField);
-        username.setFont(ema.TEXT_FONT);
+    	style(username, ema.FOREGROUND_COLOR, ema.BACKGROUND_COLOR, ema.TEXT_FONT, 
+				20, 140, 95, 35, null);
         
         usernameField = new JTextField(20);
-        usernameField.setBounds(125, 145, 125, 25);
-        usernameField.setBackground(ema.BACKGROUND_COLOR);
-        usernameField.setFont(ema.TEXT_FONT);
-        usernameField.setForeground(ema.FOREGROUND_COLOR);
         usernameField.setCaretColor(ema.FOREGROUND_COLOR);
-        
-        usernameField.setBorder(textFieldBorder);
+        style(usernameField, ema.FOREGROUND_COLOR, ema.BACKGROUND_COLOR, ema.TEXT_FONT, 
+     			 125, 145, 125, 25, textFieldBorder);
         
         if(controller.getModifiedUser() != null) { 
         	usernameField.setText(controller.getModifiedUser().getUsername()); 
@@ -249,24 +237,18 @@ public class ModifyView extends JPanel {
     
     private void initPassword() {
         password = new JLabel("Password:", SwingConstants.RIGHT);
-        password.setBounds(20, 200, 95, 35);
-        password.setForeground(ema.FOREGROUND_COLOR);
-        password.setLabelFor(passwordField);
-        password.setFont(ema.TEXT_FONT);
+        style(password, ema.FOREGROUND_COLOR, ema.BACKGROUND_COLOR, ema.TEXT_FONT, 
+				20, 200, 95, 35, null);
 
         if(controller.getCurrentUser() == controller.getModifiedUser()) {
         	password.setLabelFor(passwordField);
         	
 	        passwordField = new JPasswordField(20);
-	        
 	        passwordField.setText("******");
-	        passwordField.setBounds(125, 205, 125, 25);
-	        passwordField.setBackground(ema.BACKGROUND_COLOR);
-	        passwordField.setFont(ema.TEXT_FONT);
-	        passwordField.setForeground(ema.FOREGROUND_COLOR);
 	        passwordField.setCaretColor(ema.FOREGROUND_COLOR);
+	        style(passwordField, ema.FOREGROUND_COLOR, ema.BACKGROUND_COLOR, ema.TEXT_FONT, 
+	     			 125, 205, 125, 25, textFieldBorder);
 	        
-	        passwordField.setBorder(textFieldBorder);
 	        passwordField.addKeyListener(new KeyAdapter() {
 	
 	        //TODO I cannot for the life of me get this to function, I've tried doing the same thing as LoginView, I've tried moving outside of a function, I've tried different methods to convert the char array, it will not work.  I don't know why.
@@ -282,21 +264,14 @@ public class ModifyView extends JPanel {
 	        profilePanel.add(passwordField);
         }
         else {
-        	password.setLabelFor(passwordReset);
         	
         	passwordReset = new JCheckBox();
-        	passwordReset.setBounds(125, 205, 15, 25);
- 	        passwordReset.setBackground(ema.BACKGROUND_COLOR);
- 	        passwordReset.setFont(ema.TEXT_FONT);
- 	        passwordReset.setForeground(ema.FOREGROUND_COLOR);
- 	        
-        	passwordReset.setBorder(buttonBorder);
+        	style(passwordReset, ema.FOREGROUND_COLOR, ema.BACKGROUND_COLOR, ema.TEXT_FONT, 
+        			 125, 205, 15, 25, buttonBorder);
         	
         	passwordResetLabel = new JLabel("(Reset)", SwingConstants.LEFT);
-        	passwordResetLabel.setBounds(140, 200, 110, 35);
-        	passwordResetLabel.setForeground(ema.FOREGROUND_COLOR);
-        	passwordResetLabel.setLabelFor(passwordReset);
-        	passwordResetLabel.setFont(ema.TEXT_FONT);
+        	style(passwordResetLabel, ema.FOREGROUND_COLOR, ema.BACKGROUND_COLOR, ema.TEXT_FONT, 
+       			 140, 200, 110, 35, buttonBorder);
         	
         	profilePanel.add(passwordReset);
         	profilePanel.add(passwordResetLabel);
@@ -307,20 +282,14 @@ public class ModifyView extends JPanel {
     }
     
     private void initSalary() {
-    	salary = new JLabel("Salary($):", SwingConstants.RIGHT);
-    	salary.setForeground(ema.FOREGROUND_COLOR);
-    	salary.setBounds(20, 260, 95, 35);
-    	salary.setLabelFor(salaryField);
-    	salary.setFont(ema.TEXT_FONT);
+    	salary = new JLabel("Salary ($/h):", SwingConstants.RIGHT);
+    	style(salary, ema.FOREGROUND_COLOR, ema.BACKGROUND_COLOR, ema.TEXT_FONT, 
+				20, 260, 95, 35, null);
         
     	salaryField = new JTextField(20);
-    	salaryField.setBounds(125, 265, 125, 25);
-    	salaryField.setBackground(ema.BACKGROUND_COLOR);
-    	salaryField.setFont(ema.TEXT_FONT);
-    	salaryField.setForeground(ema.FOREGROUND_COLOR);
     	salaryField.setCaretColor(ema.FOREGROUND_COLOR);
-        
-    	salaryField.setBorder(textFieldBorder);
+    	style(salaryField, ema.FOREGROUND_COLOR, ema.BACKGROUND_COLOR, ema.TEXT_FONT, 
+   			 125, 265, 125, 25, textFieldBorder);
         
         if(controller.getModifiedUser() != null) { 
         	salaryField.setText(Double.toString(controller.getModifiedUser().getSalary()));
@@ -353,10 +322,8 @@ public class ModifyView extends JPanel {
     			controller.getModifiedUser().getFName() + " " + controller.getModifiedUser().getLName(); 
 		}
     	title = new JLabel(s, SwingConstants.LEFT);
-    	title.setBounds(20, 20, 450, 35);
-    	title.setFont(ema.TITLE_FONT);
-    	title.setForeground(ema.FOREGROUND_COLOR);
-    	
+    	style(title, ema.FOREGROUND_COLOR, ema.BACKGROUND_COLOR, ema.TITLE_FONT, 
+				20, 20, 450, 35, null);
     	
         this.add(title);
     }
@@ -377,21 +344,19 @@ public class ModifyView extends JPanel {
 	    	for(int i = 0; i < 7; i++) {
 	    		
 	    		JLabel l = new JLabel(daysOfWeek[i] + ":", SwingConstants.RIGHT);
-	    		l.setForeground(ema.FOREGROUND_COLOR);
-		    	l.setBounds(300, 20+60*i, 95, 35);
-		    	l.setFont(ema.TEXT_FONT);
+	    		style(l, ema.FOREGROUND_COLOR, ema.BACKGROUND_COLOR, ema.TEXT_FONT, 
+	    				300, 20+60*i, 95, 35, null);
+	    		
 		    	JComboBox<String> cb = new JComboBox<String>(shifts);
-		    	cb.setBounds(405, 25+60*i, 125, 25);
-				cb.setFont(ema.TEXT_FONT);
-				cb.setBackground(ema.BACKGROUND_COLOR);
-				cb.setForeground(ema.FOREGROUND_COLOR);
 				cb.setSelectedItem(shiftToString(controller.getModifiedUser().getShifts()[i]));
-				
-				profilePanel.add(l);
-				profilePanel.add(cb);
+				style(cb, ema.FOREGROUND_COLOR, ema.BACKGROUND_COLOR, ema.TEXT_FONT, 
+	    				405, 25+60*i, 125, 25, null);
 				
 				shiftlabels.add(l);
 				shiftboxes.add(cb);
+				
+				profilePanel.add(l);
+				profilePanel.add(cb);
 	    		
 	    	}
     	}
@@ -405,59 +370,50 @@ public class ModifyView extends JPanel {
 			notesField.setText(controller.getModifiedUser().getNotes());
 		}
 		
-		notesField.setForeground(ema.FOREGROUND_COLOR);
-		notesField.setBackground(ema.BACKGROUND_COLOR);
 		notesField.setMargin(new Insets(20,20,20,20));
-		notesField.setBounds(20, 320, 230, 120);
-		notesField.setFont(ema.TEXT_FONT);
-		notesField.setBorder(textAreaBorder);
 		notesField.setCaretColor(ema.FOREGROUND_COLOR);
 		notesField.setLineWrap(true);
+		style(notesField, ema.FOREGROUND_COLOR, ema.BACKGROUND_COLOR, ema.TEXT_FONT, 
+				20, 320, 230, 120, textAreaBorder);
 		
 		profilePanel.add(notesField);
 	}
 	
 	private void initErrorMssg() {
         errorMssg = new JLabel("", SwingConstants.CENTER);
-        errorMssg.setBounds(20, 440, 600, 35);
-        errorMssg.setFont(ema.ERROR_FONT);
-        errorMssg.setForeground(ema.ERROR_COLOR);
+        style(errorMssg, ema.ERROR_COLOR, ema.BACKGROUND_COLOR, ema.ERROR_FONT, 
+				20, 440, 600, 35, null);
+        
         errorMssg.setVisible(false);
 
         profilePanel.add(errorMssg);
     }
 	
 	private void initCancelButton() {
-    	logoutButton = new JButton("Cancel");
-    	logoutButton.setBounds(460, 10, 100, 25);
-    	logoutButton.setForeground(ema.FOREGROUND_COLOR);
-    	logoutButton.setBorder(buttonBorder);
-    	logoutButton.setBackground(ema.BUTTON_COLOR);
-    	logoutButton.setFont(ema.TEXT_FONT);
+    	cancelButton = new JButton("Cancel");
+    	style(cancelButton, ema.FOREGROUND_COLOR, ema.BUTTON_COLOR, ema.TEXT_FONT, 
+				460, 10, 100, 25, buttonBorder);
     
-    	logoutButton.addActionListener(new ActionListener() {
+    	cancelButton.addActionListener(new ActionListener() {
     
             @Override
             public void actionPerformed(ActionEvent e) {
                 Object source = e.getSource();
     
-                if (source.equals(logoutButton)) {
+                if (source.equals(cancelButton)) {
                     controller.cancelUpdate();
                 }
             }
         });
         
-        this.add(logoutButton);
+        this.add(cancelButton);
     }
 	
     
     private void initUpdateButton() { //TODO make method
     	updateButton = new JButton("Update");
-    	updateButton.setBounds(460, 40, 100, 25);
-    	updateButton.setForeground(ema.FOREGROUND_COLOR);
-    	updateButton.setBorder(buttonBorder);
-    	updateButton.setBackground(ema.BUTTON_COLOR);
-    	updateButton.setFont(ema.TEXT_FONT);
+    	style(updateButton, ema.FOREGROUND_COLOR, ema.BUTTON_COLOR, ema.TEXT_FONT, 
+				460, 40, 100, 25, buttonBorder);
     
     	updateButton.addActionListener(new ActionListener() {
     
@@ -475,7 +431,8 @@ public class ModifyView extends JPanel {
             		for(int i = 0; i < 7; i++) {
             			shift[i] = stringToShift(shiftboxes.get(i).getSelectedItem().toString());
             		}
-                	if(controller.getModifiedUser() == null) {
+            		
+            		if(controller.getModifiedUser() == null) {
                 		int cId = controller.getCurrentUser().getCID();
                 		controller.addProfileInformation(fname, lname, uname, UserGroup.EMPLOYEE, shift, cId, notes);
                 	} else if(controller.getModifiedUser() == controller.getCurrentUser()) {

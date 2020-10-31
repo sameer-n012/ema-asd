@@ -250,7 +250,7 @@ public class EmployeeView extends JPanel {
     }
     
     private void initSalary() {
-    	salary = new JLabel("Salary($):", SwingConstants.RIGHT);
+    	salary = new JLabel("Salary ($/h):", SwingConstants.RIGHT);
     	style(salary, ema.FOREGROUND_COLOR, ema.BACKGROUND_COLOR, ema.TEXT_FONT, 
 				20, 260, 95, 35, null);
         

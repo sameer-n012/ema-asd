@@ -130,16 +130,24 @@ public class Controller {
     
     public void updateProfileInformation(boolean resetPass, Shift[] shifts, double salary, String notes) {
 
-    	
+    	ModifyView mv = (ModifyView) views.getComponents()[ema.MODIFY_VIEW_INDEX];
+    	EmployeeView ev = (EmployeeView) views.getComponents()[ema.EMPLOYEE_VIEW_INDEX];
     	
 		if(currentUser.getRole() == UserGroup.EMPLOYER) {
 			if(resetPass == true) { modifiedUser.resetPassword(); }
-			modifiedUser.setShifts(shifts);
-			modifiedUser.setSalary(salary);
-			modifiedUser.setNotes(notes);
-			modifiedUser = null;
-			switchView(ema.LOGIN_VIEW);
-    		switchView(ema.EMPLOYER_VIEW);
+			
+			if(salary < 0) {
+				mv.showErrorMessage("Invalid Credentials", true);
+				mv.showErrorMessage("Invalid Credentials", true);
+			}
+			else {
+				modifiedUser.setShifts(shifts);
+				modifiedUser.setSalary(salary);
+				modifiedUser.setNotes(notes);
+				modifiedUser = null;
+				switchView(ema.LOGIN_VIEW);
+	    		switchView(ema.EMPLOYER_VIEW);
+			}
 			
 		}
 		
