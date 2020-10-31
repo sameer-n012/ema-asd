@@ -39,7 +39,8 @@ public class EMA extends JFrame{
 	public final String MODIFY_VIEW = "MODIFY_VIEW";
 	public final Color BACKGROUND_COLOR = Color.DARK_GRAY;
 	public final Color FOREGROUND_COLOR = Color.WHITE;
-	public final Color ERROR_COLOR = Color.RED;
+	public final Color ERROR_COLOR = Color.PINK;
+	public final Color SUCCESS_COLOR = Color.GREEN;
 	public final Color BUTTON_COLOR = Color.GRAY;
 	public final Font TITLE_FONT = new Font("Verdana", Font.BOLD, 20);
 	public final Font TEXT_FONT = new Font("Verdana", Font.PLAIN, 14);
