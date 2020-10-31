@@ -9,7 +9,6 @@ public class Password {
 	//Class for SHA-512 hashing using SecureRandom and MessageDigest
 	
 	private static SecureRandom sr = new SecureRandom();
-	private static MessageDigest md;
 	
 	public static boolean checkPassword(String password, String hashedpassword, byte[] salt) {
 		if(hash(password, salt).equals(hashedpassword)) { return true; }

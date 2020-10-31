@@ -9,26 +9,24 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
-import javax.swing.AbstractButton;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.border.Border;
-import javax.swing.border.EmptyBorder;
 import javax.swing.JPasswordField;
 
 import org.ucvts.ema.EMA;
 import org.ucvts.ema.app.Controller;
 import org.ucvts.ema.model.Shift;
 
+@SuppressWarnings("serial")
 public class EmployeeView extends JPanel {
 
 	private JPanel profilePanel;
@@ -234,8 +232,7 @@ public class EmployeeView extends JPanel {
         
         passwordField.addKeyListener(new KeyAdapter() {
 
-        //TODO I cannot for the life of me get this to function, I've tried doing the same thing as LoginView, I've tried moving outside of a function, I've tried different methods to convert the char array, it will not work.  I don't know why.
-            @Override //TODO Most likely remove (no bounds on password characters
+        	@Override
             public void keyTyped(KeyEvent e) {
                 if (getPasswordTextField().length() >= 20) {
                     e.consume(); //Next line allows upper and lowercase letters, 0-9, and special characters
@@ -357,9 +354,6 @@ public class EmployeeView extends JPanel {
     
     	logoutButton.addActionListener(new ActionListener() {
     
-            /*
-             * Respond when the user clicks the Login button.
-             */
     
             @Override
             public void actionPerformed(ActionEvent e) {

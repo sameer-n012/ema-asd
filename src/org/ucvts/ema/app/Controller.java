@@ -1,7 +1,6 @@
 package org.ucvts.ema.app;
 import java.awt.CardLayout;
 import java.awt.Container;
-import java.math.BigDecimal;
 
 import org.ucvts.ema.EMA;
 import org.ucvts.ema.model.Company;
@@ -65,7 +64,7 @@ public class Controller {
     	}
        
         ((CardLayout) views.getLayout()).show(views, view);
-        //TODO when switching views do it here
+        
     }
 
     
@@ -79,8 +78,7 @@ public class Controller {
 				   this.currentUser = u;
 				   this.currentCompany = ema.getCompany(u.getCID());
 				   this.modifiedUser = u;
-				   lv.showErrorMessage("Successful login", true); //TODO delete later
-				   //TODO uncomment when employer and employee main views finished
+				   lv.showErrorMessage("Successful login", true);
 				   if(u.getRole() == UserGroup.EMPLOYER) { switchView(ema.EMPLOYER_VIEW); }
 				   else if(u.getRole() == UserGroup.EMPLOYEE) { switchView(ema.EMPLOYEE_VIEW); }
 			   }
@@ -138,7 +136,7 @@ public class Controller {
 			
 			if(salary < 0) {
 				mv.showErrorMessage("Invalid Credentials", true);
-				mv.showErrorMessage("Invalid Credentials", true);
+				ev.showErrorMessage("Invalid Credentials", true);
 			}
 			else {
 				modifiedUser.setShifts(shifts);
@@ -216,7 +214,8 @@ public class Controller {
     public void logout() {
     	this.currentUser = null;
     	this.currentCompany = null;
+    	this.modifiedUser = null;
     	switchView(ema.LOGIN_VIEW);
-        //TODO need to add more stuff probably
+        
     }
 }

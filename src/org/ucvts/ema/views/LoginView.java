@@ -15,13 +15,12 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
-import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.border.Border;
 
 import org.ucvts.ema.EMA;
 import org.ucvts.ema.app.Controller;
 
+@SuppressWarnings("serial")
 public class LoginView extends JPanel {
 
 	private Controller controller;
@@ -149,9 +148,8 @@ public class LoginView extends JPanel {
 
         passwordField.addKeyListener(new KeyAdapter() {
 
-
-            @Override //TODO Most likely remove (no bounds on password characters
-            public void keyTyped(KeyEvent e) {
+        	@Override
+        	public void keyTyped(KeyEvent e) {
                 if (getPasswordTextField().length() >= 20) {
                     e.consume(); //Next line allows upper and lowercase letters, 0-9, and special characters
                 }else if (e.getKeyChar() < 33 || (e.getKeyChar() < 64 && e.getKeyChar() > 57) || (e.getKeyChar() < 97 && e.getKeyChar() > 90) || e.getKeyChar() > 122) {

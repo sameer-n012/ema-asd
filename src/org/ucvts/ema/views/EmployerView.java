@@ -5,8 +5,6 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
@@ -14,12 +12,9 @@ import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JPasswordField;
 import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
-import javax.swing.JTextField;
 import javax.swing.SwingConstants;
-import javax.swing.UIManager;
 import javax.swing.border.Border;
 
 import org.ucvts.ema.EMA;
@@ -27,6 +22,7 @@ import org.ucvts.ema.app.Controller;
 import org.ucvts.ema.model.Company;
 import org.ucvts.ema.model.User;
 
+@SuppressWarnings("serial")
 public class EmployerView extends JPanel {
 
     private JLabel title;

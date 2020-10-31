@@ -25,9 +25,9 @@ import javax.swing.JPasswordField;
 import org.ucvts.ema.EMA;
 import org.ucvts.ema.app.Controller;
 import org.ucvts.ema.model.Shift;
-import org.ucvts.ema.model.User;
 import org.ucvts.ema.model.UserGroup;
 
+@SuppressWarnings("serial")
 public class ModifyView extends JPanel {
 
 	private JPanel profilePanel;
@@ -251,6 +251,7 @@ public class ModifyView extends JPanel {
 	        
 	        passwordField.addKeyListener(new KeyAdapter() {
 	
+	        	@Override
 	            public void keyTyped(KeyEvent e) {
 	                if (getPasswordTextField().length() >= 20) {
 	                    e.consume(); //Next line allows upper and lowercase letters, 0-9, and special characters
@@ -298,8 +299,7 @@ public class ModifyView extends JPanel {
 
         salaryField.addKeyListener(new KeyAdapter() {
 
-            //TODO I cannot for the life of me get this to function, I've tried doing the same thing as LoginView, I've tried moving outside of a function, I've tried different methods to convert the char array, it will not work.  I don't know why.
-                @Override //TODO Most likely remove (no bounds on password characters
+        		@Override
                 public void keyTyped(KeyEvent e) {
                   //Next line allows 0-9, and period
                     if (e.getKeyChar() < 46 || (e.getKeyChar() < 48 && e.getKeyChar() > 46) || e.getKeyChar() > 57) {
@@ -329,7 +329,7 @@ public class ModifyView extends JPanel {
         this.add(title);
     }
     
-	private void initShifts() { //TODO get fields from user object
+	private void initShifts() { 
     	
 		String[] shifts = { "None", "Morning", "Afternoon", "Evening", "Night" };
 		String[] daysOfWeek = { "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday" };
@@ -416,7 +416,7 @@ public class ModifyView extends JPanel {
     }
 	
     
-    private void initUpdateButton() { //TODO make method
+    private void initUpdateButton() {
     	updateButton = new JButton("Update");
     	style(updateButton, ema.FOREGROUND_COLOR, ema.BUTTON_COLOR, ema.TEXT_FONT, 
 				460, 40, 100, 25, buttonBorder);

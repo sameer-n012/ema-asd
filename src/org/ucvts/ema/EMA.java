@@ -61,7 +61,7 @@ public class EMA extends JFrame{
 	}
 	
 	
-	public static void main(String[] args) { //TODO
+	public static void main(String[] args) {
 		
 		userDirectory = new HashMap<String, User>();
 		companyDirectory = new HashMap<Integer, Company>();
@@ -104,11 +104,11 @@ public class EMA extends JFrame{
         this.setVisible(true);
     }
 	
-	public boolean existsUser(String s) { //TODO
+	public boolean existsUser(String s) { 
 		return userDirectory.get(s)==null ? false : true; //No duplicates: returns false
 	}
 	
-	public boolean existsCompany(String s) { //TODO
+	public boolean existsCompany(String s) { 
 		for(Company val : companyDirectory.values()) {
 			if(val.getName().equalsIgnoreCase(s)) { return true; }
 		}
@@ -150,6 +150,7 @@ public class EMA extends JFrame{
 		companyDirectory.remove(c.getId());
 	}
 	
+	@SuppressWarnings("rawtypes")
 	public static void printMap(Map mp) {
 	    Iterator it = mp.entrySet().iterator();
 	    while (it.hasNext()) {

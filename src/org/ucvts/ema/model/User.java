@@ -4,14 +4,11 @@ import org.ucvts.ema.app.Password;
 
 public class User {
 	
-//	private static int uidCounter = 0;
 	private static final String defaultPassword = "password";
 
-	//TODO Will need to change some to protected
 	private String firstName;
 	private String lastName;
 	private int cid;
-//	private int uid;
 	private String passwordHash;
 	private byte[] salt;
 	private String username;

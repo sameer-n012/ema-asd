@@ -1,7 +1,6 @@
 package org.ucvts.ema.model;
-import java.util.ArrayList;
 
-import org.ucvts.ema.EMA;
+import java.util.ArrayList;
 
 public class Company {
 
@@ -15,7 +14,7 @@ public class Company {
 	
 	public Company(String name) {
 		companyName = name;
-		companyId = cidCounter++; //TODO
+		companyId = cidCounter++;
 		employees = new ArrayList<User>();
 		employer = null;
 		this.chat = new Chat(companyId);
