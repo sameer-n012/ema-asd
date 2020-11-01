@@ -262,7 +262,7 @@ public class AddLogView extends JPanel {
 	
 	private void initDescTextArea() {
 		descriptiontextarea = new PlaceholderJTextArea();
-		descriptiontextarea.setPlaceholder("Add description here");
+		descriptiontextarea.setPlaceholder("Add description of what you did here");
 		descriptiontextarea.setMargin(new Insets(20,20,20,20));
 		descriptiontextarea.setLineWrap(true);
 		descriptiontextarea.setWrapStyleWord(true);

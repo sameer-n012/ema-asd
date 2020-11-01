@@ -165,13 +165,15 @@ public class LogView extends JPanel {
 
 	    		l = list.get(i);
 	    		
-	    		logName = new JLabel("Log ID: " + l.getID(), SwingConstants.LEFT);
+	    		String s = l.getAuthor().getFName() + " " + l.getAuthor().getLName() + " (" + l.getCommitString() + ")";
+	    		
+	    		logName = new JLabel(s, SwingConstants.LEFT);
 	    		style(logName, ema.FOREGROUND_COLOR, ema.BACKGROUND_COLOR, ema.TEXT_FONT, 
 	    				40, 20+60*(i), 300, 30, null);
 	    			
 	    		viewButton = new JButton("View");
 	    		style(viewButton, ema.FOREGROUND_COLOR, ema.BUTTON_COLOR, ema.TEXT_FONT, 
-	    				330, 20+60*(i), 100, 30, buttonBorder);
+	    				450, 20+60*(i), 100, 30, buttonBorder);
 	    		
 	    		viewButton.setActionCommand(String.valueOf(i));
 	    		
@@ -187,25 +189,25 @@ public class LogView extends JPanel {
 	                }
 	            });
 	    		
-	    		deleteButton = new JButton("Delete");
-	    		style(deleteButton, ema.FOREGROUND_COLOR, ema.BUTTON_COLOR, ema.TEXT_FONT, 
-	    				450, 20+60*(i), 100, 30, buttonBorder);
-	    		
-	    		deleteButton.setActionCommand(String.valueOf(i));
-	    		
-	    		deleteButton.addActionListener(new ActionListener() {
-
-	                @Override
-	                public void actionPerformed(ActionEvent e) {
-	                    Object source = e.getSource();
-	                    int a = Integer.parseInt(((JButton) source).getActionCommand());
-	                    if (a >= 0 && a < list.size()) {
-	                    	Log l = list.get(a); 
-	                    	controller.deleteLog(l);
-	                    }
-	                    
-	                }
-	            });
+//	    		deleteButton = new JButton("Delete");
+//	    		style(deleteButton, ema.FOREGROUND_COLOR, ema.BUTTON_COLOR, ema.TEXT_FONT, 
+//	    				450, 20+60*(i), 100, 30, buttonBorder);
+//	    		
+//	    		deleteButton.setActionCommand(String.valueOf(i));
+//	    		
+//	    		deleteButton.addActionListener(new ActionListener() {
+//
+//	                @Override
+//	                public void actionPerformed(ActionEvent e) {
+//	                    Object source = e.getSource();
+//	                    int a = Integer.parseInt(((JButton) source).getActionCommand());
+//	                    if (a >= 0 && a < list.size()) {
+//	                    	Log l = list.get(a); 
+//	                    	controller.deleteLog(l);
+//	                    }
+//	                    
+//	                }
+//	            });
 	    		
 	    		JSeparator separator = new JSeparator();
 	    		style(separator, null, null,null, 
@@ -215,7 +217,7 @@ public class LogView extends JPanel {
 	    		
 	    		logBoxPanel.add(logName);
 	    		logBoxPanel.add(viewButton);
-	    		logBoxPanel.add(deleteButton);
+	    		//logBoxPanel.add(deleteButton);
 	    		
 	    		//if(i!=list.size()-1) { logBoxPanel.add(separator); }
 	    		logBoxPanel.add(separator);
