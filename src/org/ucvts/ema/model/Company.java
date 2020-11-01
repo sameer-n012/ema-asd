@@ -1,6 +1,8 @@
 package org.ucvts.ema.model;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 public class Company {
 
@@ -37,6 +39,7 @@ public class Company {
 	}
 	
 	public ArrayList<User> getEmployeeList() {
+		sortEmployees();
 		return employees;
 	}
 	
@@ -48,10 +51,13 @@ public class Company {
 		User u = new User(firstName, lastName, username, UserGroup.EMPLOYEE, companyId);
 		employees.add(u);
 		return u;
+	
 	}
 	
 	public User assign(User u) {
 		employees.add(u);
+		sortEmployees();
+		
 		return u;
 	}
 	
@@ -96,6 +102,26 @@ public class Company {
 		}
 		return null;
 	}
+	
+	private void sortEmployees() {
+		Collections.sort(employees, getCompByName());	
+	}
+	
+	public static Comparator<User> getCompByName() {
+		Comparator<User> comp = new Comparator<User>(){
+	     
+			@Override
+			public int compare(User s1, User s2) { 
+				int i = s1.getLName().toLowerCase().compareTo(s2.getLName().toLowerCase()); 
+				if(i == 0) { i = s1.getFName().toLowerCase().compareTo(s2.getFName().toLowerCase()); }
+				return i;
+			}
+			
+			
+		};
+	 
+		return comp;
+	} 
 	
 	
 	
