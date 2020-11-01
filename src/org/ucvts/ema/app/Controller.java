@@ -73,7 +73,7 @@ public class Controller {
         	ModifyView v = (ModifyView) views.getComponents()[ema.MODIFY_VIEW_INDEX];
         	v.updateCard(); 
     	}
-        if(view.equals("LOG_VEW")) { 
+        if(view.equals("LOG_VIEW")) {
         	LogView v = (LogView) views.getComponents()[ema.LOG_VIEW_INDEX];
         	v.updateCard(); 
     	}

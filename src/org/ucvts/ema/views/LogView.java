@@ -150,11 +150,7 @@ public class LogView extends JPanel {
     	//UIManager.getLookAndFeelDefaults().put( "ScrollBar.thumb", ema.BUTTON_COLOR );
     	logScrollList.getVerticalScrollBar().setBackground(ema.BACKGROUND_COLOR);
     	
-    	System.out.println("1");
-    	try { System.out.println(controller.getCurrentCompany().getName()); } catch(Exception e) {}
-    	try { System.out.println(controller.getCurrentUser().getUsername()); } catch(Exception e) {}
     	if(controller.getCurrentCompany() != null && controller.getCurrentUser() != null) {
-    		System.out.println("!");
     		initLogBoxes();
     	}
     	
@@ -171,17 +167,16 @@ public class LogView extends JPanel {
 	    		    	
 	    	
 	    	for(int i = 0; i < list.size(); i++) {
-	    		System.out.println("printed");
 
 	    		l = list.get(i);
 	    		
 	    		logName = new JLabel("Log ID: " + l.getID(), SwingConstants.LEFT);
 	    		style(logName, ema.FOREGROUND_COLOR, ema.BACKGROUND_COLOR, ema.TEXT_FONT, 
-	    				40, 20+60*(i+1), 300, 30, null);
+	    				40, 20+60*(i), 300, 30, null);
 	    			
 	    		viewButton = new JButton("View");
 	    		style(viewButton, ema.FOREGROUND_COLOR, ema.BUTTON_COLOR, ema.TEXT_FONT, 
-	    				330, 20+60*(i+1), 100, 30, buttonBorder);
+	    				330, 20+60*(i), 100, 30, buttonBorder);
 	    		
 	    		viewButton.setActionCommand(String.valueOf(i));
 	    		
@@ -232,12 +227,46 @@ public class LogView extends JPanel {
 	    		logBoxPanel.add(viewButton);
 	    		logBoxPanel.add(deleteButton);
 	    		
-	    		if(i!=list.size()-1) { logBoxPanel.add(separator); }
+	    		//if(i!=list.size()-1) { logBoxPanel.add(separator); }
+	    		logBoxPanel.add(separator);
 	    		
 	    	}
 	    	
 	    	logBoxPanel.setPreferredSize(new Dimension(560, 60*(list.size()+1)));
     	
+    }
+    
+    private void initAddButton() {
+    	
+    	int i = 0;
+    	if(controller.getCurrentCompany() != null) {
+    		i = controller.getCurrentCompany().getEmployeeList().size();
+    	}
+    	
+    	
+    	addButton = new JButton("Add");
+    	style(addButton, ema.FOREGROUND_COLOR, ema.BUTTON_COLOR, ema.TEXT_FONT, 
+				460, 40, 100, 25, buttonBorder);
+    	style(addButton, ema.FOREGROUND_COLOR, ema.BUTTON_COLOR, ema.TEXT_FONT, 
+				450, 20+60*(i+1), 100, 30, buttonBorder);
+    
+    	addButton.addActionListener(new ActionListener() {
+    
+            /*
+             * Respond when the user clicks the Login button.
+             */
+    
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Object source = e.getSource();
+    
+                if (source.equals(addButton)) {
+                    controller.modifyAddEmployee(null);
+                }
+            }
+        });
+        
+        employeeBoxPanel.add(addButton);
     }
     
     private void style(JComponent obj, Color foreground, Color background, Font font, int x, int y, int w, int h, Border border) {

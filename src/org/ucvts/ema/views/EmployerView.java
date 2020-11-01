@@ -30,6 +30,7 @@ public class EmployerView extends JPanel {
     private JScrollPane employeeScrollList;
     private JPanel employeeBoxPanel;
     private JButton addButton;
+    private JButton logsButton;
     private JButton modifyButton;
     private JButton deleteButton;
     private JLabel empName;
@@ -102,11 +103,11 @@ public class EmployerView extends JPanel {
     }
     
     private void initLogsButton() {
-    	logoutButton = new JButton("Logs");
-    	style(logoutButton, ema.FOREGROUND_COLOR, ema.BUTTON_COLOR, ema.TEXT_FONT, 
+    	logsButton = new JButton("Logs");
+    	style(logsButton, ema.FOREGROUND_COLOR, ema.BUTTON_COLOR, ema.TEXT_FONT, 
 				460, 40, 100, 25, buttonBorder);
     
-    	logoutButton.addActionListener(new ActionListener() {
+    	logsButton.addActionListener(new ActionListener() {
     
             /*
              * Respond when the user clicks the Login button.
@@ -116,13 +117,13 @@ public class EmployerView extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 Object source = e.getSource();
     
-                if (source.equals(logoutButton)) {
+                if (source.equals(logsButton)) {
                     controller.gotoViewLogs();
                 }
             }
         });
         
-        this.add(logoutButton);
+        this.add(logsButton);
     }
     
     
