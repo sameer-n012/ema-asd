@@ -11,7 +11,6 @@ public class Company {
 	private String companyName;
 	private ArrayList<User> employees;
 	private User employer;
-	private Chat chat;
 	private ArrayList<Log> logs;
 	private int logCounter;
 	
@@ -20,7 +19,6 @@ public class Company {
 		companyId = cidCounter++;
 		employees = new ArrayList<User>();
 		employer = null;
-		this.chat = new Chat(companyId);
 		logs = new ArrayList<Log>();
 		logCounter = 0;
 	}
@@ -66,9 +64,6 @@ public class Company {
 		
 	}
 	
-	public Chat getChat() {
-		return chat;
-	}
 	
 	public ArrayList<Log> getLogs() {
 		return logs;
