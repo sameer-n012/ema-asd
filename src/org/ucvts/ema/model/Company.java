@@ -6,11 +6,14 @@ public class Company {
 
 	private static int cidCounter = 0;
 	
+	
 	private int companyId;
 	private String companyName;
 	private ArrayList<User> employees;
 	private User employer;
 	private Chat chat;
+	private ArrayList<Log> logs;
+	private int logCounter;
 	
 	public Company(String name) {
 		companyName = name;
@@ -18,6 +21,8 @@ public class Company {
 		employees = new ArrayList<User>();
 		employer = null;
 		this.chat = new Chat(companyId);
+		logs = new ArrayList<Log>();
+		logCounter = 0;
 	}
 	
 	public User addEmployer(String username, String password, String firstName, String lastName) {
@@ -33,7 +38,7 @@ public class Company {
 		return companyId;
 	}
 	
-	public ArrayList<User> employeeList() {
+	public ArrayList<User> getEmployeeList() {
 		return employees;
 	}
 	
@@ -60,6 +65,36 @@ public class Company {
 		return chat;
 	}
 	
+	public ArrayList<Log> getLogs() {
+		return logs;
+	}
+	
+	public ArrayList<Log> addLog(Log l) {
+		logs.add(l);
+		l.setID(logCounter++);
+		return logs;
+	}
+	
+	
+	public boolean removeLog(Log l) {
+		for(int i = 0; i < logs.size(); i++) {
+			if(l == logs.get(i)) {
+				logs.remove(i);
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	public Log getLog(int logID) {
+		for(int i = 0; i < logs.size(); i++) {
+			Log l = logs.get(i);
+			if(logID == l.getID()) {
+				return l;
+			}
+		}
+		return null;
+	}
 	
 	
 	

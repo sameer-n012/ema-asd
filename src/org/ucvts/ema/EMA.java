@@ -16,8 +16,10 @@ import org.ucvts.ema.app.Controller;
 import org.ucvts.ema.model.Company;
 import org.ucvts.ema.model.User;
 import org.ucvts.ema.model.UserGroup;
+import org.ucvts.ema.views.AddLogView;
 import org.ucvts.ema.views.EmployeeView;
 import org.ucvts.ema.views.EmployerView;
+import org.ucvts.ema.views.LogView;
 import org.ucvts.ema.views.LoginView;
 import org.ucvts.ema.views.ModifyView;
 
@@ -33,10 +35,14 @@ public class EMA extends JFrame{
 	public final int EMPLOYEE_VIEW_INDEX = 1;
 	public final int EMPLOYER_VIEW_INDEX = 2;
 	public final int MODIFY_VIEW_INDEX = 3;
+	public final int LOG_VIEW_INDEX = 4;
+	public final int ADD_LOG_VIEW_INDEX = 5;
 	public final String LOGIN_VIEW = "LOGIN_VIEW";
 	public final String EMPLOYEE_VIEW = "EMPLOYEE_VIEW";
 	public final String EMPLOYER_VIEW = "EMPLOYER_VIEW";
 	public final String MODIFY_VIEW = "MODIFY_VIEW";
+	public final String LOG_VIEW = "LOG_VIEW";
+	public final String ADD_LOG_VIEW = "ADD_LOG_VIEW";
 	public final Color BACKGROUND_COLOR = Color.DARK_GRAY;
 	public final Color FOREGROUND_COLOR = Color.WHITE;
 	public final Color ERROR_COLOR = Color.PINK;
@@ -66,7 +72,7 @@ public class EMA extends JFrame{
 		userDirectory = new HashMap<String, User>();
 		companyDirectory = new HashMap<Integer, Company>();
 		
-		initializeTest();
+		populateTest();
 		
 				
 		SwingUtilities.invokeLater(new Runnable() {
@@ -93,6 +99,8 @@ public class EMA extends JFrame{
         views.add(new EmployeeView(controller), EMPLOYEE_VIEW);
         views.add(new EmployerView(controller), EMPLOYER_VIEW);
         views.add(new ModifyView(controller), MODIFY_VIEW);
+        views.add(new LogView(controller), LOG_VIEW);
+        views.add(new AddLogView(controller), ADD_LOG_VIEW);
 
         // configure the application frame
 
@@ -142,7 +150,7 @@ public class EMA extends JFrame{
 	}
 	
 	public void removeCompany(Company c) {
-		ArrayList<User> emplist = c.employeeList();
+		ArrayList<User> emplist = c.getEmployeeList();
 		for(int i = 0; i < emplist.size(); i++) {
 			userDirectory.remove(emplist.get(i).getUsername());
 		}
@@ -159,7 +167,7 @@ public class EMA extends JFrame{
 	    }
 	}
 	
-	private static void initializeTest() {
+	private static void populateTest() {
 		Company c1 = new Company("First Inc");
 		companyDirectory.put(c1.getId(), c1);
 		Company c2 = new Company("Last Inc");

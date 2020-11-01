@@ -20,26 +20,27 @@ import javax.swing.border.Border;
 import org.ucvts.ema.EMA;
 import org.ucvts.ema.app.Controller;
 import org.ucvts.ema.model.Company;
+import org.ucvts.ema.model.Log;
 import org.ucvts.ema.model.User;
 
 @SuppressWarnings("serial")
-public class EmployerView extends JPanel {
-
-    private JLabel title;
+public class LogView extends JPanel {
+	
+	private JLabel title;
     private JButton logoutButton;
-    private JScrollPane employeeScrollList;
-    private JPanel employeeBoxPanel;
+    private JScrollPane logScrollList;
+    private JPanel logBoxPanel;
     private JButton addButton;
-    private JButton modifyButton;
+    private JButton viewButton;
     private JButton deleteButton;
-    private JLabel empName;
+    private JLabel logName;
     private Border buttonBorder;
     private Border panelBorder;
     
     private EMA ema;
 	private Controller controller;
 
-    public EmployerView(Controller controller) {
+    public LogView(Controller controller) {
         super();
         ema = EMA.getInstance();
         this.setBackground(ema.BACKGROUND_COLOR);
@@ -61,14 +62,15 @@ public class EmployerView extends JPanel {
         initTitle();
         initLogoutButton();
         initAddButton();
-        initEmployeeList();
+        initLogList();
+        
     }
     
     
     private void initTitle() {
     	String s = null;
     	if(controller.getCurrentUser() != null) { 
-    		s = controller.getCurrentCompany().getName() + ": Employee List"; 
+    		s = controller.getCurrentCompany().getName() + ": Log List"; 
 		}
     	title = new JLabel(s, SwingConstants.LEFT);
     	style(title, ema.FOREGROUND_COLOR, ema.BACKGROUND_COLOR, ema.TITLE_FONT, 
@@ -117,7 +119,7 @@ public class EmployerView extends JPanel {
                 Object source = e.getSource();
     
                 if (source.equals(addButton)) {
-                    controller.modifyAddEmployee(null);
+                    controller.viewAddLog(null);
                 }
             }
         });
@@ -125,28 +127,28 @@ public class EmployerView extends JPanel {
         this.add(addButton);
     }
     
-    private void initEmployeeList() {
+    private void initLogList() {
     	
     	
     	
-    	employeeBoxPanel = new JPanel();
-    	employeeBoxPanel.setLayout(null);
-    	style(employeeBoxPanel, ema.FOREGROUND_COLOR, ema.BACKGROUND_COLOR, ema.TEXT_FONT, 
+    	logBoxPanel = new JPanel();
+    	logBoxPanel.setLayout(null);
+    	style(logBoxPanel, ema.FOREGROUND_COLOR, ema.BACKGROUND_COLOR, ema.TEXT_FONT, 
 				0, 80, 585, 800, null);
     	
     	
-    	employeeScrollList = new JScrollPane(employeeBoxPanel);
-    	style(employeeScrollList, null, null, null, 
+    	logScrollList = new JScrollPane(logBoxPanel);
+    	style(logScrollList, null, null, null, 
 				0, 80, 585, 485, panelBorder);
     	
-    	employeeScrollList.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-    	employeeScrollList.getVerticalScrollBar().setPreferredSize(new Dimension(15, Integer.MAX_VALUE));
-    	employeeScrollList.getVerticalScrollBar().setUnitIncrement(20);
+    	logScrollList.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+    	logScrollList.getVerticalScrollBar().setPreferredSize(new Dimension(15, Integer.MAX_VALUE));
+    	logScrollList.getVerticalScrollBar().setUnitIncrement(20);
     	
     	//TODO try to change scrollbar thumb color
-    	employeeScrollList.getVerticalScrollBar().setForeground(ema.BUTTON_COLOR);
+    	logScrollList.getVerticalScrollBar().setForeground(ema.BUTTON_COLOR);
     	//UIManager.getLookAndFeelDefaults().put( "ScrollBar.thumb", ema.BUTTON_COLOR );
-    	employeeScrollList.getVerticalScrollBar().setBackground(ema.BACKGROUND_COLOR);
+    	logScrollList.getVerticalScrollBar().setBackground(ema.BACKGROUND_COLOR);
     	
     	
     	
@@ -154,40 +156,34 @@ public class EmployerView extends JPanel {
     		initEmployeeBoxes();
     	}
     	
-    	this.add(employeeScrollList);
+    	this.add(logScrollList);
     	
     }
     
     private void initEmployeeBoxes() {
     	
     		Company c = controller.getCurrentCompany();
-	    	ArrayList<User> list = c.getEmployeeList();
+	    	ArrayList<Log> list = c.getLogs();
 	    	
-	    	User u = null;
-	    	String name = null;
+	    	Log l = null;
+	    		    	
 	    	
-	    	//scrollPanel.setBounds(0, 80, 600, 20+60*list.size());
-	    	
-	    	
-	    	for(int i = -1; i < list.size(); i++) {
+	    	for(int i = 0; i < list.size(); i++) {
 	    		
-	    		if(i == -1) { u = c.getEmployer(); }
-	    		else { u = list.get(i); }
+
+	    		l = list.get(i);
 	    		
-	    		name = u.getFName() + " " + u.getLName();
-	    		if(i == -1) { name = name + " *"; }
-	    		
-	    		empName = new JLabel(name, SwingConstants.LEFT);
-	    		style(empName, ema.FOREGROUND_COLOR, ema.BACKGROUND_COLOR, ema.TEXT_FONT, 
+	    		logName = new JLabel("Log ID: " + l.getID(), SwingConstants.LEFT);
+	    		style(logName, ema.FOREGROUND_COLOR, ema.BACKGROUND_COLOR, ema.TEXT_FONT, 
 	    				40, 20+60*(i+1), 300, 30, null);
 	    			
-	    		modifyButton = new JButton("Modify");
-	    		style(modifyButton, ema.FOREGROUND_COLOR, ema.BUTTON_COLOR, ema.TEXT_FONT, 
+	    		viewButton = new JButton("View");
+	    		style(viewButton, ema.FOREGROUND_COLOR, ema.BUTTON_COLOR, ema.TEXT_FONT, 
 	    				330, 20+60*(i+1), 100, 30, buttonBorder);
 	    		
-	    		modifyButton.setActionCommand(String.valueOf(i));
+	    		viewButton.setActionCommand(String.valueOf(i));
 	    		
-	    		modifyButton.addActionListener(new ActionListener() {
+	    		viewButton.addActionListener(new ActionListener() {
 	    		    
 	                /*
 	                 * Respond when the user clicks the Login button.
@@ -197,11 +193,9 @@ public class EmployerView extends JPanel {
 	                public void actionPerformed(ActionEvent e) {
 	                    Object source = e.getSource();
 	                    int a = Integer.parseInt(((JButton) source).getActionCommand());
-	                    if (a >= -1 && a < list.size()) {
-	                    	User u = null;
-	                    	if(a==-1) { u = c.getEmployer(); }
-	                    	else { u = list.get(a); }
-	                    	controller.modifyAddEmployee(u);
+	                    if (a >= 0 && a < list.size()) {
+	                    	//TODO do controller function to move to view log screen
+	                    	controller.viewAddLog(controller.getCurrentCompany().getLog(a));
 	                    }
 	                }
 	            });
@@ -222,14 +216,11 @@ public class EmployerView extends JPanel {
 	                public void actionPerformed(ActionEvent e) {
 	                    Object source = e.getSource();
 	                    int a = Integer.parseInt(((JButton) source).getActionCommand());
-	                    if (a >= -1 && a < list.size()) {
-	                    	User u = null;
-	                    	if(a==-1) { u = c.getEmployer(); }
-	                    	else { u = list.get(a); }
-	                    	controller.deleteEmployee(u);
-	                    	//updateCard();
-	                    	//initEmployeeList();
+	                    if (a >= 0 && a < list.size()) {
+	                    	Log l = list.get(a); 
+	                    	controller.deleteLog(l);
 	                    }
+	                    
 	                }
 	            });
 	    		
@@ -239,15 +230,15 @@ public class EmployerView extends JPanel {
 	    		separator.setSize(540, 2);
 	    		separator.setOrientation(SwingConstants.HORIZONTAL);
 	    		
-	    		employeeBoxPanel.add(empName);
-	    		employeeBoxPanel.add(modifyButton);
-	    		employeeBoxPanel.add(deleteButton);
+	    		logBoxPanel.add(logName);
+	    		logBoxPanel.add(viewButton);
+	    		logBoxPanel.add(deleteButton);
 	    		
-	    		if(i!=list.size()-1) { employeeBoxPanel.add(separator); }
+	    		if(i!=list.size()-1) { logBoxPanel.add(separator); }
 	    		
 	    	}
 	    	
-	    	employeeBoxPanel.setPreferredSize(new Dimension(560, 60*(list.size()+1)));
+	    	logBoxPanel.setPreferredSize(new Dimension(560, 60*(list.size()+1)));
     	
     }
     
@@ -271,7 +262,5 @@ public class EmployerView extends JPanel {
     	}
     	catch(Exception e) { e.printStackTrace(); }
     }
-    
 
-    
 }

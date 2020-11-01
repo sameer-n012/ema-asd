@@ -4,6 +4,7 @@ import java.awt.Container;
 
 import org.ucvts.ema.EMA;
 import org.ucvts.ema.model.Company;
+import org.ucvts.ema.model.Log;
 import org.ucvts.ema.model.Shift;
 import org.ucvts.ema.model.User;
 import org.ucvts.ema.model.UserGroup;
@@ -20,6 +21,7 @@ public class Controller {
     private User currentUser;
     private User modifiedUser;
     private Company currentCompany;
+    private Log currentLog;
     
     private EMA ema = null;
 
@@ -28,6 +30,7 @@ public class Controller {
         this.currentUser = null;
         this.currentCompany = null;
         this.modifiedUser = null;
+        this.currentLog = null;
         ema = EMA.getInstance();
     }
     
@@ -41,6 +44,10 @@ public class Controller {
     
     public User getModifiedUser() {
     	return modifiedUser;
+    }
+    
+    public Log getCurrentLog() {
+    	return currentLog;
     }
 
     public void switchView(String view) {
@@ -60,6 +67,14 @@ public class Controller {
     	}
         if(view.equals("MODIFY_VIEW")) { 
         	ModifyView ev = (ModifyView) views.getComponents()[ema.MODIFY_VIEW_INDEX];
+        	ev.updateCard(); 
+    	}
+        if(view.equals("LOG_VEW")) { 
+        	ModifyView ev = (ModifyView) views.getComponents()[ema.LOG_VIEW_INDEX];
+        	ev.updateCard(); 
+    	}
+        if(view.equals("ADD_LOG_VIEW")) { 
+        	ModifyView ev = (ModifyView) views.getComponents()[ema.ADD_LOG_VIEW_INDEX];
         	ev.updateCard(); 
     	}
        
@@ -208,6 +223,24 @@ public class Controller {
     	} else {
     		switchView(ema.LOGIN_VIEW);
     		switchView(ema.EMPLOYER_VIEW);
+    	}
+    }
+    
+    public void deleteLog(Log l) {
+    	Company c = ema.getCompany(l.getCID());
+    	c.removeLog(l);
+    	switchView(ema.LOGIN_VIEW);
+		switchView(ema.LOG_VIEW);
+    }
+    
+    public void viewAddLog(Log l) {
+    	if(l == null) {
+    		this.currentLog = null;
+    		switchView(ema.LOG_VIEW);
+    	}
+    	else {
+    		this.currentLog = l;
+    		switchView(ema.LOG_VIEW);
     	}
     }
     
