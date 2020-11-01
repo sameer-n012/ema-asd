@@ -60,7 +60,7 @@ public class EmployerView extends JPanel {
 
         initTitle();
         initLogoutButton();
-        initAddButton();
+        initLogsButton();
         initEmployeeList();
     }
     
@@ -101,12 +101,12 @@ public class EmployerView extends JPanel {
         this.add(logoutButton);
     }
     
-    private void initAddButton() {
-    	addButton = new JButton("Add");
-    	style(addButton, ema.FOREGROUND_COLOR, ema.BUTTON_COLOR, ema.TEXT_FONT, 
+    private void initLogsButton() {
+    	logoutButton = new JButton("Logs");
+    	style(logoutButton, ema.FOREGROUND_COLOR, ema.BUTTON_COLOR, ema.TEXT_FONT, 
 				460, 40, 100, 25, buttonBorder);
     
-    	addButton.addActionListener(new ActionListener() {
+    	logoutButton.addActionListener(new ActionListener() {
     
             /*
              * Respond when the user clicks the Login button.
@@ -116,14 +116,15 @@ public class EmployerView extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 Object source = e.getSource();
     
-                if (source.equals(addButton)) {
-                    controller.modifyAddEmployee(null);
+                if (source.equals(logoutButton)) {
+                    controller.gotoViewLogs();
                 }
             }
         });
         
-        this.add(addButton);
+        this.add(logoutButton);
     }
+    
     
     private void initEmployeeList() {
     	
@@ -152,6 +153,7 @@ public class EmployerView extends JPanel {
     	
     	if(controller.getCurrentCompany() != null && controller.getCurrentUser() != null) {
     		initEmployeeBoxes();
+    		initAddButton();
     	}
     	
     	this.add(employeeScrollList);
@@ -200,8 +202,9 @@ public class EmployerView extends JPanel {
 	                    if (a >= -1 && a < list.size()) {
 	                    	User u = null;
 	                    	if(a==-1) { u = c.getEmployer(); }
-	                    	else { u = list.get(a); }
+	                    	else { u = ema.getUser(list.get(a).getUsername()); }
 	                    	controller.modifyAddEmployee(u);
+	                    	
 	                    }
 	                }
 	            });
@@ -243,12 +246,46 @@ public class EmployerView extends JPanel {
 	    		employeeBoxPanel.add(modifyButton);
 	    		employeeBoxPanel.add(deleteButton);
 	    		
-	    		if(i!=list.size()-1) { employeeBoxPanel.add(separator); }
+	    		//if(i!=list.size()-1) { employeeBoxPanel.add(separator); }
+	    		employeeBoxPanel.add(separator);
 	    		
 	    	}
 	    	
-	    	employeeBoxPanel.setPreferredSize(new Dimension(560, 60*(list.size()+1)));
+	    	employeeBoxPanel.setPreferredSize(new Dimension(560, 60*(list.size()+2)));
     	
+    }
+    
+    private void initAddButton() {
+    	
+    	int i = 0;
+    	if(controller.getCurrentCompany() != null) {
+    		i = controller.getCurrentCompany().getEmployeeList().size();
+    	}
+    	
+    	
+    	addButton = new JButton("Add");
+    	style(addButton, ema.FOREGROUND_COLOR, ema.BUTTON_COLOR, ema.TEXT_FONT, 
+				460, 40, 100, 25, buttonBorder);
+    	style(addButton, ema.FOREGROUND_COLOR, ema.BUTTON_COLOR, ema.TEXT_FONT, 
+				450, 20+60*(i+1), 100, 30, buttonBorder);
+    
+    	addButton.addActionListener(new ActionListener() {
+    
+            /*
+             * Respond when the user clicks the Login button.
+             */
+    
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Object source = e.getSource();
+    
+                if (source.equals(addButton)) {
+                    controller.modifyAddEmployee(null);
+                }
+            }
+        });
+        
+        employeeBoxPanel.add(addButton);
     }
     
     private void style(JComponent obj, Color foreground, Color background, Font font, int x, int y, int w, int h, Border border) {

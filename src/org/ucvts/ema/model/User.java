@@ -1,5 +1,7 @@
 package org.ucvts.ema.model;
 
+import java.util.Arrays;
+
 import org.ucvts.ema.app.Password;
 
 public class User {
@@ -106,6 +108,19 @@ public class User {
 	
 	public void resetPassword() {
 		this.setPasswordHash(defaultPassword);
+	}
+	
+	public void printUser() {
+		System.out.println("\n-----------------");
+		System.out.println("UName: " + this.username);
+		System.out.println("Role: " + this.role);
+		System.out.println("FName: " + this.firstName);
+		System.out.println("LName: " + this.lastName);
+		System.out.println("CID: " + this.cid);
+		System.out.println("Salary: " + this.salary);
+		System.out.println("Shifts: " + Arrays.toString(this.shifts));
+		System.out.println("Notes: " + this.notes);
+		System.out.println("-----------------\n");
 	}
 	
 	

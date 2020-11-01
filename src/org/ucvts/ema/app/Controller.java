@@ -1,6 +1,7 @@
 package org.ucvts.ema.app;
 import java.awt.CardLayout;
 import java.awt.Container;
+import java.util.Arrays;
 import java.util.Date;
 
 import org.ucvts.ema.EMA;
@@ -57,28 +58,28 @@ public class Controller {
     	
         
         if(view.equals("LOGIN_VIEW")) { 
-        	LoginView lv = (LoginView) views.getComponents()[ema.LOGIN_VIEW_INDEX];
-        	lv.updateCard(); 
+        	LoginView v = (LoginView) views.getComponents()[ema.LOGIN_VIEW_INDEX];
+        	v.updateCard(); 
     	}
         if(view.equals("EMPLOYEE_VIEW")) { 
-        	EmployeeView ev = (EmployeeView) views.getComponents()[ema.EMPLOYEE_VIEW_INDEX];
-        	ev.updateCard(); 
+        	EmployeeView v = (EmployeeView) views.getComponents()[ema.EMPLOYEE_VIEW_INDEX];
+        	v.updateCard(); 
     	}
         if(view.equals("EMPLOYER_VIEW")) { 
-        	EmployerView ev = (EmployerView) views.getComponents()[ema.EMPLOYER_VIEW_INDEX];
-        	ev.updateCard(); 
+        	EmployerView v = (EmployerView) views.getComponents()[ema.EMPLOYER_VIEW_INDEX];
+        	v.updateCard(); 
     	}
         if(view.equals("MODIFY_VIEW")) { 
-        	ModifyView ev = (ModifyView) views.getComponents()[ema.MODIFY_VIEW_INDEX];
-        	ev.updateCard(); 
+        	ModifyView v = (ModifyView) views.getComponents()[ema.MODIFY_VIEW_INDEX];
+        	v.updateCard(); 
     	}
         if(view.equals("LOG_VEW")) { 
-        	ModifyView ev = (ModifyView) views.getComponents()[ema.LOG_VIEW_INDEX];
-        	ev.updateCard(); 
+        	LogView v = (LogView) views.getComponents()[ema.LOG_VIEW_INDEX];
+        	v.updateCard(); 
     	}
         if(view.equals("ADD_LOG_VIEW")) { 
-        	ModifyView ev = (ModifyView) views.getComponents()[ema.ADD_LOG_VIEW_INDEX];
-        	ev.updateCard(); 
+        	AddLogView v = (AddLogView) views.getComponents()[ema.ADD_LOG_VIEW_INDEX];
+        	v.updateCard(); 
     	}
        
         ((CardLayout) views.getLayout()).show(views, view);
@@ -97,6 +98,7 @@ public class Controller {
 				   this.currentCompany = ema.getCompany(u.getCID());
 				   this.modifiedUser = u;
 				   lv.showErrorMessage("Successful login", true);
+				   //try { u.printUser(); } catch(Exception e) {System.out.println("Null User"); }
 				   if(u.getRole() == UserGroup.EMPLOYER) { switchView(ema.EMPLOYER_VIEW); }
 				   else if(u.getRole() == UserGroup.EMPLOYEE) { switchView(ema.EMPLOYEE_VIEW); }
 			   }
@@ -140,6 +142,7 @@ public class Controller {
     }
 
     public void modifyAddEmployee(User u) {
+    	//try { u.printUser(); } catch(Exception e) {System.out.println("Null User"); }
     	this.modifiedUser = u;
     	switchView(ema.MODIFY_VIEW);
     }
@@ -150,13 +153,13 @@ public class Controller {
     	EmployeeView ev = (EmployeeView) views.getComponents()[ema.EMPLOYEE_VIEW_INDEX];
     	
 		if(currentUser.getRole() == UserGroup.EMPLOYER) {
-			if(resetPass == true) { modifiedUser.resetPassword(); }
-			
 			if(salary < 0) {
-				mv.showErrorMessage("Invalid Credentials", true);
-				ev.showErrorMessage("Invalid Credentials", true);
+				mv.showErrorMessage("Invalid values.", true);
+				ev.showErrorMessage("Invalid values.", true);
 			}
+			
 			else {
+				if(resetPass == true) { modifiedUser.resetPassword(); }
 				modifiedUser.setShifts(shifts);
 				modifiedUser.setSalary(salary);
 				modifiedUser.setNotes(notes);
@@ -169,7 +172,7 @@ public class Controller {
 		
     }
     
-    public void updateProfileInformation(String fname, String lname, String password, String notes) {
+    public void updateProfileInformation(String fname, String lname, String password, String notes, Shift[] shifts, double salary) {
     	ModifyView mv = (ModifyView) views.getComponents()[ema.MODIFY_VIEW_INDEX];
     	EmployeeView ev = (EmployeeView) views.getComponents()[ema.EMPLOYEE_VIEW_INDEX];
     	if(password == null || password.equals("")) {
@@ -177,9 +180,12 @@ public class Controller {
     		ev.showErrorMessage("Credentials cannot be empty.", true);
     	}
     	else {
-    	
-	    	if(currentUser == modifiedUser) { 
-				modifiedUser.setPasswordHash(password);
+    		if(shifts.length == 7) { modifiedUser.setShifts(shifts); }
+    		if(salary >= 0) { modifiedUser.setSalary(salary); }
+	    	if(currentUser == modifiedUser) {
+	    		if(!password.equals("******")) {
+	    			modifiedUser.setPasswordHash(password);
+	    		}
 				modifiedUser.setFName(fname);
 				modifiedUser.setLName(lname);
 				modifiedUser.setNotes(notes);
@@ -192,7 +198,7 @@ public class Controller {
     	
     }
     
-    public void addProfileInformation(String fname, String lname, String uname, UserGroup uG, Shift[] shifts, int cId, String notes) {
+    public void addProfileInformation(String fname, String lname, String uname, UserGroup uG, Shift[] shifts, int cId, String notes, double salary) {
     	ModifyView mv = (ModifyView) views.getComponents()[ema.MODIFY_VIEW_INDEX];
     	if(ema.existsUser(uname)) {
     		mv.showErrorMessage("Username already exists.", true);
@@ -203,7 +209,8 @@ public class Controller {
     	else {
 			User u = new User(fname, lname, uname, uG, shifts, cId);
 			u.setNotes(notes);
-			ema.getCompany(cId).assign(uname, fname, lname);
+			u.setSalary(salary);
+			ema.getCompany(cId).assign(u);
 			ema.addUser(u);
 			switchView(ema.EMPLOYER_VIEW);
     	}
@@ -219,7 +226,12 @@ public class Controller {
     public void cancelLogUpdate() {
     	switchView(ema.LOGIN_VIEW);
     	currentLog = null;
-    	switchView(ema.LOG_VIEW);
+    	if(getCurrentUser().getRole() == UserGroup.EMPLOYER) {
+    		switchView(ema.LOG_VIEW);
+    	}
+    	else {
+    		switchView(ema.EMPLOYEE_VIEW);
+    	}
     }
     
     public void deleteEmployee(User u) {
@@ -243,7 +255,7 @@ public class Controller {
 		switchView(ema.LOG_VIEW);
     }
     
-    public void viewAddLog(Log l) {
+    public void gotoAddLog(Log l) {
     	if(l == null) {
     		this.currentLog = null;
     		switchView(ema.LOG_VIEW);
@@ -252,6 +264,14 @@ public class Controller {
     		this.currentLog = l;
     		switchView(ema.LOG_VIEW);
     	}
+    }
+    
+    public void gotoAddLog() {
+    	switchView(ema.ADD_LOG_VIEW);
+    }
+    
+    public void gotoViewLogs() {
+    	switchView(ema.LOG_VIEW);
     }
     
     public void addLog(Date start, Date stop, String desc, boolean ver) {

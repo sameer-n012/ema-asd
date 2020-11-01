@@ -3,6 +3,7 @@ package org.ucvts.ema.views;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
@@ -27,6 +28,8 @@ import org.ucvts.ema.EMA;
 import org.ucvts.ema.app.Controller;
 import org.ucvts.ema.model.Shift;
 import org.ucvts.ema.model.UserGroup;
+import org.ucvts.ema.placeholders.PlaceholderJTextArea;
+import org.ucvts.ema.placeholders.PlaceholderJTextField;
 
 @SuppressWarnings("serial")
 public class AddLogView extends JPanel {
@@ -40,10 +43,11 @@ public class AddLogView extends JPanel {
 	private JLabel errorMssg;
 	private JLabel startdatelabel;
 	private JLabel stopdatelabel;
-	private JTextField stopdatefield;
-	private JTextField startdatefield;
-	private JTextArea descriptiontextarea;
+	private PlaceholderJTextField stopdatefield;
+	private PlaceholderJTextField startdatefield;
+	private PlaceholderJTextArea descriptiontextarea;
 	private JScrollPane descriptionscrollpane;
+	private JLabel commitdatelabel;
 	private JCheckBox verifiedbox;
 	private JLabel verifiedlabel;
 	private JButton cancelButton;
@@ -70,13 +74,14 @@ public class AddLogView extends JPanel {
 
 	public void updateCard() {
 		this.removeAll();
+		
 		initialize();
 	}
 
 	private void initialize() {
 		this.adding = (controller.getCurrentLog() == null);
 		this.setLayout(null);
-
+		System.out.println("2");
 		initLogPanel();
 		initCancelButton();
 		initUpdateButton();
@@ -113,11 +118,11 @@ public class AddLogView extends JPanel {
 
 	private void initTitle() {
     	String s = null;
-    	if(adding) { 
-    		s = "New Log"; 
+    	if(adding && controller.getCurrentCompany() != null) { 
+    		s = controller.getCurrentCompany().getName() + ": New Log"; 
 		}
-    	if(!adding && controller.getCurrentLog() != null) {
-    		s = "Log View: " + controller.getCurrentLog().getID();
+    	if(!adding && controller.getCurrentLog() != null && controller.getCurrentCompany() != null) {
+    		s = controller.getCurrentCompany().getName() + ": Log " + controller.getCurrentLog().getID();
     	}
     	title = new JLabel(s, SwingConstants.LEFT);
     	style(title, ema.FOREGROUND_COLOR, ema.BACKGROUND_COLOR, ema.TITLE_FONT, 
@@ -141,6 +146,7 @@ public class AddLogView extends JPanel {
 		initStartDate();
 		initStopDate();
 		initDescTextArea();
+		initCommitDate();
 		
 
 
@@ -155,9 +161,9 @@ public class AddLogView extends JPanel {
 		else if(!adding && controller.getCurrentLog() != null) {
 			name = controller.getCurrentLog().getAuthor().getFName() + " " + controller.getCurrentLog().getAuthor().getLName();
 		}
-		authorlabel = new JLabel(name + ":", SwingConstants.RIGHT);
+		authorlabel = new JLabel("Author: " + name, SwingConstants.LEFT);
 		style(authorlabel, ema.FOREGROUND_COLOR, ema.BACKGROUND_COLOR, ema.TEXT_FONT, 
-				20, 20, 200, 35, null);
+				33, 20, 300, 35, null);
 
 		logPanel.add(authorlabel);
 
@@ -166,15 +172,16 @@ public class AddLogView extends JPanel {
 	private void initVerifiedBox() {
 		verifiedbox = new JCheckBox();
 		style(verifiedbox, ema.FOREGROUND_COLOR, ema.BACKGROUND_COLOR, ema.TEXT_FONT, 
-   			 250, 20, 15, 25, buttonBorder);
+   			 350, 25, 15, 25, buttonBorder);
+		verifiedbox.setEnabled(false);
 		
-		verifiedlabel = new JLabel("(Verified)");
+		verifiedlabel = new JLabel("(Verified)", SwingConstants.LEFT);
 		style(verifiedlabel, ema.FOREGROUND_COLOR, ema.BACKGROUND_COLOR, ema.TEXT_FONT,
-				265, 20, 110, 35, null);
+				375, 20, 110, 35, null);
 		
 		
 		
-		if(controller.getCurrentLog() != null && controller.getCurrentUser().getRole() == UserGroup.EMPLOYER) {
+		if(adding && controller.getCurrentUser() != null && controller.getCurrentUser().getRole() == UserGroup.EMPLOYER) {
 			verifiedbox.setEnabled(true);
 		}
 		if(!adding && controller.getCurrentLog() != null) {
@@ -191,11 +198,12 @@ public class AddLogView extends JPanel {
 		
 
 			
-		startdatelabel = new JLabel("Start Time (DD/MM/YY HH:MM):", SwingConstants.RIGHT);
+		startdatelabel = new JLabel("Start Time: ", SwingConstants.RIGHT);
 		style(startdatelabel, ema.FOREGROUND_COLOR, ema.BACKGROUND_COLOR, ema.TEXT_FONT, 
 				20, 80, 100, 35, null);
 
-		startdatefield = new JTextField(20);
+		startdatefield = new PlaceholderJTextField(14);
+		startdatefield.setPlaceholder("DD/MM/YY hh:mm");
 		startdatefield.setCaretColor(ema.FOREGROUND_COLOR);
 		style(startdatefield, ema.FOREGROUND_COLOR, ema.BACKGROUND_COLOR, ema.TEXT_FONT, 
 				125, 85, 125, 25, textFieldBorder);
@@ -207,7 +215,7 @@ public class AddLogView extends JPanel {
 			public void keyTyped(KeyEvent e) {
 				if (getStartDateField().length() >= 14) {
 					e.consume();  //Next line includes 0-9, :, and space 
-				} else if (e.getKeyChar() < 32 || (e.getKeyChar() > 32 && e.getKeyChar() < 48) || e.getKeyChar() > 58) {
+				} else if (e.getKeyChar() < 32 || (e.getKeyChar() > 32 && e.getKeyChar() < 47) || e.getKeyChar() > 58) {
 					e.consume(); 
 				}
 			}
@@ -226,11 +234,12 @@ public class AddLogView extends JPanel {
 	}
 	
 	private void initStopDate() {
-		stopdatelabel = new JLabel("Stop Time (DD/MM/YY HH:MM):", SwingConstants.RIGHT);
+		stopdatelabel = new JLabel("Stop Time: ", SwingConstants.RIGHT);
 		style(stopdatelabel, ema.FOREGROUND_COLOR, ema.BACKGROUND_COLOR, ema.TEXT_FONT, 
 				300, 80, 100, 35, null);
 
-		stopdatefield = new JTextField(20);
+		stopdatefield = new PlaceholderJTextField(14);
+		stopdatefield.setPlaceholder("DD/MM/YY hh:mm");
 		stopdatefield.setCaretColor(ema.FOREGROUND_COLOR);
 		style(stopdatefield, ema.FOREGROUND_COLOR, ema.BACKGROUND_COLOR, ema.TEXT_FONT, 
 				405, 85, 125, 25, textFieldBorder);
@@ -241,7 +250,7 @@ public class AddLogView extends JPanel {
 			public void keyTyped(KeyEvent e) {
 				if (getStopDateField().length() >= 14) {
 					e.consume();  //Next line includes 0-9, :, and space 
-				} else if (e.getKeyChar() < 32 || (e.getKeyChar() > 32 && e.getKeyChar() < 48) || e.getKeyChar() > 58) {
+				} else if (e.getKeyChar() < 32 || (e.getKeyChar() > 32 && e.getKeyChar() < 47) || e.getKeyChar() > 58) {
 					e.consume(); 
 				}
 			}
@@ -261,14 +270,13 @@ public class AddLogView extends JPanel {
 	}
 	
 	private void initDescTextArea() {
-		descriptiontextarea = new JTextArea();
+		descriptiontextarea = new PlaceholderJTextArea();
+		descriptiontextarea.setPlaceholder("Add description here");
+		descriptiontextarea.setMargin(new Insets(20,20,20,20));
+		descriptiontextarea.setLineWrap(true);
+		descriptiontextarea.setWrapStyleWord(true);
 		style(descriptiontextarea, ema.FOREGROUND_COLOR, ema.BACKGROUND_COLOR, ema.TEXT_FONT, 
-				20, 90, 760, 600, textAreaBorder);
-			
-		descriptionscrollpane = new JScrollPane(descriptiontextarea); 
-		style(descriptionscrollpane, ema.FOREGROUND_COLOR, ema.BACKGROUND_COLOR, ema.TEXT_FONT, 
-				-1,-1,-1,-1, textAreaBorder);
-		descriptionscrollpane.setPreferredSize(new Dimension(760, 600));
+				20, 150, 540, 300, textAreaBorder);
 		
 		if(adding) {
 			descriptiontextarea.setEditable(true);
@@ -278,18 +286,32 @@ public class AddLogView extends JPanel {
 			descriptiontextarea.setEditable(false);
 		}
 		
-		logPanel.add(descriptionscrollpane);
+		logPanel.add(descriptiontextarea);
 	}
 
 	private void initErrorMssg() {
 		errorMssg = new JLabel("", SwingConstants.CENTER);
 		style(errorMssg, ema.ERROR_COLOR, ema.BACKGROUND_COLOR, ema.ERROR_FONT, 
-				20, 440, 600, 35, null);
+				0, 450, 600, 35, null);
 
 		errorMssg.setVisible(false);
 
 		logPanel.add(errorMssg);
 	}
+	
+	private void initCommitDate() {
+		String s = null;
+		if(!adding && controller.getCurrentLog() != null) {
+			s = "Commit Date: " + controller.getCurrentLog().getCommitString();
+			showErrorMessage("", false);
+		}
+		else { s = ""; }
+		commitdatelabel = new JLabel(s, SwingConstants.CENTER);
+		style(commitdatelabel, ema.FOREGROUND_COLOR, ema.BACKGROUND_COLOR, ema.TEXT_FONT, 
+				400, 450, 600, 35, null);
+	}
+	
+	
 	
 	private void initCancelButton() {
     	cancelButton = new JButton("Cancel");
@@ -337,8 +359,13 @@ public class AddLogView extends JPanel {
             		Date d2 = null;
                 	
                 	try { 
+                		if(start.length() != 14 && stop.length() != 14) {
+                			throw new Exception();
+                		}
+                		
                 		d1 = new SimpleDateFormat("dd/MM/yy HH:mm").parse(start); 
                 		d2 = new SimpleDateFormat("dd/MM/yy HH:mm").parse(stop); 
+                		
                 		
                 		if(d1.compareTo(d2) >= 0) {
                 			showErrorMessage("Invalid dates", true);
@@ -350,7 +377,7 @@ public class AddLogView extends JPanel {
                 			controller.addLog(d1, d2, desc, ver);
                 		}
                 		
-            		} 
+            		}
                 	catch (Exception ex) { showErrorMessage("Invalid dates", true); }
                 }
             }

@@ -119,7 +119,7 @@ public class LogView extends JPanel {
                 Object source = e.getSource();
     
                 if (source.equals(addButton)) {
-                    controller.viewAddLog(null);
+                    controller.gotoAddLog(null);
                 }
             }
         });
@@ -150,17 +150,19 @@ public class LogView extends JPanel {
     	//UIManager.getLookAndFeelDefaults().put( "ScrollBar.thumb", ema.BUTTON_COLOR );
     	logScrollList.getVerticalScrollBar().setBackground(ema.BACKGROUND_COLOR);
     	
-    	
-    	
+    	System.out.println("1");
+    	try { System.out.println(controller.getCurrentCompany().getName()); } catch(Exception e) {}
+    	try { System.out.println(controller.getCurrentUser().getUsername()); } catch(Exception e) {}
     	if(controller.getCurrentCompany() != null && controller.getCurrentUser() != null) {
-    		initEmployeeBoxes();
+    		System.out.println("!");
+    		initLogBoxes();
     	}
     	
     	this.add(logScrollList);
     	
     }
     
-    private void initEmployeeBoxes() {
+    private void initLogBoxes() {
     	
     		Company c = controller.getCurrentCompany();
 	    	ArrayList<Log> list = c.getLogs();
@@ -169,7 +171,7 @@ public class LogView extends JPanel {
 	    		    	
 	    	
 	    	for(int i = 0; i < list.size(); i++) {
-	    		
+	    		System.out.println("printed");
 
 	    		l = list.get(i);
 	    		
@@ -184,10 +186,6 @@ public class LogView extends JPanel {
 	    		viewButton.setActionCommand(String.valueOf(i));
 	    		
 	    		viewButton.addActionListener(new ActionListener() {
-	    		    
-	                /*
-	                 * Respond when the user clicks the Login button.
-	                 */
 	        
 	                @Override
 	                public void actionPerformed(ActionEvent e) {
@@ -195,7 +193,7 @@ public class LogView extends JPanel {
 	                    int a = Integer.parseInt(((JButton) source).getActionCommand());
 	                    if (a >= 0 && a < list.size()) {
 	                    	//TODO do controller function to move to view log screen
-	                    	controller.viewAddLog(controller.getCurrentCompany().getLog(a));
+	                    	controller.gotoAddLog(controller.getCurrentCompany().getLog(a));
 	                    }
 	                }
 	            });

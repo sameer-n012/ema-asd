@@ -25,6 +25,9 @@ import javax.swing.JPasswordField;
 import org.ucvts.ema.EMA;
 import org.ucvts.ema.app.Controller;
 import org.ucvts.ema.model.Shift;
+import org.ucvts.ema.placeholders.PlaceholderJPasswordField;
+import org.ucvts.ema.placeholders.PlaceholderJTextArea;
+import org.ucvts.ema.placeholders.PlaceholderJTextField;
 
 @SuppressWarnings("serial")
 public class EmployeeView extends JPanel {
@@ -33,17 +36,18 @@ public class EmployeeView extends JPanel {
 	private JLabel title;
     private JButton logoutButton;
     private JButton updateButton;
+    private JButton addLogButton;
     private JLabel fName;
     private JLabel lName;
-    private JTextField fNameField;
-    private JTextField lNameField;
+    private PlaceholderJTextField fNameField;
+    private PlaceholderJTextField lNameField;
     private JLabel username;
     private JTextField usernameField;
     private JLabel password;
-    private JPasswordField passwordField;
+    private PlaceholderJPasswordField passwordField;
     private JLabel salary;
     private JTextField salaryField;
-    private JTextArea notesField;
+    private PlaceholderJTextArea notesField;
     private JLabel errorMssg;
     private Border buttonBorder;
     private Border textFieldBorder;
@@ -132,6 +136,7 @@ public class EmployeeView extends JPanel {
     	initShifts();
     	initNotesField();
     	initErrorMssg();
+    	initAddLogButton();
     	
     	
     	this.add(profilePanel);
@@ -142,7 +147,8 @@ public class EmployeeView extends JPanel {
     	 style(fName, ema.FOREGROUND_COLOR, ema.BACKGROUND_COLOR, ema.TEXT_FONT, 
     			 20, 20, 95, 35, null);
     	 
-    	 fNameField = new JTextField(20);
+    	 fNameField = new PlaceholderJTextField(20);
+    	 fNameField.setPlaceholder("First Name");
     	 fNameField.setCaretColor(ema.FOREGROUND_COLOR);
     	 style(fNameField, ema.FOREGROUND_COLOR, ema.BACKGROUND_COLOR, ema.TEXT_FONT, 
     			 125, 25, 125, 25, textFieldBorder);
@@ -174,7 +180,8 @@ public class EmployeeView extends JPanel {
 		style(lName, ema.FOREGROUND_COLOR, ema.BACKGROUND_COLOR, ema.TEXT_FONT, 
 				20, 80, 95, 35, null);
 		 
-		lNameField = new JTextField(20);
+		lNameField = new PlaceholderJTextField(20);
+		lNameField.setPlaceholder("Last Name");
 		lNameField.setCaretColor(ema.FOREGROUND_COLOR);
 		style(lNameField, ema.FOREGROUND_COLOR, ema.BACKGROUND_COLOR, ema.TEXT_FONT, 
    			 125, 85, 125, 25, textFieldBorder);
@@ -224,9 +231,9 @@ public class EmployeeView extends JPanel {
         style(password, ema.FOREGROUND_COLOR, ema.BACKGROUND_COLOR, ema.TEXT_FONT, 
 				20, 200, 95, 35, null);
 
-        passwordField = new JPasswordField(20);
+        passwordField = new PlaceholderJPasswordField(20);
         passwordField.setCaretColor(ema.FOREGROUND_COLOR);
-        passwordField.setText("******");
+        passwordField.setPlaceholder("******");
         style(passwordField, ema.FOREGROUND_COLOR, ema.BACKGROUND_COLOR, ema.TEXT_FONT, 
      			 125, 205, 125, 25, textFieldBorder);
         
@@ -319,8 +326,31 @@ public class EmployeeView extends JPanel {
     	
     }
 	
+	private void initAddLogButton() {
+		addLogButton = new JButton("Add Log");
+		style(addLogButton, ema.FOREGROUND_COLOR, ema.BUTTON_COLOR, ema.TEXT_FONT, 
+				405, 440, 100, 25, buttonBorder);
+		
+		addLogButton.addActionListener(new ActionListener() {
+		    
+		    
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Object source = e.getSource();
+    
+                if (source.equals(addLogButton)) {
+                    controller.gotoAddLog();
+                }
+            }
+        });
+		
+		profilePanel.add(addLogButton);
+		
+	}
+	
 	private void initNotesField() {
-		notesField = new JTextArea();
+		notesField = new PlaceholderJTextArea();
+		notesField.setPlaceholder("There are no notes");
 		if(controller.getCurrentUser() != null) {
 			notesField.setText(controller.getCurrentUser().getNotes());
 		}
@@ -385,8 +415,9 @@ public class EmployeeView extends JPanel {
                 	String lname = getLNameTextField();
                 	String password = getPasswordTextField();
                 	String notes = getNotesTextArea();
+                	Shift[] emptyArr = new Shift[0];
                 	
-                    controller.updateProfileInformation(fname, lname, password, notes);
+                    controller.updateProfileInformation(fname, lname, password, notes, emptyArr, -1);
                 }
             }
         });

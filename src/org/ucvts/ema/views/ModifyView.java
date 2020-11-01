@@ -26,6 +26,9 @@ import org.ucvts.ema.EMA;
 import org.ucvts.ema.app.Controller;
 import org.ucvts.ema.model.Shift;
 import org.ucvts.ema.model.UserGroup;
+import org.ucvts.ema.placeholders.PlaceholderJPasswordField;
+import org.ucvts.ema.placeholders.PlaceholderJTextArea;
+import org.ucvts.ema.placeholders.PlaceholderJTextField;
 
 @SuppressWarnings("serial")
 public class ModifyView extends JPanel {
@@ -36,17 +39,17 @@ public class ModifyView extends JPanel {
     private JButton updateButton;
     private JLabel fName;
     private JLabel lName;
-    private JTextField fNameField;
-    private JTextField lNameField;
+    private PlaceholderJTextField fNameField;
+    private PlaceholderJTextField lNameField;
     private JLabel username;
-    private JTextField usernameField;
+    private PlaceholderJTextField usernameField;
     private JLabel password;
-    private JPasswordField passwordField;
+    private PlaceholderJPasswordField passwordField;
     private JCheckBox passwordReset;
     private JLabel passwordResetLabel;
     private JLabel salary;
-    private JTextField salaryField;
-    private JTextArea notesField;
+    private PlaceholderJTextField salaryField;
+    private PlaceholderJTextArea notesField;
     private JLabel errorMssg;
     private Border buttonBorder;
     private Border textFieldBorder;
@@ -143,7 +146,8 @@ public class ModifyView extends JPanel {
     	 style(fName, ema.FOREGROUND_COLOR, ema.BACKGROUND_COLOR, ema.TEXT_FONT, 
     			 20, 20, 95, 35, null);
     	 
-    	 fNameField = new JTextField(20);
+    	 fNameField = new PlaceholderJTextField(20);
+    	 fNameField.setPlaceholder("First Name");
     	 fNameField.setCaretColor(ema.FOREGROUND_COLOR);
     	 style(fNameField, ema.FOREGROUND_COLOR, ema.BACKGROUND_COLOR, ema.TEXT_FONT, 
     			 125, 25, 125, 25, textFieldBorder);
@@ -151,7 +155,6 @@ public class ModifyView extends JPanel {
     	 if(controller.getModifiedUser() != null) {
     		 fNameField.setText(controller.getModifiedUser().getFName()); 
 		 }
-    	 else { fNameField.setText("First Name"); }
     	 
     	 if(controller.getModifiedUser() != controller.getCurrentUser() && controller.getModifiedUser() != null) {
     		 fNameField.setEditable(false);
@@ -180,7 +183,8 @@ public class ModifyView extends JPanel {
 		style(lName, ema.FOREGROUND_COLOR, ema.BACKGROUND_COLOR, ema.TEXT_FONT, 
 				20, 80, 95, 35, null);
 		 
-		lNameField = new JTextField(20);
+		lNameField = new PlaceholderJTextField(20);
+		lNameField.setPlaceholder("Last Name");
 		lNameField.setCaretColor(ema.FOREGROUND_COLOR);
 		style(lNameField, ema.FOREGROUND_COLOR, ema.BACKGROUND_COLOR, ema.TEXT_FONT, 
 	   			 125, 85, 125, 25, textFieldBorder);
@@ -188,7 +192,6 @@ public class ModifyView extends JPanel {
 		if(controller.getModifiedUser() != null) {
 			lNameField.setText(controller.getModifiedUser().getLName()); 
 		}
-		else { lNameField.setText("Last Name"); }
 		
 		if(controller.getModifiedUser() != controller.getCurrentUser() && controller.getModifiedUser() != null) {
 			lNameField.setEditable(false);
@@ -214,7 +217,8 @@ public class ModifyView extends JPanel {
     	style(username, ema.FOREGROUND_COLOR, ema.BACKGROUND_COLOR, ema.TEXT_FONT, 
 				20, 140, 95, 35, null);
         
-        usernameField = new JTextField(20);
+        usernameField = new PlaceholderJTextField(20);
+        usernameField.setPlaceholder("Username");
         usernameField.setCaretColor(ema.FOREGROUND_COLOR);
         style(usernameField, ema.FOREGROUND_COLOR, ema.BACKGROUND_COLOR, ema.TEXT_FONT, 
      			 125, 145, 125, 25, textFieldBorder);
@@ -224,7 +228,6 @@ public class ModifyView extends JPanel {
         	usernameField.setEditable(false);
     	}
         else { 
-        	usernameField.setText("Username"); 
         	usernameField.setEditable(true);
     	}
         
@@ -243,8 +246,8 @@ public class ModifyView extends JPanel {
         if(controller.getCurrentUser() == controller.getModifiedUser()) {
         	password.setLabelFor(passwordField);
         	
-	        passwordField = new JPasswordField(20);
-	        passwordField.setText("******");
+	        passwordField = new PlaceholderJPasswordField(20);
+	        passwordField.setPlaceholder("******");
 	        passwordField.setCaretColor(ema.FOREGROUND_COLOR);
 	        style(passwordField, ema.FOREGROUND_COLOR, ema.BACKGROUND_COLOR, ema.TEXT_FONT, 
 	     			 125, 205, 125, 25, textFieldBorder);
@@ -285,16 +288,14 @@ public class ModifyView extends JPanel {
     	style(salary, ema.FOREGROUND_COLOR, ema.BACKGROUND_COLOR, ema.TEXT_FONT, 
 				20, 260, 95, 35, null);
         
-    	salaryField = new JTextField(20);
+    	salaryField = new PlaceholderJTextField(20);
+    	salaryField.setPlaceholder("0.00");
     	salaryField.setCaretColor(ema.FOREGROUND_COLOR);
     	style(salaryField, ema.FOREGROUND_COLOR, ema.BACKGROUND_COLOR, ema.TEXT_FONT, 
    			 125, 265, 125, 25, textFieldBorder);
         
         if(controller.getModifiedUser() != null) { 
         	salaryField.setText(Double.toString(controller.getModifiedUser().getSalary()));
-        }
-        else {
-        	salaryField.setText("0.00");
         }
 
         salaryField.addKeyListener(new KeyAdapter() {
@@ -350,8 +351,10 @@ public class ModifyView extends JPanel {
 	    		
 		    	JComboBox<String> cb = new JComboBox<String>(shifts);
 		    	try {
+			    	//System.out.println(shiftToString(controller.getModifiedUser().getShifts()[i]));
 		    		cb.setSelectedItem(shiftToString(controller.getModifiedUser().getShifts()[i]));
 		    	} catch(Exception e) {
+		    		//System.out.println("N/A");
 		    		cb.setSelectedItem("None");
 		    	}
 				style(cb, ema.FOREGROUND_COLOR, ema.BACKGROUND_COLOR, ema.TEXT_FONT, 
@@ -370,7 +373,8 @@ public class ModifyView extends JPanel {
     }
 	
 	private void initNotesField() {
-		notesField = new JTextArea();
+		notesField = new PlaceholderJTextArea();
+		notesField.setPlaceholder("Add notes here");
 		if(controller.getModifiedUser() != null) {
 			notesField.setText(controller.getModifiedUser().getNotes());
 		}
@@ -417,7 +421,10 @@ public class ModifyView extends JPanel {
 	
     
     private void initUpdateButton() {
-    	updateButton = new JButton("Update");
+    	String s = null;
+    	if(controller.getCurrentUser() == null) { s = "Add"; }
+    	else { s = "Update"; }
+    	updateButton = new JButton(s);
     	style(updateButton, ema.FOREGROUND_COLOR, ema.BUTTON_COLOR, ema.TEXT_FONT, 
 				460, 40, 100, 25, buttonBorder);
     
@@ -429,10 +436,14 @@ public class ModifyView extends JPanel {
                 Object source = e.getSource();
     
                 if (source.equals(updateButton)) {
+                	
+                	
+                	
                 	String fname = getFNameTextField();
                 	String lname = getLNameTextField();
                 	String uname = getUsernameTextField();
                 	String notes = getNotesTextArea();
+                	double salary = getSalaryTextField();
             		Shift[] shift = new Shift[7];
             		for(int i = 0; i < 7; i++) {
             			shift[i] = stringToShift(shiftboxes.get(i).getSelectedItem().toString());
@@ -440,10 +451,10 @@ public class ModifyView extends JPanel {
             		
             		if(controller.getModifiedUser() == null) {
                 		int cId = controller.getCurrentUser().getCID();
-                		controller.addProfileInformation(fname, lname, uname, UserGroup.EMPLOYEE, shift, cId, notes);
+                		controller.addProfileInformation(fname, lname, uname, UserGroup.EMPLOYEE, shift, cId, notes, salary);
                 	} else if(controller.getModifiedUser() == controller.getCurrentUser()) {
                 		String pass = getPasswordTextField();
-                		controller.updateProfileInformation(fname, lname, pass, notes);
+                		controller.updateProfileInformation(fname, lname, pass, notes, shift, salary);
                 	} else {
                 		boolean passreset = passwordReset.isSelected();
                 		controller.updateProfileInformation(passreset, shift, getSalaryTextField(), notes);

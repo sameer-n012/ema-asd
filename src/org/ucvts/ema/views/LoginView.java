@@ -19,14 +19,15 @@ import javax.swing.border.Border;
 
 import org.ucvts.ema.EMA;
 import org.ucvts.ema.app.Controller;
+import org.ucvts.ema.placeholders.PlaceholderJTextField;
 
 @SuppressWarnings("serial")
 public class LoginView extends JPanel {
 
 	private Controller controller;
-    private JTextField usernameField;
+    private PlaceholderJTextField usernameField;
     private JPasswordField passwordField;
-    private JTextField companyField;
+    private PlaceholderJTextField companyField;
     private JButton loginButton;
     private JButton createCompanyButton;
     private JLabel errorMssg;
@@ -115,7 +116,8 @@ public class LoginView extends JPanel {
         style(label, ema.FOREGROUND_COLOR, ema.BACKGROUND_COLOR, ema.TEXT_FONT, 
 				100, 160, 95, 35, null);
 
-        usernameField = new JTextField(20);
+        usernameField = new PlaceholderJTextField(20);
+        usernameField.setPlaceholder("Username");
         usernameField.setCaretColor(ema.FOREGROUND_COLOR);
         style(usernameField, ema.FOREGROUND_COLOR, ema.BACKGROUND_COLOR, ema.TEXT_FONT, 
 				205, 165, 200, 25, textFieldBorder);        
@@ -157,6 +159,19 @@ public class LoginView extends JPanel {
                 }
             }
         });
+        
+        passwordField.addKeyListener(new KeyAdapter() {
+
+            @Override
+            public void keyTyped(KeyEvent e) {
+                if (e.getKeyChar() == 10 || e.getKeyChar() == 13) {
+                    loginButton.doClick(); 
+                }
+            }
+        });
+
+        this.add(label);
+        this.add(usernameField);
 
         this.add(label);
         this.add(passwordField);
@@ -167,7 +182,8 @@ public class LoginView extends JPanel {
         style(label, ema.FOREGROUND_COLOR, ema.BACKGROUND_COLOR, ema.TEXT_FONT, 
 				100, 240, 95, 35, null);
 
-        companyField = new JTextField(20);
+        companyField = new PlaceholderJTextField(20);
+        companyField.setPlaceholder("Company Name (Optional)");
         companyField.setCaretColor(ema.FOREGROUND_COLOR);
         style(companyField, ema.FOREGROUND_COLOR, ema.BACKGROUND_COLOR, ema.TEXT_FONT, 
 				205, 245, 200, 25, textFieldBorder);

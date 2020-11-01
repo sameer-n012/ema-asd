@@ -52,6 +52,11 @@ public class Company {
 		return u;
 	}
 	
+	public User assign(User u) {
+		employees.add(u);
+		return u;
+	}
+	
 	public User getEmployer() {
 		return employer;
 	}
