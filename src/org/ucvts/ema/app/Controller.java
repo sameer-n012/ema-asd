@@ -258,20 +258,23 @@ public class Controller {
     public void gotoAddLog(Log l) {
     	if(l == null) {
     		this.currentLog = null;
-    		switchView(ema.LOG_VIEW);
+    		switchView(ema.ADD_LOG_VIEW);
     	}
     	else {
     		this.currentLog = l;
-    		switchView(ema.LOG_VIEW);
+    		switchView(ema.ADD_LOG_VIEW);
     	}
     }
     
-    public void gotoAddLog() {
-    	switchView(ema.ADD_LOG_VIEW);
-    }
     
     public void gotoViewLogs() {
+    	this.currentLog = null;
     	switchView(ema.LOG_VIEW);
+    }
+    
+    public void gotoEmployerHome() {
+    	this.currentLog = null;
+    	switchView(ema.EMPLOYER_VIEW);
     }
     
     public void addLog(Date start, Date stop, String desc, boolean ver) {
@@ -279,7 +282,6 @@ public class Controller {
     	
     	if(getCurrentUser() != null) {
 	    	Log l = new Log(getCurrentUser(), start, stop, desc);
-	    	l.toggleVerify();
 	    	getCurrentCompany().addLog(l);
 	    	this.currentLog = null;
 	    	
@@ -292,6 +294,16 @@ public class Controller {
 	    	
     	}
     	else { lv.showErrorMessage("Invalid user", true); }
+    }
+    
+    public void verifyLog(Log l) {
+    	l.toggleVerify();
+    	if(getCurrentUser().getRole() == UserGroup.EMPLOYER) {
+    		switchView(ema.LOG_VIEW);
+    	}
+    	else {
+    		switchView(ema.EMPLOYEE_VIEW);
+    	}
     }
     
     public void logout() {

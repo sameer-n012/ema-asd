@@ -33,6 +33,7 @@ public class LogView extends JPanel {
     private JButton addButton;
     private JButton viewButton;
     private JButton deleteButton;
+    private JButton backButton;
     private JLabel logName;
     private Border buttonBorder;
     private Border panelBorder;
@@ -61,7 +62,7 @@ public class LogView extends JPanel {
 
         initTitle();
         initLogoutButton();
-        initAddButton();
+        initBackButton();
         initLogList();
         
     }
@@ -86,10 +87,6 @@ public class LogView extends JPanel {
     
     	logoutButton.addActionListener(new ActionListener() {
     
-            /*
-             * Respond when the user clicks the Login button.
-             */
-    
             @Override
             public void actionPerformed(ActionEvent e) {
                 Object source = e.getSource();
@@ -103,29 +100,27 @@ public class LogView extends JPanel {
         this.add(logoutButton);
     }
     
-    private void initAddButton() {
-    	addButton = new JButton("Add");
-    	style(addButton, ema.FOREGROUND_COLOR, ema.BUTTON_COLOR, ema.TEXT_FONT, 
+    private void initBackButton() {
+    	backButton = new JButton("Back");
+    	style(backButton, ema.FOREGROUND_COLOR, ema.BUTTON_COLOR, ema.TEXT_FONT, 
 				460, 40, 100, 25, buttonBorder);
     
-    	addButton.addActionListener(new ActionListener() {
+    	backButton.addActionListener(new ActionListener() {
     
-            /*
-             * Respond when the user clicks the Login button.
-             */
     
             @Override
             public void actionPerformed(ActionEvent e) {
                 Object source = e.getSource();
     
-                if (source.equals(addButton)) {
-                    controller.gotoAddLog(null);
+                if (source.equals(backButton)) {
+                    controller.gotoEmployerHome();
                 }
             }
         });
         
-        this.add(addButton);
+        this.add(backButton);
     }
+    
     
     private void initLogList() {
     	
@@ -152,6 +147,7 @@ public class LogView extends JPanel {
     	
     	if(controller.getCurrentCompany() != null && controller.getCurrentUser() != null) {
     		initLogBoxes();
+    		initAddButton();
     	}
     	
     	this.add(logScrollList);
@@ -195,7 +191,7 @@ public class LogView extends JPanel {
 	    		
 	    		deleteButton = new JButton("Delete");
 	    		style(deleteButton, ema.FOREGROUND_COLOR, ema.BUTTON_COLOR, ema.TEXT_FONT, 
-	    				450, 20+60*(i+1), 100, 30, buttonBorder);
+	    				450, 20+60*(i), 100, 30, buttonBorder);
 	    		
 	    		deleteButton.setActionCommand(String.valueOf(i));
 	    		
@@ -219,7 +215,7 @@ public class LogView extends JPanel {
 	    		
 	    		JSeparator separator = new JSeparator();
 	    		style(separator, null, null,null, 
-	    				20, 65+60*(i+1), 540, 2, BorderFactory.createMatteBorder(50,50,50,50, ema.FOREGROUND_COLOR));
+	    				20, 65+60*(i), 540, 2, BorderFactory.createMatteBorder(50,50,50,50, ema.FOREGROUND_COLOR));
 	    		separator.setSize(540, 2);
 	    		separator.setOrientation(SwingConstants.HORIZONTAL);
 	    		
@@ -240,7 +236,7 @@ public class LogView extends JPanel {
     	
     	int i = 0;
     	if(controller.getCurrentCompany() != null) {
-    		i = controller.getCurrentCompany().getEmployeeList().size();
+    		i = controller.getCurrentCompany().getLogs().size();
     	}
     	
     	
@@ -248,7 +244,7 @@ public class LogView extends JPanel {
     	style(addButton, ema.FOREGROUND_COLOR, ema.BUTTON_COLOR, ema.TEXT_FONT, 
 				460, 40, 100, 25, buttonBorder);
     	style(addButton, ema.FOREGROUND_COLOR, ema.BUTTON_COLOR, ema.TEXT_FONT, 
-				450, 20+60*(i+1), 100, 30, buttonBorder);
+				450, 20+60*(i), 100, 30, buttonBorder);
     
     	addButton.addActionListener(new ActionListener() {
     
@@ -261,12 +257,12 @@ public class LogView extends JPanel {
                 Object source = e.getSource();
     
                 if (source.equals(addButton)) {
-                    controller.modifyAddEmployee(null);
+                    controller.gotoAddLog(null);
                 }
             }
         });
         
-        employeeBoxPanel.add(addButton);
+        logBoxPanel.add(addButton);
     }
     
     private void style(JComponent obj, Color foreground, Color background, Font font, int x, int y, int w, int h, Border border) {

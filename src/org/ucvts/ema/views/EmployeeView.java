@@ -339,7 +339,7 @@ public class EmployeeView extends JPanel {
                 Object source = e.getSource();
     
                 if (source.equals(addLogButton)) {
-                    controller.gotoAddLog();
+                    controller.gotoAddLog(null);
                 }
             }
         });

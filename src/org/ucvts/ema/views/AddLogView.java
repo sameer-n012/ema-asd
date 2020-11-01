@@ -26,6 +26,7 @@ import javax.swing.border.Border;
 
 import org.ucvts.ema.EMA;
 import org.ucvts.ema.app.Controller;
+import org.ucvts.ema.model.Log;
 import org.ucvts.ema.model.Shift;
 import org.ucvts.ema.model.UserGroup;
 import org.ucvts.ema.placeholders.PlaceholderJTextArea;
@@ -81,7 +82,6 @@ public class AddLogView extends JPanel {
 	private void initialize() {
 		this.adding = (controller.getCurrentLog() == null);
 		this.setLayout(null);
-		System.out.println("2");
 		initLogPanel();
 		initCancelButton();
 		initUpdateButton();
@@ -181,7 +181,7 @@ public class AddLogView extends JPanel {
 		
 		
 		
-		if(adding && controller.getCurrentUser() != null && controller.getCurrentUser().getRole() == UserGroup.EMPLOYER) {
+		if(controller.getCurrentUser() != null && controller.getCurrentUser().getRole() == UserGroup.EMPLOYER) {
 			verifiedbox.setEnabled(true);
 		}
 		if(!adding && controller.getCurrentLog() != null) {
@@ -302,13 +302,16 @@ public class AddLogView extends JPanel {
 	private void initCommitDate() {
 		String s = null;
 		if(!adding && controller.getCurrentLog() != null) {
+			System.out.println("5");
 			s = "Commit Date: " + controller.getCurrentLog().getCommitString();
 			showErrorMessage("", false);
 		}
 		else { s = ""; }
 		commitdatelabel = new JLabel(s, SwingConstants.CENTER);
 		style(commitdatelabel, ema.FOREGROUND_COLOR, ema.BACKGROUND_COLOR, ema.TEXT_FONT, 
-				400, 450, 600, 35, null);
+				0, 450, 600, 35, null);
+		
+		logPanel.add(commitdatelabel);
 	}
 	
 	
@@ -350,35 +353,43 @@ public class AddLogView extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 Object source = e.getSource();
     
-                if (source.equals(updateButton)) {
-                	String start = getStartDateField();
-                	String stop = getStopDateField();
-                	String desc = getDescriptionTextArea();
-                	boolean ver = getVerifiedBox();
-            		Date d1 = null;
-            		Date d2 = null;
-                	
-                	try { 
-                		if(start.length() != 14 && stop.length() != 14) {
-                			throw new Exception();
-                		}
-                		
-                		d1 = new SimpleDateFormat("dd/MM/yy HH:mm").parse(start); 
-                		d2 = new SimpleDateFormat("dd/MM/yy HH:mm").parse(stop); 
-                		
-                		
-                		if(d1.compareTo(d2) >= 0) {
-                			showErrorMessage("Invalid dates", true);
-                		}
-                		else if(desc == null || desc.length() == 0) {
-                			showErrorMessage("Invalid description", true);
-                		}
-                		else {
-                			controller.addLog(d1, d2, desc, ver);
-                		}
-                		
-            		}
-                	catch (Exception ex) { showErrorMessage("Invalid dates", true); }
+                if(source.equals(updateButton)) {
+	                if (controller.getCurrentLog() == null) {
+	                	String start = getStartDateField();
+	                	String stop = getStopDateField();
+	                	String desc = getDescriptionTextArea();
+	                	boolean ver = getVerifiedBox();
+	            		Date d1 = null;
+	            		Date d2 = null;
+	                	
+	                	try { 
+	                		if(start.length() != 14 || stop.length() != 14) {
+	                			throw new Exception();
+	                		}
+	                		
+	                		d1 = new SimpleDateFormat("dd/MM/yy HH:mm").parse(start); 
+	                		d2 = new SimpleDateFormat("dd/MM/yy HH:mm").parse(stop); 
+	                		
+	                		
+	                		if(d1.compareTo(d2) >= 0) {
+	                			showErrorMessage("Invalid dates", true);
+	                		}
+	                		else if(desc == null || desc.length() == 0) {
+	                			showErrorMessage("Invalid description", true);
+	                		}
+	                		else {
+	                			controller.addLog(d1, d2, desc, ver);
+	                		}
+	                		
+	            		}
+	                	catch (Exception ex) { showErrorMessage("Invalid dates", true); }
+	                }
+	                else if(controller.getCurrentLog() != null && verifiedbox.isSelected() != controller.getCurrentLog().isVerified()){
+	                	controller.verifyLog(controller.getCurrentLog());
+	                }
+	                else {
+	                	controller.gotoViewLogs();
+	                }
                 }
             }
         });
