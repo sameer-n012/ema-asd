@@ -1,8 +1,12 @@
 package org.ucvts.ema.model;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 public class Log {
+	DateFormat df = new SimpleDateFormat("dd/MM/yy HH:mm");
 	
 	private int id;
 	private int CID;
@@ -11,17 +15,16 @@ public class Log {
 	private Date stop;
 	private Date commitDate;
 	private String desc;
-	private User verifier;
+	private boolean verified;
 	
 	
-	public Log(int CID, User author, Date start, Date stop, Date commitDate, String desc) {
-		this.CID = CID;
+	public Log(User author, Date start, Date stop, String desc) {
 		this.author = author;
 		this.start = start;
 		this.stop = stop;
-		this.commitDate = commitDate;
+		this.commitDate = Calendar.getInstance().getTime();
 		this.desc = desc;
-		this.verifier = null;
+		this.verified = false;
 		this.id = 0;
 	}
 	
@@ -34,16 +37,22 @@ public class Log {
 	public Date getStop() { return stop; }
 	
 	public User getAuthor() { return author; }
+		
+	public void toggleVerify() { this.verified = !this.verified; }
 	
-	public User getVerifier() { return verifier; }
-	
-	public void verify(User verifier) { this.verifier = verifier; }
-	
-	public boolean isVerified() { return (verifier != null); }
+	public boolean isVerified() { return verified; }
 	
 	public int getCID() { return CID; }
 	
 	public void setID(int id) { this.id = id; }
 	
 	public int getID() { return id; }
+	
+	public void setCID(int CID) { this.CID = CID; }
+	
+	public String getStartString() { return df.format(start); }
+	
+	public String getStopString() { return df.format(stop); }
+	
+	public String getCommitString() { return df.format(commitDate); }
 }

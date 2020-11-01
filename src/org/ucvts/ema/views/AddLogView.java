@@ -1,134 +1,386 @@
 package org.ucvts.ema.views;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.util.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 
 import javax.swing.BorderFactory;
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.Border;
 
 import org.ucvts.ema.EMA;
 import org.ucvts.ema.app.Controller;
+import org.ucvts.ema.model.Shift;
+import org.ucvts.ema.model.UserGroup;
 
 @SuppressWarnings("serial")
 public class AddLogView extends JPanel {
-	
-    private EMA ema;
+
+	private EMA ema;
 	private Controller controller;
 	private boolean adding;
+	private JLabel title;
 	private JLabel authorlabel;
 	private JPanel logPanel;
 	private JLabel errorMssg;
+	private JLabel startdatelabel;
+	private JLabel stopdatelabel;
+	private JTextField stopdatefield;
+	private JTextField startdatefield;
+	private JTextArea descriptiontextarea;
+	private JScrollPane descriptionscrollpane;
+	private JCheckBox verifiedbox;
+	private JLabel verifiedlabel;
+	private JButton cancelButton;
+	private JButton updateButton;
 	private Border buttonBorder;
 	private Border panelBorder;
 	private Border textAreaBorder;
 	private Border textFieldBorder;
 
 	public AddLogView(Controller controller) {
-        super();
-        ema = EMA.getInstance();
-        this.setBackground(ema.BACKGROUND_COLOR);
-        this.controller = controller;
-        
-        buttonBorder = BorderFactory.createMatteBorder(0, 0, 0, 0, ema.FOREGROUND_COLOR);
-        textFieldBorder = BorderFactory.createMatteBorder(0,0,2,0, ema.FOREGROUND_COLOR);
-        textAreaBorder = BorderFactory.createMatteBorder(2,2,2,2, ema.FOREGROUND_COLOR);
-        panelBorder = BorderFactory.createLineBorder(ema.FOREGROUND_COLOR);
-        
-        this.initialize();
-        
-    }
-	
+		super();
+		ema = EMA.getInstance();
+		this.setBackground(ema.BACKGROUND_COLOR);
+		this.controller = controller;
+
+		buttonBorder = BorderFactory.createMatteBorder(0, 0, 0, 0, ema.FOREGROUND_COLOR);
+		textFieldBorder = BorderFactory.createMatteBorder(0,0,2,0, ema.FOREGROUND_COLOR);
+		textAreaBorder = BorderFactory.createMatteBorder(2,2,2,2, ema.FOREGROUND_COLOR);
+		panelBorder = BorderFactory.createLineBorder(ema.FOREGROUND_COLOR);
+
+		this.initialize();
+
+	}
+
 	public void updateCard() {
-    	this.removeAll();
-    	initialize();
-    }
+		this.removeAll();
+		initialize();
+	}
 
-    private void initialize() {
-    	this.adding = (controller.getCurrentLog() == null);
-        this.setLayout(null);
-        
-        initProfilePanel();
+	private void initialize() {
+		this.adding = (controller.getCurrentLog() == null);
+		this.setLayout(null);
 
-        //TODO call initialize methods here
-    }
-    
-    public void showErrorMessage(String mssg, boolean show){
-    	if(show) {
-    		errorMssg.setText(mssg);
-    		errorMssg.setVisible(true);
-    	}else {
-    		errorMssg.setText("");
-    		errorMssg.setVisible(false);
+		initLogPanel();
+		initCancelButton();
+		initUpdateButton();
+		initTitle();
+
+		//TODO call initialize methods here
+	}
+
+	public void showErrorMessage(String mssg, boolean show){
+		if(show) {
+			errorMssg.setText(mssg);
+			errorMssg.setVisible(true);
+		}else {
+			errorMssg.setText("");
+			errorMssg.setVisible(false);
+		}
+	}
+	
+	private String getStartDateField() {
+		return startdatefield.getText();
+	}
+	
+	private String getStopDateField() {
+		return stopdatefield.getText();
+	}
+	
+	private String getDescriptionTextArea() {
+		return descriptiontextarea.getText();
+	}
+	
+	private boolean getVerifiedBox() {
+		return verifiedbox.isSelected();
+	}
+
+	private void initTitle() {
+    	String s = null;
+    	if(adding) { 
+    		s = "New Log"; 
+		}
+    	if(!adding && controller.getCurrentLog() != null) {
+    		s = "Log View: " + controller.getCurrentLog().getID();
     	}
+    	title = new JLabel(s, SwingConstants.LEFT);
+    	style(title, ema.FOREGROUND_COLOR, ema.BACKGROUND_COLOR, ema.TITLE_FONT, 
+				20, 20, 500, 35, null);
+
+        this.add(title);
     }
-    
+
+	private void initLogPanel() {
+
+		logPanel = new JPanel();
+		logPanel.setLayout(null);
+
+		style(logPanel, ema.FOREGROUND_COLOR, ema.BACKGROUND_COLOR, null, 
+				0, 80, 600, 800, panelBorder);
+
+		initName();
+		initVerifiedBox();
+		initErrorMssg();
+		initName();
+		initStartDate();
+		initStopDate();
+		initDescTextArea();
+		
+
+
+		this.add(logPanel);
+	}
+
+	private void initName() {
+		String name = null;
+		if(adding && controller.getCurrentUser() != null) {
+			name = controller.getCurrentUser().getFName() + " " + controller.getCurrentUser().getLName();
+		}
+		else if(!adding && controller.getCurrentLog() != null) {
+			name = controller.getCurrentLog().getAuthor().getFName() + " " + controller.getCurrentLog().getAuthor().getLName();
+		}
+		authorlabel = new JLabel(name + ":", SwingConstants.RIGHT);
+		style(authorlabel, ema.FOREGROUND_COLOR, ema.BACKGROUND_COLOR, ema.TEXT_FONT, 
+				20, 20, 200, 35, null);
+
+		logPanel.add(authorlabel);
+
+	}
+	
+	private void initVerifiedBox() {
+		verifiedbox = new JCheckBox();
+		style(verifiedbox, ema.FOREGROUND_COLOR, ema.BACKGROUND_COLOR, ema.TEXT_FONT, 
+   			 250, 20, 15, 25, buttonBorder);
+		
+		verifiedlabel = new JLabel("(Verified)");
+		style(verifiedlabel, ema.FOREGROUND_COLOR, ema.BACKGROUND_COLOR, ema.TEXT_FONT,
+				265, 20, 110, 35, null);
+		
+		
+		
+		if(controller.getCurrentLog() != null && controller.getCurrentUser().getRole() == UserGroup.EMPLOYER) {
+			verifiedbox.setEnabled(true);
+		}
+		if(!adding && controller.getCurrentLog() != null) {
+			verifiedbox.setSelected(controller.getCurrentLog().isVerified());
+		}
+		
+		logPanel.add(verifiedbox);
+		logPanel.add(verifiedlabel);
+	}
+
+	
+	
+	private void initStartDate() {
+		
+
+			
+		startdatelabel = new JLabel("Start Time (DD/MM/YY HH:MM):", SwingConstants.RIGHT);
+		style(startdatelabel, ema.FOREGROUND_COLOR, ema.BACKGROUND_COLOR, ema.TEXT_FONT, 
+				20, 80, 100, 35, null);
+
+		startdatefield = new JTextField(20);
+		startdatefield.setCaretColor(ema.FOREGROUND_COLOR);
+		style(startdatefield, ema.FOREGROUND_COLOR, ema.BACKGROUND_COLOR, ema.TEXT_FONT, 
+				125, 85, 125, 25, textFieldBorder);
+
+
+		startdatefield.addKeyListener(new KeyAdapter() {
+
+			@Override
+			public void keyTyped(KeyEvent e) {
+				if (getStartDateField().length() >= 14) {
+					e.consume();  //Next line includes 0-9, :, and space 
+				} else if (e.getKeyChar() < 32 || (e.getKeyChar() > 32 && e.getKeyChar() < 48) || e.getKeyChar() > 58) {
+					e.consume(); 
+				}
+			}
+		});
+		
+		if(adding) {
+			startdatefield.setEditable(true);
+		}
+		else if(!adding && controller.getCurrentLog() != null) {
+			startdatefield.setText(controller.getCurrentLog().getStartString());
+			startdatefield.setEditable(false);
+		}
+		
+		logPanel.add(startdatelabel);
+		logPanel.add(startdatefield);
+	}
+	
+	private void initStopDate() {
+		stopdatelabel = new JLabel("Stop Time (DD/MM/YY HH:MM):", SwingConstants.RIGHT);
+		style(stopdatelabel, ema.FOREGROUND_COLOR, ema.BACKGROUND_COLOR, ema.TEXT_FONT, 
+				300, 80, 100, 35, null);
+
+		stopdatefield = new JTextField(20);
+		stopdatefield.setCaretColor(ema.FOREGROUND_COLOR);
+		style(stopdatefield, ema.FOREGROUND_COLOR, ema.BACKGROUND_COLOR, ema.TEXT_FONT, 
+				405, 85, 125, 25, textFieldBorder);
+
+		stopdatefield.addKeyListener(new KeyAdapter() {
+
+			@Override
+			public void keyTyped(KeyEvent e) {
+				if (getStopDateField().length() >= 14) {
+					e.consume();  //Next line includes 0-9, :, and space 
+				} else if (e.getKeyChar() < 32 || (e.getKeyChar() > 32 && e.getKeyChar() < 48) || e.getKeyChar() > 58) {
+					e.consume(); 
+				}
+			}
+		});
+		
+		if(adding && controller.getCurrentUser() != null) {
+			stopdatefield.setEditable(true);
+		}
+		else if(!adding && controller.getCurrentUser() != null) {
+			stopdatefield.setText(controller.getCurrentLog().getStopString());
+			stopdatefield.setEditable(false);
+		}
+		
+		logPanel.add(stopdatelabel);
+		logPanel.add(stopdatefield);
+
+	}
+	
+	private void initDescTextArea() {
+		descriptiontextarea = new JTextArea();
+		style(descriptiontextarea, ema.FOREGROUND_COLOR, ema.BACKGROUND_COLOR, ema.TEXT_FONT, 
+				20, 90, 760, 600, textAreaBorder);
+			
+		descriptionscrollpane = new JScrollPane(descriptiontextarea); 
+		style(descriptionscrollpane, ema.FOREGROUND_COLOR, ema.BACKGROUND_COLOR, ema.TEXT_FONT, 
+				-1,-1,-1,-1, textAreaBorder);
+		descriptionscrollpane.setPreferredSize(new Dimension(760, 600));
+		
+		if(adding) {
+			descriptiontextarea.setEditable(true);
+		}
+		else if(!adding && controller.getCurrentLog() != null) {
+			descriptiontextarea.setText(controller.getCurrentLog().getDescription());
+			descriptiontextarea.setEditable(false);
+		}
+		
+		logPanel.add(descriptionscrollpane);
+	}
+
 	private void initErrorMssg() {
-        errorMssg = new JLabel("", SwingConstants.CENTER);
-        style(errorMssg, ema.ERROR_COLOR, ema.BACKGROUND_COLOR, ema.ERROR_FONT, 
+		errorMssg = new JLabel("", SwingConstants.CENTER);
+		style(errorMssg, ema.ERROR_COLOR, ema.BACKGROUND_COLOR, ema.ERROR_FONT, 
 				20, 440, 600, 35, null);
 
-        errorMssg.setVisible(false);
+		errorMssg.setVisible(false);
 
-        logPanel.add(errorMssg);
-    }
+		logPanel.add(errorMssg);
+	}
+	
+	private void initCancelButton() {
+    	cancelButton = new JButton("Cancel");
+    	style(cancelButton, ema.FOREGROUND_COLOR, ema.BUTTON_COLOR, ema.TEXT_FONT, 
+				460, 10, 100, 25, buttonBorder);
     
-    private void initProfilePanel() {
-    	
-    	logPanel = new JPanel();
-    	logPanel.setLayout(null);
-    	
-    	style(logPanel, ema.FOREGROUND_COLOR, ema.BACKGROUND_COLOR, null, 
-    			0, 80, 600, 800, panelBorder);
-    	
-    	initName();
-    	initErrorMssg();
-    	
-    	
-    	this.add(logPanel);
-    }
+    	cancelButton.addActionListener(new ActionListener() {
     
-    private void initName() {
-    	String name = null;
-    	if(adding && controller.getCurrentUser() != null) {
-    		name = controller.getCurrentUser().getFName() + " " + controller.getCurrentUser().getLName();
-    	}
-    	else if(!adding && controller.getCurrentUser() != null) {
-    		name = controller.getCurrentLog().getAuthor().getFName() + " " + controller.getCurrentLog().getAuthor().getLName();
-    	}
-    	authorlabel = new JLabel(name + ":", SwingConstants.RIGHT);
-    	style(authorlabel, ema.FOREGROUND_COLOR, ema.BACKGROUND_COLOR, ema.TEXT_FONT, 
-    			20, 20, 200, 35, null);
-
-    	logPanel.add(authorlabel);
-
-   }
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Object source = e.getSource();
     
-    private void style(JComponent obj, Color foreground, Color background, Font font, int x, int y, int w, int h, Border border) {
-    	try {
-    		if(foreground != null) {
-    			obj.setForeground(foreground);
-    		}
-    		if(background != null) {
-    			obj.setBackground(background);
-    		}
-    		if(font != null) {
-    			obj.setFont(font);
-    		}
-    		if(x >= 0 && y >= 0 && w >= 0 && h >= 0) {
-    			obj.setBounds(x, y, w, h);
-    		}
-    		if(border != null) {
-    			obj.setBorder(border);
-    		}
-    	}
-    	catch(Exception e) { e.printStackTrace(); }
+                if (source.equals(cancelButton)) {
+                    controller.cancelLogUpdate();
+                }
+            }
+        });
+        
+        this.add(cancelButton);
     }
 	
+    
+    private void initUpdateButton() {
+    	String s = null;
+    	if(adding) { s = "Add"; }
+    	else { s = "Update"; }
+    	
+    	updateButton = new JButton(s);
+    	style(updateButton, ema.FOREGROUND_COLOR, ema.BUTTON_COLOR, ema.TEXT_FONT, 
+				460, 40, 100, 25, buttonBorder);
+    
+    	updateButton.addActionListener(new ActionListener() {
+    
+    
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Object source = e.getSource();
+    
+                if (source.equals(updateButton)) {
+                	String start = getStartDateField();
+                	String stop = getStopDateField();
+                	String desc = getDescriptionTextArea();
+                	boolean ver = getVerifiedBox();
+            		Date d1 = null;
+            		Date d2 = null;
+                	
+                	try { 
+                		d1 = new SimpleDateFormat("dd/MM/yy HH:mm").parse(start); 
+                		d2 = new SimpleDateFormat("dd/MM/yy HH:mm").parse(stop); 
+                		
+                		if(d1.compareTo(d2) >= 0) {
+                			showErrorMessage("Invalid dates", true);
+                		}
+                		else if(desc == null || desc.length() == 0) {
+                			showErrorMessage("Invalid description", true);
+                		}
+                		else {
+                			controller.addLog(d1, d2, desc, ver);
+                		}
+                		
+            		} 
+                	catch (Exception ex) { showErrorMessage("Invalid dates", true); }
+                }
+            }
+        });
+        
+        this.add(updateButton);
+    }
+	
+	
+	
+	
+	private void style(JComponent obj, Color foreground, Color background, Font font, int x, int y, int w, int h, Border border) {
+		try {
+			if(foreground != null) {
+				obj.setForeground(foreground);
+			}
+			if(background != null) {
+				obj.setBackground(background);
+			}
+			if(font != null) {
+				obj.setFont(font);
+			}
+			if(x >= 0 && y >= 0 && w >= 0 && h >= 0) {
+				obj.setBounds(x, y, w, h);
+			}
+			if(border != null) {
+				obj.setBorder(border);
+			}
+		}
+		catch(Exception e) { e.printStackTrace(); }
+	}
+
 }

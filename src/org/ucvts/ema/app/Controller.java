@@ -1,6 +1,7 @@
 package org.ucvts.ema.app;
 import java.awt.CardLayout;
 import java.awt.Container;
+import java.util.Date;
 
 import org.ucvts.ema.EMA;
 import org.ucvts.ema.model.Company;
@@ -8,8 +9,10 @@ import org.ucvts.ema.model.Log;
 import org.ucvts.ema.model.Shift;
 import org.ucvts.ema.model.User;
 import org.ucvts.ema.model.UserGroup;
+import org.ucvts.ema.views.AddLogView;
 import org.ucvts.ema.views.EmployeeView;
 import org.ucvts.ema.views.EmployerView;
+import org.ucvts.ema.views.LogView;
 import org.ucvts.ema.views.LoginView;
 import org.ucvts.ema.views.ModifyView;
 
@@ -213,6 +216,12 @@ public class Controller {
     	else { switchView(ema.EMPLOYEE_VIEW); }
     }
     
+    public void cancelLogUpdate() {
+    	switchView(ema.LOGIN_VIEW);
+    	currentLog = null;
+    	switchView(ema.LOG_VIEW);
+    }
+    
     public void deleteEmployee(User u) {
     	String s1 = u.getUsername();
     	String s2 = currentUser.getUsername();
@@ -229,6 +238,7 @@ public class Controller {
     public void deleteLog(Log l) {
     	Company c = ema.getCompany(l.getCID());
     	c.removeLog(l);
+    	this.currentLog = null;
     	switchView(ema.LOGIN_VIEW);
 		switchView(ema.LOG_VIEW);
     }
@@ -242,6 +252,26 @@ public class Controller {
     		this.currentLog = l;
     		switchView(ema.LOG_VIEW);
     	}
+    }
+    
+    public void addLog(Date start, Date stop, String desc, boolean ver) {
+    	AddLogView lv = (AddLogView) views.getComponents()[ema.ADD_LOG_VIEW_INDEX];
+    	
+    	if(getCurrentUser() != null) {
+	    	Log l = new Log(getCurrentUser(), start, stop, desc);
+	    	l.toggleVerify();
+	    	getCurrentCompany().addLog(l);
+	    	this.currentLog = null;
+	    	
+	    	if(getCurrentUser().getRole() == UserGroup.EMPLOYER) {
+	    		switchView(ema.LOG_VIEW);
+	    	}
+	    	else {
+	    		switchView(ema.EMPLOYEE_VIEW);
+	    	}
+	    	
+    	}
+    	else { lv.showErrorMessage("Invalid user", true); }
     }
     
     public void logout() {

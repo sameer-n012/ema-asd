@@ -72,6 +72,7 @@ public class Company {
 	public ArrayList<Log> addLog(Log l) {
 		logs.add(l);
 		l.setID(logCounter++);
+		l.setCID(this.companyId);
 		return logs;
 	}
 	

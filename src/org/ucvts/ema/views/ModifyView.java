@@ -445,7 +445,7 @@ public class ModifyView extends JPanel {
                 		String pass = getPasswordTextField();
                 		controller.updateProfileInformation(fname, lname, pass, notes);
                 	} else {
-                		boolean passreset = true;
+                		boolean passreset = passwordReset.isSelected();
                 		controller.updateProfileInformation(passreset, shift, getSalaryTextField(), notes);
                 	}                   
                 }
