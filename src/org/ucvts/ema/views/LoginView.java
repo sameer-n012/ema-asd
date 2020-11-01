@@ -12,13 +12,12 @@ import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JPasswordField;
-import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.Border;
 
 import org.ucvts.ema.EMA;
 import org.ucvts.ema.app.Controller;
+import org.ucvts.ema.placeholders.PlaceholderJPasswordField;
 import org.ucvts.ema.placeholders.PlaceholderJTextField;
 
 @SuppressWarnings("serial")
@@ -26,7 +25,7 @@ public class LoginView extends JPanel {
 
 	private Controller controller;
     private PlaceholderJTextField usernameField;
-    private JPasswordField passwordField;
+    private PlaceholderJPasswordField passwordField;
     private PlaceholderJTextField companyField;
     private JButton loginButton;
     private JButton createCompanyButton;
@@ -143,7 +142,7 @@ public class LoginView extends JPanel {
         style(label, ema.FOREGROUND_COLOR, ema.BACKGROUND_COLOR, ema.TEXT_FONT, 
 				100, 200, 95, 35, null);
 
-        passwordField = new JPasswordField(20);
+        passwordField = new PlaceholderJPasswordField(20);
         passwordField.setCaretColor(ema.FOREGROUND_COLOR);
         style(passwordField, ema.FOREGROUND_COLOR, ema.BACKGROUND_COLOR, ema.TEXT_FONT, 
 				205, 205, 200, 25, textFieldBorder);   

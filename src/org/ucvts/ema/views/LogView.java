@@ -21,7 +21,6 @@ import org.ucvts.ema.EMA;
 import org.ucvts.ema.app.Controller;
 import org.ucvts.ema.model.Company;
 import org.ucvts.ema.model.Log;
-import org.ucvts.ema.model.User;
 
 @SuppressWarnings("serial")
 public class LogView extends JPanel {
@@ -183,7 +182,6 @@ public class LogView extends JPanel {
 	                    Object source = e.getSource();
 	                    int a = Integer.parseInt(((JButton) source).getActionCommand());
 	                    if (a >= 0 && a < list.size()) {
-	                    	//TODO do controller function to move to view log screen
 	                    	controller.gotoAddLog(controller.getCurrentCompany().getLog(a));
 	                    }
 	                }
@@ -196,11 +194,7 @@ public class LogView extends JPanel {
 	    		deleteButton.setActionCommand(String.valueOf(i));
 	    		
 	    		deleteButton.addActionListener(new ActionListener() {
-	    		    
-	                /*
-	                 * Respond when the user clicks the Login button.
-	                 */
-	        
+
 	                @Override
 	                public void actionPerformed(ActionEvent e) {
 	                    Object source = e.getSource();

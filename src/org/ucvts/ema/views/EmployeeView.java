@@ -15,12 +15,9 @@ import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JTextArea;
-import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.border.Border;
-import javax.swing.JPasswordField;
 
 import org.ucvts.ema.EMA;
 import org.ucvts.ema.app.Controller;
@@ -42,11 +39,11 @@ public class EmployeeView extends JPanel {
     private PlaceholderJTextField fNameField;
     private PlaceholderJTextField lNameField;
     private JLabel username;
-    private JTextField usernameField;
+    private PlaceholderJTextField usernameField;
     private JLabel password;
     private PlaceholderJPasswordField passwordField;
     private JLabel salary;
-    private JTextField salaryField;
+    private PlaceholderJTextField salaryField;
     private PlaceholderJTextArea notesField;
     private JLabel errorMssg;
     private Border buttonBorder;
@@ -210,13 +207,13 @@ public class EmployeeView extends JPanel {
     	style(username, ema.FOREGROUND_COLOR, ema.BACKGROUND_COLOR, ema.TEXT_FONT, 
 				20, 140, 95, 35, null);
         
-        usernameField = new JTextField(20);
+        usernameField = new PlaceholderJTextField(20);
         usernameField.setCaretColor(ema.FOREGROUND_COLOR);
         style(usernameField, ema.FOREGROUND_COLOR, ema.BACKGROUND_COLOR, ema.TEXT_FONT, 
       			 125, 145, 125, 25, textFieldBorder);
         
         if(controller.getCurrentUser() != null) { 
-        	usernameField.setText(controller.getCurrentUser().getUsername()); 
+        	usernameField.setPlaceholder(controller.getCurrentUser().getUsername()); 
     	}
         usernameField.setEditable(false);
 
@@ -258,13 +255,13 @@ public class EmployeeView extends JPanel {
     	style(salary, ema.FOREGROUND_COLOR, ema.BACKGROUND_COLOR, ema.TEXT_FONT, 
 				20, 260, 95, 35, null);
         
-    	salaryField = new JTextField(20);
+    	salaryField = new PlaceholderJTextField(20);
     	salaryField.setCaretColor(ema.FOREGROUND_COLOR);
     	style(salaryField, ema.FOREGROUND_COLOR, ema.BACKGROUND_COLOR, ema.TEXT_FONT, 
     			 125, 265, 125, 25, textFieldBorder);
                 
         if(controller.getCurrentUser() != null) { 
-        	salaryField.setText(Double.toString(controller.getCurrentUser().getSalary()));
+        	salaryField.setPlaceholder(Double.toString(controller.getCurrentUser().getSalary()));
         }
     	salaryField.setEditable(false);
 

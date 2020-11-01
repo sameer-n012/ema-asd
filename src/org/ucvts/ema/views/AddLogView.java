@@ -1,7 +1,6 @@
 package org.ucvts.ema.views;
 
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
@@ -9,7 +8,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.Date;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
 import javax.swing.BorderFactory;
@@ -18,16 +16,11 @@ import javax.swing.JCheckBox;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
-import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.Border;
 
 import org.ucvts.ema.EMA;
 import org.ucvts.ema.app.Controller;
-import org.ucvts.ema.model.Log;
-import org.ucvts.ema.model.Shift;
 import org.ucvts.ema.model.UserGroup;
 import org.ucvts.ema.placeholders.PlaceholderJTextArea;
 import org.ucvts.ema.placeholders.PlaceholderJTextField;
@@ -47,7 +40,6 @@ public class AddLogView extends JPanel {
 	private PlaceholderJTextField stopdatefield;
 	private PlaceholderJTextField startdatefield;
 	private PlaceholderJTextArea descriptiontextarea;
-	private JScrollPane descriptionscrollpane;
 	private JLabel commitdatelabel;
 	private JCheckBox verifiedbox;
 	private JLabel verifiedlabel;
@@ -87,7 +79,6 @@ public class AddLogView extends JPanel {
 		initUpdateButton();
 		initTitle();
 
-		//TODO call initialize methods here
 	}
 
 	public void showErrorMessage(String mssg, boolean show){
