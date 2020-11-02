@@ -31,7 +31,7 @@ public class LogView extends JPanel {
     private JPanel logBoxPanel;
     private JButton addButton;
     private JButton viewButton;
-    private JButton deleteButton;
+//    private JButton deleteButton;
     private JButton backButton;
     private JLabel logName;
     private Border buttonBorder;

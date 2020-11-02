@@ -96,7 +96,10 @@ public class ModifyView extends JPanel {
     }
     
     public Double getSalaryTextField() {
-    	return Double.parseDouble(salaryField.getText());
+    	double a;
+    	try{ a = Double.parseDouble(salaryField.getText()); }
+    	catch(Exception e) {a = 0;}
+    	return a;
     }
 
     public String getPasswordTextField() {

@@ -1,12 +1,14 @@
 package org.ucvts.ema.model;
 
 import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
+import org.ucvts.ema.EMA;
+
 public class Log {
-	DateFormat df = new SimpleDateFormat("dd/MM/yy HH:mm");
+	private static EMA ema = EMA.getInstance();
+	DateFormat df = ema.DATE_FORMAT;
 	
 	private int id;
 	private int CID;
@@ -41,6 +43,8 @@ public class Log {
 	public void toggleVerify() { this.verified = !this.verified; }
 	
 	public boolean isVerified() { return verified; }
+	
+	public void setVerified(boolean b) { this.verified = b; }
 	
 	public int getCID() { return CID; }
 	

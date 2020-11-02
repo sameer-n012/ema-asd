@@ -3,6 +3,8 @@ package org.ucvts.ema;
 import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Font;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -43,6 +45,7 @@ public class EMA extends JFrame{
 	public final String MODIFY_VIEW = "MODIFY_VIEW";
 	public final String LOG_VIEW = "LOG_VIEW";
 	public final String ADD_LOG_VIEW = "ADD_LOG_VIEW";
+	public final DateFormat DATE_FORMAT = new SimpleDateFormat("MM/dd/yy HH:mm");
 	public final Color BACKGROUND_COLOR = Color.DARK_GRAY;
 	public final Color FOREGROUND_COLOR = Color.WHITE;
 	public final Color ERROR_COLOR = Color.PINK;

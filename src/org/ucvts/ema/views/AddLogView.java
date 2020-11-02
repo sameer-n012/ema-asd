@@ -194,7 +194,7 @@ public class AddLogView extends JPanel {
 				20, 80, 100, 35, null);
 
 		startdatefield = new PlaceholderJTextField(14);
-		startdatefield.setPlaceholder("DD/MM/YY hh:mm");
+		startdatefield.setPlaceholder("MM/DD/YY hh:mm");
 		startdatefield.setCaretColor(ema.FOREGROUND_COLOR);
 		style(startdatefield, ema.FOREGROUND_COLOR, ema.BACKGROUND_COLOR, ema.TEXT_FONT, 
 				125, 85, 125, 25, textFieldBorder);
@@ -230,7 +230,7 @@ public class AddLogView extends JPanel {
 				300, 80, 100, 35, null);
 
 		stopdatefield = new PlaceholderJTextField(14);
-		stopdatefield.setPlaceholder("DD/MM/YY hh:mm");
+		stopdatefield.setPlaceholder("MM/DD/YY hh:mm");
 		stopdatefield.setCaretColor(ema.FOREGROUND_COLOR);
 		style(stopdatefield, ema.FOREGROUND_COLOR, ema.BACKGROUND_COLOR, ema.TEXT_FONT, 
 				405, 85, 125, 25, textFieldBorder);
@@ -358,8 +358,8 @@ public class AddLogView extends JPanel {
 	                			throw new Exception();
 	                		}
 	                		
-	                		d1 = new SimpleDateFormat("dd/MM/yy HH:mm").parse(start); 
-	                		d2 = new SimpleDateFormat("dd/MM/yy HH:mm").parse(stop); 
+	                		d1 = ema.DATE_FORMAT.parse(start); 
+	                		d2 = ema.DATE_FORMAT.parse(stop); 
 	                		
 	                		
 	                		if(d1.compareTo(d2) >= 0) {

@@ -281,6 +281,7 @@ public class Controller {
     	
     	if(getCurrentUser() != null) {
 	    	Log l = new Log(getCurrentUser(), start, stop, desc);
+	    	l.setVerified(ver);
 	    	getCurrentCompany().addLog(l);
 	    	this.currentLog = null;
 	    	

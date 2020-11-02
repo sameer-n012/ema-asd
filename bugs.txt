@@ -10,3 +10,5 @@ Creating a user with the same username as another company owner will delete the 
 salary does not update - not finding this problem
 
 no title on add user screen - fixed
+
+verify check box not staying checked when posted - fixed
