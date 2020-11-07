@@ -214,6 +214,11 @@ public class EmployerView extends JPanel {
 	    		style(deleteButton, ema.FOREGROUND_COLOR, ema.BUTTON_COLOR, ema.TEXT_FONT, 
 	    				450, 20+60*(i+1), 100, 30, buttonBorder);
 	    		
+	    		if(i==-1) { 
+	    			deleteButton.setEnabled(false); 
+	    			deleteButton.setVisible(false);
+    			}
+	    		
 	    		deleteButton.setActionCommand(String.valueOf(i));
 	    		
 	    		deleteButton.addActionListener(new ActionListener() {

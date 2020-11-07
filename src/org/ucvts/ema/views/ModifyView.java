@@ -17,6 +17,7 @@ import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
+import javax.swing.UIManager;
 import javax.swing.border.Border;
 
 import org.ucvts.ema.EMA;
@@ -331,6 +332,9 @@ public class ModifyView extends JPanel {
     }
     
 	private void initShifts() { 
+		
+		UIManager.put("ComboBox.background", ema.BACKGROUND_COLOR);
+		UIManager.put("ComboBox.foreground", ema.FOREGROUND_COLOR);
     	
 		String[] shifts = { "None", "Morning", "Afternoon", "Evening", "Night" };
 		String[] daysOfWeek = { "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday" };

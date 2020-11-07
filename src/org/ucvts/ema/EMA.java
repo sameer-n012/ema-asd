@@ -13,6 +13,8 @@ import java.util.Map;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 
 import org.ucvts.ema.app.Controller;
 import org.ucvts.ema.model.Company;
@@ -71,6 +73,17 @@ public class EMA extends JFrame{
 	
 	
 	public static void main(String[] args) {
+		
+		try {
+			UIManager.setLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeel");
+		} catch (Exception e1) {
+			try {
+				UIManager.setLookAndFeel("com.sun.java.swing.plaf.motif.MotifLookAndFeel");
+			}
+			catch(Exception e2) {
+				System.out.println("L&F Not Supported");
+			}
+		}
 		
 		userDirectory = new HashMap<String, User>();
 		companyDirectory = new HashMap<Integer, Company>();

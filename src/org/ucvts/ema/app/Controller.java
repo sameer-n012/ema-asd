@@ -174,7 +174,7 @@ public class Controller {
     public void updateProfileInformation(String fname, String lname, String password, String notes, Shift[] shifts, double salary) {
     	ModifyView mv = (ModifyView) views.getComponents()[ema.MODIFY_VIEW_INDEX];
     	EmployeeView ev = (EmployeeView) views.getComponents()[ema.EMPLOYEE_VIEW_INDEX];
-    	if(password == null || password.equals("")) {
+    	if(fname.equals("") || lname.equals("")) {
     		mv.showErrorMessage("Credentials cannot be empty.", true);
     		ev.showErrorMessage("Credentials cannot be empty.", true);
     	}
@@ -182,7 +182,7 @@ public class Controller {
     		if(shifts.length == 7) { modifiedUser.setShifts(shifts); }
     		if(salary >= 0) { modifiedUser.setSalary(salary); }
 	    	if(currentUser == modifiedUser) {
-	    		if(!password.equals("******")) {
+	    		if(!password.equals("******") && !password.equals("")) {
 	    			modifiedUser.setPasswordHash(password);
 	    		}
 				modifiedUser.setFName(fname);
