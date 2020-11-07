@@ -14,8 +14,6 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
-
 import org.ucvts.ema.app.Controller;
 import org.ucvts.ema.model.Company;
 import org.ucvts.ema.model.User;
@@ -190,8 +188,8 @@ public class EMA extends JFrame{
 		companyDirectory.put(c2.getId(), c2);
 		
 		
-		userDirectory.put("sn", c1.addEmployer("sn", "admin", "sameer", "narendran"));
-		userDirectory.put("a", c1.assign("a", "Ajskajdksa", "ahjskahdkja"));
+		userDirectory.put("snarendran", c1.addEmployer("snarendran", "admin", "Sameer", "Narendran"));
+		userDirectory.put("a", c1.assign("a", "A", "a"));
 		userDirectory.put("k", c1.assign("k", "K", "k"));
 		userDirectory.put("b", c1.assign("b", "B", "b"));
 		userDirectory.put("f", c1.assign("f", "F", "f"));
@@ -203,9 +201,8 @@ public class EMA extends JFrame{
 		userDirectory.put("i", c1.assign("i", "I", "i"));
 		userDirectory.put("l", c1.assign("l", "L", "l"));
 		userDirectory.put("j", c1.assign("j", "J", "j"));
-		userDirectory.put("j2", c1.assign("j2", "a", "j"));
 		
-		userDirectory.put("es", c2.addEmployer("es", "admin", "evan", "sun"));
+		userDirectory.put("esun", c2.addEmployer("esun", "admin", "Evan", "Sun"));
 		userDirectory.put("m", c2.assign("x", "X", "x"));
 		userDirectory.put("n", c2.assign("y", "Y", "y"));
 		userDirectory.put("o", c2.assign("z", "Z", "z"));
