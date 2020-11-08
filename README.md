@@ -6,6 +6,8 @@ This is a graphical application made with Java Swing that can help an employer e
 
 Due to the constraints of the project, there is no storage of data apart from the application memory, therefore the application is reset every time it is run. If this were a professional project, the data would be stored in a database on a server and would be retrieved in order to appear on the application. The default password that we decided to use when a new employee is created or when the employer resets the password is "password". It is the responsibility of the employee to change it after being set to the default.
 
+The application was exported into the file ema1-0.jar which is located in the project folder. The main method in the code is located in the file EMA.java
+
 ### Pre-Populated Data
 The application is pre-populated with data for demonstration purposes. 
 
